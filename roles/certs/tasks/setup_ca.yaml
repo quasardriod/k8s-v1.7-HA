@@ -1,0 +1,33 @@
+---
+
+- name: Create a directory to store certificates in loadbalancer node
+  file:
+    path: /var/k8s-v1.7/certs
+    state: directory
+    owner: stack
+    group: stack
+    mode: 0755
+
+- name: Copy CA config and csr files to lb node
+  copy:
+    src: "{{item}}"
+    dest: /var/k8s-v1.7/certs/
+  with_items:
+    - ca-config.json
+    - ca-csr.json
+  ignore_errors: false
+
+- name: Generate a CA certificate and private key:
+  command: cd /var/k8s-v1.7/certs/; cfssl gencert -initca ca-csr.json | cfssljson -bare ca
+
+- name: Validate CA files got created
+  stat:
+    path: /var/k8s-v1.7/certs/"{{item}}"
+  with_items:
+    - ca-key.pem
+    - ca.pem
+  ignore_errors: false
+  register: ca_files
+- debug:
+    msg: "Files are created."
+    when: ca_files.stat.exists == True

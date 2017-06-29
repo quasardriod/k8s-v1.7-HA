@@ -1,0 +1,4 @@
+---
+
+- include: install_cfssl_tool.yaml
+- include: setup_ca.yaml

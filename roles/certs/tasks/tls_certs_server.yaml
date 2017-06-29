@@ -1,0 +1,4 @@
+---
+
+# The Kubernetes public IP address will be included in the list of subject alternative names for the Kubernetes server certificate.
+# This will ensure the TLS certificate is valid for remote client access.
