@@ -8,4 +8,4 @@
   vars_files:
     - group_vars/all
   roles:
-    - certs
+    - create-certs

@@ -15,5 +15,5 @@
   with_items:
     - chmod +x /tmp/cfssl_linux-amd64
     - chmod +x /tmp/cfssljson_linux-amd64
-    - sudo mv /tmp/cfssl_linux-amd64 /usr/local/bin/cfssl
-    - sudo mv /tmp/cfssljson_linux-amd64 /usr/local/bin/cfssljson
+    - mv /tmp/cfssl_linux-amd64 /usr/local/bin/cfssl
+    - mv /tmp/cfssljson_linux-amd64 /usr/local/bin/cfssljson

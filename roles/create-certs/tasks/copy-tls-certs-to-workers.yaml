@@ -1,0 +1,11 @@
+---
+
+- name: Copy client certificates to worker nodes
+  copy:
+    src: /tmp/"{{item}}"
+    dest: /home/"{{ansible_ssh_user}}"
+  with_items:
+    - ca.pem
+    - kube-proxy.pem
+    - kube-proxy-key.pem
+  ignore_errors: false

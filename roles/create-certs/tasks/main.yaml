@@ -1,0 +1,10 @@
+---
+
+- include: install_cfssl_tool.yaml
+- include: setup_ca.yaml
+- include: tls_certs_clients.yaml
+- include: tls_certs_server.yaml
+- include: install-kubectl.yaml
+- include: gen-tls-bootstrap-token.yaml
+- include: create-client-bootstrap-config.yaml
+- include: fetch-certs-to-local.yaml

@@ -1,0 +1,19 @@
+---
+
+# Fetch all required worker and mster certificates to local system
+- name: Fetch certificates files from lb system
+  fetch:
+    src: /var/k8s-v1.7/certs/"{{item}}
+    dest: /tmp/
+    flat: yes
+  with_items:
+    - ca.pem
+    - kube-proxy.pem
+    - kube-proxy-key.pem
+    - ca-key.pem
+    - kubernetes-key.pem
+    - kubernetes.pem
+    - token.csv
+    - bootstrap.kubeconfig
+    - kube-proxy.kubeconfig
+  ignore_errors: false

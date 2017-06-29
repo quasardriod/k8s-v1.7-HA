@@ -1,6 +1,0 @@
----
-
-- include: install_cfssl_tool.yaml
-- include: setup_ca.yaml
-- include: tls_certs_clients.yaml
-- include: tls_certs_server.yaml
