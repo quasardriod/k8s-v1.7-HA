@@ -1,5 +1,5 @@
 # KVM office lab VMs
-kube-master1 ansible_ssh_host=192.168.151
+kube-master1 ansible_ssh_host=192.168.2.151
 kube-master2 ansible_ssh_host=192.168.2.152
 kube-master3 ansible_ssh_host=192.168.2.153
 

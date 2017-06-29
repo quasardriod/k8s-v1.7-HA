@@ -1,0 +1,9 @@
+---
+# Define load balancer DNS name or IP address in KUBERNETES_PUBLIC_ADDRESS variable
+
+KUBERNETES_PUBLIC_ADDRESS: 192.168.2.155
+kube_master1_ip: 192.168.2.151
+kube_master2_ip: 192.168.2.152
+kube_master3_ip: 192.168.2.153
+kube_node1_ip: 192.168.2.161
+kube_node2_ip: 192.168.2.162
