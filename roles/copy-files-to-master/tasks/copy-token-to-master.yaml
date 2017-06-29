@@ -2,5 +2,5 @@
 - name: Copy token.csv to master nodes
   copy:
     src: /var/tmp/k8s-v1.7-certs/token.csv
-    dest: /home/"{{ansible_ssh_user}}"/
+    dest: /home/{{ansible_ssh_user}}/
   ignore_errors: flase

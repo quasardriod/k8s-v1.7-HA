@@ -2,8 +2,8 @@
 
 - name: Distribute the TLS certificates to master nodes
   copy:
-    src: /var/tmp/k8s-v1.7-certs/"{{item}}"
-    dest: /home/"{{ansible_ssh_user}}"/
+    src: /var/tmp/k8s-v1.7-certs/{{item}}
+    dest: /home/{{ansible_ssh_user}}/
   with_items:
     - ca.pem
     - ca-key.pem
