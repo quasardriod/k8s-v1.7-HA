@@ -4,7 +4,7 @@
 # This tasks we will be performed in lb node
 - name: Install cfssl and cfssljson binaries
   get_url:
-    url: {{item}}
+    url: "{{item}}"
     dest: /tmp
   with_items:
     - https://pkg.cfssl.org/R1.2/cfssl_linux-amd64

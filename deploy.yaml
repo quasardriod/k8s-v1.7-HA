@@ -5,7 +5,7 @@
 - hosts: kube-lb
   become: true
   become_method: sudo
-  vars_files:
-    - group_vars/all
+#  vars_files:
+#    - group_vars/all
   roles:
     - certs

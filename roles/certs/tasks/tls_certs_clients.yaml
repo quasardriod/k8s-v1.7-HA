@@ -11,32 +11,9 @@
     dest: /var/k8s-v1.7/certs/
   ignore_errors: false
 
-- name: Validate admin csr file got copied
-  stat:
-    path: /var/k8s-v1.7/certs/admin-csr.json
-  ignore_errors: false
-  register: admin_csr
-
-- debug:
-    msg: "admin-csr.json file got copied to /var/k8s-v1.7/certs/."
-    when: admin_csr.stat.exists == True
-
 - name: Generate the admin client certificate and private key "gen-admin-client-cert-key.sh"
   script: gen-admin-client-cert-key.sh
   ignore_errors: false
-
-- name: Validate admin certificate and key file got created
-  stat:
-    path: /var/k8s-v1.7/certs/"{{item}}"
-  with_items:
-    - admin-key.pem
-    - admin.pem
-  ignore_errors: false
-  register: admin_cert_key
-
-- debug:
-    msg: "Admin client certificate and private key files got created"
-    when: admin_cert_key.stat.exists == True
 
 # Create the kube-proxy client certificate
 
@@ -46,29 +23,6 @@
     dest: /var/k8s-v1.7/certs/
   ignore_errors: false
 
-- name: Validate kube-proxy-csr.json file got copied
-  stat:
-    path: /var/k8s-v1.7/certs/kube-proxy-csr.json
-  ignore_errors: false
-  register: kube_proxy_csr
-
-- debug:
-    msg: "kube-proxy-csr.json file got copied to /var/k8s-v1.7/certs/."
-    when: kube_proxy_csr.stat.exists == True
-
 - name: Generate the kube-proxy client certificate and private key "gen-kube_proxy-client-cert-key.sh"
   script: gen-kube_proxy-client-cert-key.sh
   ignore_errors: false
-
-- name: Validate kube-proxy certificate and key file got created
-  stat:
-    path: /var/k8s-v1.7/certs/"{{item}}"
-  with_items:
-    - kube-proxy-key.pem
-    - kube-proxy.pem
-  ignore_errors: false
-  register: kubeproxy_cert_key
-
-- debug:
-    msg: "Kube-proxy client certificate and private key files got created"
-    when: kubeproxy_cert_key.stat.exists == True
