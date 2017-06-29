@@ -27,4 +27,13 @@
   args:
     chdir: /var/k8s-v1.7/certs
   ignore_errors: false
-  
+
+- name: Remove copied scripts
+  file:
+    path: /tmp/{{item}}
+    state: absent
+  with_items:
+    - create-client-bootstrap-kubeconfig.sh
+    - create-client-kubeproxy-kubeconfig.sh
+  tags:
+    - remove-worker-kube-config-scripts
