@@ -1,3 +1,4 @@
 ---
 
 - include: get-etcd.yaml
+- includeL etcd-service-setup.yaml

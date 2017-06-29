@@ -1,0 +1,26 @@
+---
+
+- name: Copy etcd service template to master nodes
+  template:
+    src: etcd-service.j2
+    dest: /etc/systemd/system/etcd.service
+    mode: 0744
+    backup: no
+  ignore_errors: false
+
+- name: Reload systemd daemon
+  command: systemctl daemon-reload
+  ignore_errors: false
+
+- name: Start and enable etcd service
+  service:
+    name: etcd
+    state: started
+    enabled: yes
+
+
+- name: Check etcd service status
+  shell: systemctl status etcd --no-pager
+  register: ectd_srv_status
+- debug:
+    var: ectd_srv_status.stdout
