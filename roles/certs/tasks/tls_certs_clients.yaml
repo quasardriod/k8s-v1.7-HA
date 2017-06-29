@@ -21,8 +21,8 @@
     msg: "admin-csr.json file got copied to /var/k8s-v1.7/certs/."
     when: admin_csr.stat.exists == True
 
-- name: Generate the admin client certificate and private key
-  command: cd /var/k8s-v1.7/certs/; cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes admin-csr.json | cfssljson -bare admin
+- name: Generate the admin client certificate and private key "gen-admin-client-cert-key.sh"
+  script: gen-admin-client-cert-key.sh
   ignore_errors: false
 
 - name: Validate admin certificate and key file got created
@@ -56,8 +56,8 @@
     msg: "kube-proxy-csr.json file got copied to /var/k8s-v1.7/certs/."
     when: kube_proxy_csr.stat.exists == True
 
-- name: Generate the kube-proxy client certificate and private key
-  command: cd /var/k8s-v1.7/certs/; cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes kube-proxy-csr.json | cfssljson -bare kube-proxy
+- name: Generate the kube-proxy client certificate and private key "gen-kube_proxy-client-cert-key.sh"
+  script: gen-kube_proxy-client-cert-key.sh
   ignore_errors: false
 
 - name: Validate kube-proxy certificate and key file got created

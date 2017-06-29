@@ -17,8 +17,9 @@
     - ca-csr.json
   ignore_errors: false
 
-- name: Generate a CA certificate and private key:
-  command: cd /var/k8s-v1.7/certs/; cfssl gencert -initca ca-csr.json | cfssljson -bare ca
+- name: Generate a CA certificate and private key "gen-ca-certs.sh"
+  script: gen-ca-certs.sh
+  ignore_errors: false
 
 - name: Validate CA files got created
   stat:
