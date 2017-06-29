@@ -10,5 +10,5 @@
 - name: Move downloaded kubectl binary to /usr/local/bin
   command: "{{item}}"
   with_items:
-    - chmod +x kubectl
-    - mv kubectl /usr/local/bin
+    - chmod +x /tmp/kubectl
+    - mv /tmp/kubectl /usr/local/bin
