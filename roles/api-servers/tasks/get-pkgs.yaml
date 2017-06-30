@@ -20,8 +20,32 @@
     - https://storage.googleapis.com/kubernetes-release/release/v1.7.0-alpha.3/bin/linux/amd64/kube-scheduler
     - https://storage.googleapis.com/kubernetes-release/release/v1.7.0-alpha.3/bin/linux/amd64/kubectl
 
-- name: Install kubernetes binaries
-  command: "{{item}}"
+- name: Stat download binaries
+  stat:
+    path: {{item}}
   with_items:
-    - chmod +x /tmp/{kube-apiserver,kube-controller-manager,kube-scheduler,kubectl}
-    - mv /tmp/{kube-apiserver,kube-controller-manager,kube-scheduler,kubectl} /usr/bin/
+    - kube-apiserver
+    - kube-controller-manager
+    - kube-scheduler
+    - kubectl
+  register: kube_binaries_stat
+
+- name: Change download binaries permissions
+  file:
+    path: /tmp/{{item}}
+    mode: 0755
+  with_items:
+    - kube-apiserver
+    - kube-controller-manager
+    - kube-scheduler
+    - kubectl
+
+- name: Install kubernetes binaries
+  command: mv /tmp/{{item}} /usr/bin/
+  with_items:
+    - kube-apiserver
+    - kube-controller-manager
+    - kube-scheduler
+    - kubectl
+  when: kube_binaries_stat.exists
+  
