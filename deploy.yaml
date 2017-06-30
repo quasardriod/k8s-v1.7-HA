@@ -33,9 +33,17 @@
 #  roles:
 #    - etcd-ha-non-https
 
-- hosts: master
+#- hosts: master
+#  become: true
+#  vars_files:
+#    - group_vars/all
+#  roles:
+#    - api-servers
+
+- hosts: kube-lb
   become: true
+  become_method: sudo
   vars_files:
     - group_vars/all
   roles:
-    - api-servers
+    - kube-api-haproxy

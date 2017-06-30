@@ -1,6 +1,6 @@
 ---
 
-#- include: get-pkgs.yaml
+- include: get-pkgs.yaml
 - include: kube-apiserver.yaml
 - include: kube-controller-manager.yaml
 - include: kube-scheduler.yaml

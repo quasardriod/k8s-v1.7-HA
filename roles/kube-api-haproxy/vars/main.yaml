@@ -1,0 +1,4 @@
+kube_bind_port: 6443
+backend_name: k8s-masters
+balance_method: roundrobin
+traffic_mode: tcp

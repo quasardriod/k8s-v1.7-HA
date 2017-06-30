@@ -1,0 +1,34 @@
+---
+
+- name: Install haproxy package
+  package:
+    name: haproxy
+    state: latest
+
+- name: Copy haproxy.cfg template to load balancer node
+  template:
+    src: haproxy-conf.j2
+    dest: /etc/haproxy/haproxy.cfg
+    mode: 0644
+    backup: yes
+  ignore_errors: false
+
+- name: Copy /etc/default/haproxy template to load balancer node
+  template:
+    src: default-haproxy.j2
+    dest: /etc/default/haproxy
+    mode: 0644
+    backup: yes
+  ignore_errors: false
+
+
+- name: Restart haproxy service
+  service:
+    name: haproxy
+    state: restarted
+
+- name: Check haproxy service status
+  shell: systemctl status haproxy --no-pager
+  register: haproxy_status
+- debug:
+    var: haproxy_status.stdout
