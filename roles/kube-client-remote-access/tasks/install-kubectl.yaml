@@ -1,0 +1,14 @@
+---
+
+# Download and Install kubectl in load balancer node (node which used to create certs or wants to use as client machine)
+
+- name: Download and Install kubectl in client machine
+  get_url:
+    url: https://storage.googleapis.com/kubernetes-release/release/v1.7.0-alpha.3/bin/linux/amd64/kubectl
+    dest: /tmp
+
+- name: Move downloaded kubectl binary to /usr/local/bin
+  command: "{{item}}"
+  with_items:
+    - chmod +x /tmp/kubectl
+    - mv /tmp/kubectl /usr/local/bin

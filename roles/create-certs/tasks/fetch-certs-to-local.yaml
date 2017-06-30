@@ -28,3 +28,5 @@
     - token.csv
     - bootstrap.kubeconfig
     - kube-proxy.kubeconfig
+    - admin.pem
+    - admin-key.pem

@@ -1,0 +1,4 @@
+---
+
+- include: install-kubectl.yaml
+- include: kubectl-client-setup.yaml
