@@ -1,0 +1,35 @@
+---
+
+- name: Create kubelet kube-proxy kubernetes data directories
+  file:
+    path: /var/lib/{{item}}
+    state: directory
+    mode: 0755
+  with_items:
+    - kubelet
+    - kube-proxy
+    - kubernetes
+
+- name: Create kubernetes process directory
+  file:
+    path: /var/run/kubernetes
+    state: directory
+    mode: 0755
+
+- name: copy bootstrap.kubeconfig to /var/lib/kubelet
+  copy:
+    src: /var/tmp/k8s-v1.7-certs/bootstrap.kubeconfig
+    dest: /var/lib/kubelet/bootstrap.kubeconfig
+  ignore_errors: flase
+
+- name: copy kube-proxy.kubeconfig to /var/lib/kube-proxy
+  copy:
+    src: /var/tmp/k8s-v1.7-certs/kube-proxy.kubeconfig
+    dest: /var/lib/kube-proxy/kube-proxy.kubeconfig
+  ignore_errors: flase
+
+- name: copy ca.pem to /var/lib/kubernetes/
+  copy:
+    src: /var/tmp/k8s-v1.7-certs/ca.pem
+    dest: /var/lib/kubernetes/ca.pem
+  ignore_errors: flase

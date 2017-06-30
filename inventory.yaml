@@ -25,7 +25,10 @@ k8s-master3
 k8s-node1
 k8s-node2
 
-[lb]
+[loadbalancers]
+kube-lb
+
+[kube-client]
 kube-lb
 
 [all:vars]
