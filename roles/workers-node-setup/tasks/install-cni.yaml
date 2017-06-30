@@ -1,0 +1,17 @@
+---
+
+# The Kubelet can now use CNI - the Container Network Interface to manage machine level networking requirements.
+# https://github.com/containernetworking/cni
+
+- name: Create /opt/cni directory
+  file:
+    path: /opt/cni
+    state: directory
+    mode: 0755
+
+- name: Install CNI package
+  unarchive:
+    src: https://storage.googleapis.com/kubernetes-release/network-plugins/cni-amd64-0799f5732f2a11b329d9e3d51b9c8f2e3759f2ff.tar.gz
+    dest: /opt/cni
+    remote_src: True
+  ignore_errors: false
