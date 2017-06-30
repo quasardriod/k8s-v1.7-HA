@@ -1,0 +1,25 @@
+---
+
+- name: Copy kube-scheduler service template to master nodes
+  template:
+    src: kube-scheduler.j2
+    dest: /etc/systemd/system/kube-scheduler.service
+    mode: 0644
+    backup: no
+  ignore_errors: false
+
+- name: Reload systemd daemon
+  command: systemctl daemon-reload
+  ignore_errors: false
+
+- name: Start and enable kube-scheduler service
+  service:
+    name: kube-scheduler.service
+    state: started
+    enabled: yes
+
+- name: Check kube-scheduler service status
+  shell: systemctl status kube-scheduler --no-pager
+  register: k8s_scheduler_svc_status
+- debug:
+    var: k8s_scheduler_svc_status.stdout

@@ -1,0 +1,10 @@
+---
+
+- name: Get kube component status
+  shell: kubectl get componentstatuses
+  when: ansible_nodename == "{{k8s_master1_hostname}}"
+  register: kube_component_health
+
+- debug:
+    var: kube_component_health.stdout
+  when: ansible_nodename == "{{k8s_master1_hostname}}"
