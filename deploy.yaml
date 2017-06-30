@@ -40,10 +40,18 @@
 #  roles:
 #    - api-servers
 
+#- hosts: kube-lb
+#  become: true
+#  become_method: sudo
+#  vars_files:
+#    - group_vars/all
+#  roles:
+#    - kube-api-haproxy
+
 - hosts: kube-lb
   become: true
   become_method: sudo
   vars_files:
     - group_vars/all
   roles:
-    - kube-api-haproxy
+    - kube-client-remote-access
