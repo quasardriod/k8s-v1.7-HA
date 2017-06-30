@@ -34,7 +34,10 @@
   file:
     path: /tmp/kubectl-setup
     state: absent
-#  with_items:
-#    - create-client-bootstrap-kubeconfig.sh
-#    - create-client-kubeproxy-kubeconfig.sh
   ignore_errors: false
+
+- name: Check cluster status from client
+  shell: kubectl get componentstatuses
+  register: kubectl_client_clus_status
+- debug:
+    var: kubectl_client_clus_status.stdout
