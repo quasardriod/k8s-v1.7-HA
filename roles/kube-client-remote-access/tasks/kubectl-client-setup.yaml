@@ -30,14 +30,9 @@
     chdir: /tmp/kubectl-setup
   ignore_errors: false
 
-- name: Delete copied files
+# Note: Do not delete copied certificates
+- name: Delete copied script
   file:
-    path: /tmp/kubectl-setup
+    path: /tmp/kubectl-setup/kubeconfig-client-setup.sh
     state: absent
   ignore_errors: false
-
-- name: Check cluster status from client
-  shell: kubectl get componentstatuses
-  register: kubectl_client_clus_status
-- debug:
-    var: kubectl_client_clus_status.stdout

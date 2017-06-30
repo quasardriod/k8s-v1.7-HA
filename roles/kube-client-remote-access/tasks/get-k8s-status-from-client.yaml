@@ -1,0 +1,6 @@
+---
+- name: Check cluster status from client
+  shell: kubectl get componentstatuses
+  register: kubectl_client_clus_status
+- debug:
+    var: kubectl_client_clus_status.stdout
