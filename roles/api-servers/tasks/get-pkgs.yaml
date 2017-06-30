@@ -13,6 +13,7 @@
 - name: Download offcial kubernetes binaries
   get_url:
     url: "{{item}}"
+    dest: /tmp
   with_items:
     - https://storage.googleapis.com/kubernetes-release/release/v1.7.0-alpha.3/bin/linux/amd64/kube-apiserver
     - https://storage.googleapis.com/kubernetes-release/release/v1.7.0-alpha.3/bin/linux/amd64/kube-controller-manager
@@ -22,5 +23,5 @@
 - name: Install kubernetes binaries
   command: "{{item}}"
   with_items:
-    - chmod +x kube-apiserver kube-controller-manager kube-scheduler kubectl
-    - mv kube-apiserver kube-controller-manager kube-scheduler kubectl /usr/bin/
+    - chmod +x /tmp/{kube-apiserver,kube-controller-manager,kube-scheduler,kubectl}
+    - mv /tmp/{kube-apiserver,kube-controller-manager,kube-scheduler,kubectl} /usr/bin/
