@@ -20,16 +20,6 @@
 #    - https://storage.googleapis.com/kubernetes-release/release/v1.7.0-alpha.3/bin/linux/amd64/kube-scheduler
 #    - https://storage.googleapis.com/kubernetes-release/release/v1.7.0-alpha.3/bin/linux/amd64/kubectl
 
-- name: Stat download binaries
-  stat:
-    path: "{{item}}"
-  with_items:
-    - kube-apiserver
-    - kube-controller-manager
-    - kube-scheduler
-    - kubectl
-  register: kube_binaries_stat
-
 - name: Change download binaries permissions
   file:
     path: /tmp/{{item}}
@@ -47,4 +37,3 @@
     - kube-controller-manager
     - kube-scheduler
     - kubectl
-  when: kube_binaries_stat.exists
