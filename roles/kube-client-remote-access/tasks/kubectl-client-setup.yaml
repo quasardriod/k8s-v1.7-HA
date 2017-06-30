@@ -29,3 +29,12 @@
   args:
     chdir: /tmp/kubectl-setup
   ignore_errors: false
+
+- name: Delete copied files
+  file:
+    path: /tmp/kubectl-setup
+    state: absent
+#  with_items:
+#    - create-client-bootstrap-kubeconfig.sh
+#    - create-client-kubeproxy-kubeconfig.sh
+  ignore_errors: false
