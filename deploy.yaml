@@ -56,13 +56,13 @@
 #  roles:
 #    - kube-client-remote-access
 
-- hosts: k8s-master1
-  become: true
-  become_method: sudo
-  vars_files:
-    - group_vars/all
-  roles:
-    - worker-node-setup-prerequisites
+#- hosts: k8s-master1
+#  become: true
+#  become_method: sudo
+#  vars_files:
+#    - group_vars/all
+#  roles:
+#    - worker-node-setup-prerequisites
 
 - hosts: nodes
   become: true
