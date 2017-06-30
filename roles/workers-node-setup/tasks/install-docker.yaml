@@ -6,13 +6,13 @@
 #    remote_src: True
 #  ignore_errors: false
 
-- name: Copy docker binaries to /usr/bin
-  shell: mv /tmp/docker/docker* /usr/bin/
-  ignore_errors: false
+#- name: Copy docker binaries to /usr/bin
+#  shell: mv /tmp/docker/docker* /usr/bin/
+#  ignore_errors: false
 
 - name: Clean remaining docker files from /tmp
   file:
-    scr: /tmp/docker
+    path: /tmp/docker
     state: absent
 
 - name: Copy docker service template to all worker nodes
