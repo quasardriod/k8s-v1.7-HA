@@ -26,10 +26,16 @@
 #  roles:
 #    - copy-files-to-worker
 
+#- hosts: master
+#  become: true
+#  vars_files:
+#    - group_vars/all
+#  roles:
+#    - etcd-ha-non-https
+
 - hosts: master
   become: true
-  become_method: sudo
   vars_files:
     - group_vars/all
   roles:
-    - etcd-ha-non-https
+    - api-servers
