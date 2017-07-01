@@ -24,11 +24,3 @@
     state: started
     enabled: yes
   ignore_errors: false
-
-#- name: check kube-proxy service status
-#  shell: ps -ef |grep -i kube-proxy |awk 'F'
-#  register: kubelet_status
-#  ignore_errors: false
-
-#- debug:
-#    var: kubelet_status.stdout
