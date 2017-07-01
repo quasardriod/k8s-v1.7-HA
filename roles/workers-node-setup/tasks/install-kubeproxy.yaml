@@ -1,0 +1,34 @@
+---
+
+- name: Download kube-proxy binary
+  get_url:
+    url: https://storage.googleapis.com/kubernetes-release/release/v1.7.0-alpha.3/bin/linux/amd64/kube-proxy
+    dest: /usr/bin/
+    mode: 0744
+
+- name: Copy kube-proxy service template to all worker nodes
+  template:
+    src: kube-proxy-service.j2
+    dest: /etc/systemd/system/kube-proxy.service
+    mode: 0644
+    backup: yes
+  ignore_errors: false
+
+
+- name: Reload systemd daemon
+  command: systemctl daemon-reload
+
+- name: Start and enable kube-proxy service
+  service:
+    name: kube-proxy
+    state: started
+    enabled: yes
+  ignore_errors: false
+
+#- name: check kube-proxy service status
+#  shell: ps -ef |grep -i kube-proxy |awk 'F'
+#  register: kubelet_status
+#  ignore_errors: false
+
+#- debug:
+#    var: kubelet_status.stdout
