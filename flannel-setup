@@ -1,0 +1,54 @@
+cat > flanneld-conf.json <<EOF
+{
+	"Network": "10.0.0.0/8",
+	"SubnetLen": 20,
+	"SubnetMin": "10.10.0.0",
+	"SubnetMax": "10.99.0.0",
+	"Backend": {
+		"Type": "udp",
+		"Port": 7890
+	}
+}
+EOF
+
+stack@k8s-ha-master1:~$ etcdctl set /coreos.com/network/config < flanneld-conf.json
+
+
+stack@k8s-ha-master1:~$ etcdctl get /coreos.com/network/config
+
+
+stack@k8s-ha-master1:~$ etcdctl ls
+/kubernetes-cluster
+=================================================
+curl -L http://localhost:2379/v2/keys/atomic.io/network/config -XPUT --data-urlencode value@flanneld-conf.json
+
+nodes
+--------------
+wget https://github.com/coreos/flannel/releases/download/v0.7.0/flanneld-amd64 && chmod +x flanneld-amd64
+
+cat > flanneld.service <<EOF
+[Unit]
+Description=Flanneld overlay address etcd agent
+Documentation=https://github.com/coreos
+After=network.target
+After=network-online.target
+Wants=network-online.target
+Before=docker.service
+
+[Service]
+ExecStart=/usr/bin/flanneld \\
+  --etcd-endpoints=http://192.168.2.111:2380, http://192.168.2.112:2380, http://192.168.2.113:2380
+  --etcd-prefix=/kubernetes-cluster/network/config
+  Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+
+sudo mv flanneld.service /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable flanneld
+sudo systemctl start flanneld
+sudo systemctl status flanneld --no-pager

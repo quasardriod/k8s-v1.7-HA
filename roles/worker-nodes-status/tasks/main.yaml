@@ -12,4 +12,4 @@
   register: nodes_status
 
 - debug:
-    var: nodes_status..stdout
+    var: nodes_status.stdout
