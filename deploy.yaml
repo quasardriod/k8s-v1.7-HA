@@ -80,10 +80,26 @@
 #  roles:
 #    - approve-tls-csr-request
 
-- hosts: kube-client
+#- hosts: kube-client
+#  become: true
+#  become_method: sudo
+#  vars_files:
+#    - group_vars/all
+#  roles:
+#    - worker-nodes-status
+
+- hosts: k8s-master1
   become: true
   become_method: sudo
   vars_files:
     - group_vars/all
   roles:
-    - worker-nodes-status
+    - etcd-master-flannel-net
+
+- hosts: nodes
+  become: true
+  become_method: sudo
+  vars_files:
+    - group_vars/all
+  roles:
+    - worker-flannel-install

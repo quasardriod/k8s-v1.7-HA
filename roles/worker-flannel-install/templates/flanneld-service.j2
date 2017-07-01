@@ -1,0 +1,15 @@
+[Unit]
+Description=Flanneld overlay address etcd agent
+Documentation=https://github.com/coreos
+After=network.target
+After=network-online.target
+Wants=network-online.target
+Before=docker.service
+
+[Service]
+ExecStart=/usr/bin/flanneld --etcd-endpoints=http://{{k8s_master1_ip}}:2379,http://{{k8s_master2_ip}}:2379,http://{{k8s_master3_ip}}:2379 --etcd-prefix=/kubernetes-cluster/network/config
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
