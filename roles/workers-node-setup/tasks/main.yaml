@@ -4,4 +4,4 @@
 #- include: install-docker.yaml
 #- include: install-cni.yaml
 #- include: install-kubelet-service.yaml
-- include: install-kubeproxy.html
+- include: install-kubeproxy.yaml
