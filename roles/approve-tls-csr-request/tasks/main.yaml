@@ -1,0 +1,4 @@
+---
+
+- name: Approve pending TLS csr requests
+  script: approve-tls-csr.sh

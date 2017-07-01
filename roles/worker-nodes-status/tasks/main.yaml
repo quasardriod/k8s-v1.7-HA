@@ -1,0 +1,15 @@
+---
+
+- name: Get kube component status
+  shell: kubectl get componentstatuses
+  register: kube_component_health
+
+- debug:
+    var: kube_component_health.stdout
+
+- name: Get nodes status
+  shell: kubectl get nodes
+  register: nodes_status
+
+- debug:
+    var: nodes_status..stdout
