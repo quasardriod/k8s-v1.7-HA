@@ -1,10 +1,10 @@
 ---
-- name: Install flannel package
-  get_url:
-    url: https://github.com/coreos/flannel/releases/download/v0.7.0/flanneld-amd64
-    dest: /usr/bin/flanneld
-    mode: 0755
-  ignore_errors: false
+#- name: Install flannel package
+#  get_url:
+#    url: https://github.com/coreos/flannel/releases/download/v0.7.0/flanneld-amd64
+#    dest: /usr/bin/flanneld
+#    mode: 0755
+#  ignore_errors: false
 
 - name: Copy flanneld service template to all worker nodes
   template:

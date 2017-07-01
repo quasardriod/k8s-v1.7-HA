@@ -2,11 +2,11 @@
 
 - name: Copy flannel network conf file to master node
   template:
-    scr: flannel-conf.j2
+    src: flannel-conf.j2
     dest: /tmp/flannel-conf.json
 
 - name: Initialized flannel network in etcd
-  shell: etcdctl set /kubernetes-cluster/network/config < /tmp/flanneld-conf.json
+  shell: etcdctl set /kubernetes-cluster/network/config < /tmp/flannel-conf.json
 
 - name: Get flannel network details from etcd
   shell: etcdctl get /kubernetes-cluster/network/config
