@@ -9,9 +9,9 @@
 - name: Get API_SERVERS url
   shell: cat /var/lib/kubelet/bootstrap.kubeconfig | grep server | cut -d ':' -f2,3,4 | tr -d '[:space:]'
   when: ansible_nodename == "{{k8s_worker1_hostname}}"
-  register: API_SERVERS
+  register: api_servers
 - debug:
-    var: API_SERVERS.stdout
+    var: api_server.stdout
 
 - name: Copy kubelet service template to all worker nodes
   template:
