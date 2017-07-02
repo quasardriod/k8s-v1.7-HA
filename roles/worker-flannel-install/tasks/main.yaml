@@ -20,7 +20,7 @@
 - name: Start and enable flanneld service
   service:
     name: flanneld
-    state: started
+    state: restarted
     enabled: yes
   ignore_errors: false
 

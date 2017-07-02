@@ -18,13 +18,13 @@
 #  roles:
 #    - copy-files-to-master
 
-- hosts: k8s-node1
-  become: true
-  become_method: sudo
-  vars_files:
-    - group_vars/all
-  roles:
-    - copy-files-to-worker
+#- hosts: k8s-node1
+#  become: true
+#  become_method: sudo
+#  vars_files:
+#    - group_vars/all
+#  roles:
+#    - copy-files-to-worker
 
 #- hosts: master
 #  become: true
@@ -64,29 +64,29 @@
 #  roles:
 #    - worker-node-setup-prerequisites
 
-- hosts: k8s-node1
-  become: true
-  become_method: sudo
-  vars_files:
-    - group_vars/all
-  roles:
-    - workers-node-setup
+#- hosts: k8s-node1
+#  become: true
+#  become_method: sudo
+#  vars_files:
+#    - group_vars/all
+#  roles:
+#    - workers-node-setup
 
-- hosts: k8s-master1
-  become: true
-  become_method: sudo
-  vars_files:
-    - group_vars/all
-  roles:
-    - approve-tls-csr-request
+#- hosts: k8s-master1
+#  become: true
+#  become_method: sudo
+#  vars_files:
+#    - group_vars/all
+#  roles:
+#    - approve-tls-csr-request
 
-- hosts: kube-client
-  become: true
-  become_method: sudo
-  vars_files:
-    - group_vars/all
-  roles:
-    - worker-nodes-status
+#- hosts: kube-client
+#  become: true
+#  become_method: sudo
+#  vars_files:
+#    - group_vars/all
+#  roles:
+#    - worker-nodes-status
 
 #- hosts: k8s-master1
 #  become: true
