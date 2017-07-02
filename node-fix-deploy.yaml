@@ -1,0 +1,105 @@
+---
+
+# Setup hosts and k8s package installation
+
+#- hosts: kube-lb
+#  become: true
+#  become_method: sudo
+#  vars_files:
+#    - group_vars/all
+#  roles:
+#    - create-certs
+
+#- hosts: master
+#  become: true
+#  become_method: sudo
+#  vars_files:
+#    - group_vars/all
+#  roles:
+#    - copy-files-to-master
+
+- hosts: k8s-node1
+  become: true
+  become_method: sudo
+  vars_files:
+    - group_vars/all
+  roles:
+    - copy-files-to-worker
+
+#- hosts: master
+#  become: true
+#  vars_files:
+#    - group_vars/all
+#  roles:
+#    - etcd-ha-non-https
+
+#- hosts: master
+#  become: true
+#  vars_files:
+#    - group_vars/all
+#  roles:
+#    - api-servers
+
+#- hosts: loadbalancers
+#  become: true
+#  become_method: sudo
+#  vars_files:
+#    - group_vars/all
+#  roles:
+#    - kube-api-haproxy
+
+#- hosts: kube-client
+#  become: true
+#  become_method: sudo
+#  vars_files:
+#    - group_vars/all
+#  roles:
+#    - kube-client-remote-access
+
+#- hosts: k8s-master1
+#  become: true
+#  become_method: sudo
+#  vars_files:
+#    - group_vars/all
+#  roles:
+#    - worker-node-setup-prerequisites
+
+- hosts: k8s-node1
+  become: true
+  become_method: sudo
+  vars_files:
+    - group_vars/all
+  roles:
+    - workers-node-setup
+
+- hosts: k8s-master1
+  become: true
+  become_method: sudo
+  vars_files:
+    - group_vars/all
+  roles:
+    - approve-tls-csr-request
+
+- hosts: kube-client
+  become: true
+  become_method: sudo
+  vars_files:
+    - group_vars/all
+  roles:
+    - worker-nodes-status
+
+#- hosts: k8s-master1
+#  become: true
+#  become_method: sudo
+#  vars_files:
+#    - group_vars/all
+#  roles:
+#    - etcd-master-flannel-net
+
+- hosts: k8s-node1
+  become: true
+  become_method: sudo
+  vars_files:
+    - group_vars/all
+  roles:
+    - worker-flannel-install
