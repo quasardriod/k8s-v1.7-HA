@@ -7,7 +7,7 @@ Wants=network-online.target
 Before=docker.service
 
 [Service]
-ExecStart=/usr/bin/flanneld --etcd-endpoints=http://{{k8s_master1_ip}}:2380,http://{{k8s_master2_ip}}:2380,http://{{k8s_master3_ip}}:2380 --etcd-prefix=/kubernetes-cluster/network/config
+ExecStart=/usr/bin/flanneld --etcd-endpoints=http://{{k8s_master1_ip}}:2380, http://{{k8s_master2_ip}}:2380, http://{{k8s_master3_ip}}:2380 --etcd-prefix=/kubernetes-cluster/network/config
 Restart=on-failure
 RestartSec=5
 

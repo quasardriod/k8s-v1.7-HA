@@ -31,3 +31,15 @@
 
 - debug:
     var: flanneld_status.stdout
+
+- name: Install bridge-utils package
+  package:
+    name: bridge-utils
+    state: latest
+
+- name: Get brctl output
+  shell: brctl show
+  register: brctl_show
+
+- debug:
+    var: brctl_show.stdout
