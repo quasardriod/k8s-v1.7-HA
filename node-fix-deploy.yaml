@@ -96,7 +96,7 @@
 #  roles:
 #    - etcd-master-flannel-net
 
-- hosts: k8s-node1
+- hosts: nodes
   become: true
   become_method: sudo
   vars_files:

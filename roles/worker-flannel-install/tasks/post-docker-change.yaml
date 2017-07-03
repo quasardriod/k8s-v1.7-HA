@@ -1,0 +1,20 @@
+---
+
+- name: Get FLANNEL_SUBNET from /run/flannel/subnet.env
+  shell: cat /run/flannel/subnet.env| grep -i FLANNEL_SUBNET|cut -d '=' -f2
+  register: flannel_subnet_env
+
+- debug:
+    var: flannel_subnet_env.stdout
+
+- name: Get FLANNEL_MTU from /run/flannel/subnet.env
+  shell: cat /run/flannel/subnet.env| grep -i FLANNEL_MTU|cut -d '=' -f2
+  register: flannel_mtu_env
+- debug:
+    var: flannel_mtu_env.stdout
+
+- name: Copy docker env file to worker nodes
+  template:
+    src: default-docker.j2
+    dest: /etc/default/docker
+    mode: 0644
