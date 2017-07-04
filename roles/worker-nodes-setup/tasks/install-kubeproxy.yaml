@@ -30,4 +30,4 @@
   register: kubeproxy_status
 
 - debug:
-    var: kubeproxy_status.stdou
+    var: kubeproxy_status.stdout
