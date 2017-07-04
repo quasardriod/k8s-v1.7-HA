@@ -1,4 +1,4 @@
 ---
 #- include: install-flannel.yaml
 - include: post-docker-change.yaml
-- include: restart-docker.yaml
+- include: restart-docker-flanneld.yaml

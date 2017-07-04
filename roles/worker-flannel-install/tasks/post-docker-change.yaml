@@ -18,3 +18,9 @@
     src: default-docker.j2
     dest: /etc/default/docker
     mode: 0644
+
+- name: Copy flannel-docker env file to worker nodes
+  template:
+    src: run-flannel-docker.j2
+    dest: /run/flannel/docker
+    mode: 0644
