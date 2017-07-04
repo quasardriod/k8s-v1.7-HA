@@ -1,5 +1,7 @@
 ---
 
+#Note: To fix kubectl exec..container login issue
+#https://github.com/kelseyhightower/kubernetes-the-hard-way/issues/146
 #- name: Download kubelet binary
 #  get_url:
 #    url: https://storage.googleapis.com/kubernetes-release/release/v1.7.0-alpha.3/bin/linux/amd64/kubelet

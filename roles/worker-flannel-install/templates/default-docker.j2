@@ -1,1 +1,5 @@
-DOCKER_OPTS="--bip={{flannel_subnet_env.stdout}} --mtu={{flannel_mtu_env.stdout}}"
+#DOCKER_OPTS="--bip={{flannel_subnet_env.stdout}} --mtu={{flannel_mtu_env.stdout}}"
+DOCKER_OPT_BIP="--bip={{flannel_subnet_env.stdout}}"
+DOCKER_OPT_IPMASQ="--ip-masq=true"
+DOCKER_OPT_MTU="--mtu={{flannel_mtu_env.stdout}}"
+DOCKER_NETWORK_OPTIONS=" --bip={{flannel_subnet_env.stdout}} --ip-masq=true --mtu={{flannel_mtu_env.stdout}} "

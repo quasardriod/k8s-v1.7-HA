@@ -1,5 +1,7 @@
 ---
-
+#Note: to fix kubectl exec container login issue disable kubelet certs in api service file
+#Note: To fix kubectl exec..container login issue
+#https://github.com/kelseyhightower/kubernetes-the-hard-way/issues/146
 - name: Copy kube-apiserver service template to master nodes
   template:
     src: kube-apiserver.j2

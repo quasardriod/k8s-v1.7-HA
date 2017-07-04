@@ -33,12 +33,12 @@
 #  roles:
 #    - etcd-ha-non-https
 
-- hosts: master
-  become: true
-  vars_files:
-    - group_vars/all
-  roles:
-    - api-servers
+#- hosts: master
+#  become: true
+#  vars_files:
+#    - group_vars/all
+#  roles:
+#    - api-servers
 
 #- hosts: loadbalancers
 #  become: true
@@ -96,10 +96,10 @@
 #  roles:
 #    - etcd-master-flannel-net
 
-#- hosts: nodes
-#  become: true
-#  become_method: sudo
-#  vars_files:
-#    - group_vars/all
-#  roles:
-#    - worker-flannel-install
+- hosts: nodes
+  become: true
+  become_method: sudo
+  vars_files:
+    - group_vars/all
+  roles:
+    - worker-flannel-install
