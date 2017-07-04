@@ -33,12 +33,12 @@
 #  roles:
 #    - etcd-ha-non-https
 
-#- hosts: master
-#  become: true
-#  vars_files:
-#    - group_vars/all
-#  roles:
-#    - api-servers
+- hosts: master
+  become: true
+  vars_files:
+    - group_vars/all
+  roles:
+    - api-servers
 
 #- hosts: loadbalancers
 #  become: true
