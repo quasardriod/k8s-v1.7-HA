@@ -1,10 +1,10 @@
 ---
 
-- name: Download kubelet binary
-  get_url:
-    url: https://storage.googleapis.com/kubernetes-release/release/v1.7.0-alpha.3/bin/linux/amd64/kubelet
-    dest: /usr/bin/
-    mode: 0744
+#- name: Download kubelet binary
+#  get_url:
+#    url: https://storage.googleapis.com/kubernetes-release/release/v1.7.0-alpha.3/bin/linux/amd64/kubelet
+#    dest: /usr/bin/
+#    mode: 0744
 
 - name: Get API_SERVERS url
   shell: cat /var/tmp/k8s-v1.7-certs/bootstrap.kubeconfig| grep server | cut -d ':' -f2,3,4 | tr -d '[:space:]'
@@ -30,7 +30,7 @@
 - name: Start and enable kubelet service
   service:
     name: kubelet
-    state: started
+    state: restarted
     enabled: yes
   ignore_errors: false
 

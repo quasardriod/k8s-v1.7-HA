@@ -1,11 +1,11 @@
 ---
 
-- name: Download kube-proxy binary
-  get_url:
-    url: https://storage.googleapis.com/kubernetes-release/release/v1.7.0-alpha.3/bin/linux/amd64/kube-proxy
-    dest: /usr/bin/
-    mode: 0744
-
+#- name: Download kube-proxy binary#
+#  get_url:
+#    url: https://storage.googleapis.com/kubernetes-release/release/v1.7.0-alpha.3/bin/linux/amd64/kube-proxy
+#    dest: /usr/bin/
+#    mode: 0744
+#
 - name: Copy kube-proxy service template to all worker nodes
   template:
     src: kube-proxy-service.j2
@@ -21,13 +21,13 @@
 - name: Start and enable kube-proxy service
   service:
     name: kube-proxy
-    state: started
+    state: restarted
     enabled: yes
   ignore_errors: false
 
 - name: check kube-proxy service status
   shell: ps -ef |grep -i kube-proxy |awk 'FNR==1 {print $2"\t"$8}'
   register: kubeproxy_status
-  
+
 - debug:
     var: kubeproxy_status.stdou

@@ -70,7 +70,7 @@
 #  vars_files:
 #    - group_vars/all
 #  roles:
-#    - workers-node-setup
+#    - worker-nodes-setup
 
 #- hosts: k8s-master1
 #  become: true
