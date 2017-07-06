@@ -1,11 +1,11 @@
 ---
 
-#- name: Download kube-proxy binary#
-#  get_url:
-#    url: https://storage.googleapis.com/kubernetes-release/release/v1.7.0-alpha.3/bin/linux/amd64/kube-proxy
-#    dest: /usr/bin/
-#    mode: 0744
-#
+- name: Download kube-proxy binary#
+  get_url:
+    url: https://storage.googleapis.com/kubernetes-release/release/v1.7.0-alpha.3/bin/linux/amd64/kube-proxy
+    dest: /usr/bin/
+    mode: 0755
+
 - name: Copy kube-proxy service template to all worker nodes
   template:
     src: kube-proxy-service.j2

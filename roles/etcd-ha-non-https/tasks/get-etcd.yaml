@@ -5,7 +5,7 @@
     path: /etc/etcd
     state: directory
     mode: 0755
-
+# Just for the knowledge coping certs. However these will not be used.
 - name: Copy the TLS certs to etcd directory
   command: cp ca.pem kubernetes-key.pem kubernetes.pem /etc/etcd
   ignore_errors: false

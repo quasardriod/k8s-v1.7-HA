@@ -6,28 +6,28 @@
 #  get_url:
 #    url: https://storage.googleapis.com/kubernetes-release/release/v1.7.0-alpha.3/bin/linux/amd64/kubelet
 #    dest: /usr/bin/
-#    mode: 0744
+#    mode: 0755
 
-- name: Get API_SERVERS url
-  shell: cat /var/tmp/k8s-v1.7-certs/bootstrap.kubeconfig| grep server | cut -d ':' -f2,3,4 | tr -d '[:space:]'
-  delegate_to: localhost
-  register: api_server
+#- name: Get API_SERVERS url
+#  shell: cat /var/tmp/k8s-v1.7-certs/bootstrap.kubeconfig| grep server | cut -d ':' -f2,3,4 | tr -d '[:space:]'
+#  delegate_to: localhost
+#  register: api_server
 
-- debug:
-    var: api_server.stdout
-  delegate_to: localhost
+#- debug:
+#    var: api_server.stdout
+#  delegate_to: localhost
 
-- name: Copy kubelet service template to all worker nodes
-  template:
-    src: kubelet-service.j2
-    dest: /etc/systemd/system/kubelet.service
-    mode: 0644
-    backup: yes
-  ignore_errors: false
+#- name: Copy kubelet service template to all worker nodes
+#  template:
+#    src: kubelet-service.j2
+#    dest: /etc/systemd/system/kubelet.service
+#    mode: 0644
+#    backup: yes
+#  ignore_errors: false
 
 
-- name: Reload systemd daemon
-  command: systemctl daemon-reload
+#- name: Reload systemd daemon
+#  command: systemctl daemon-reload
 
 - name: Start and enable kubelet service
   service:
