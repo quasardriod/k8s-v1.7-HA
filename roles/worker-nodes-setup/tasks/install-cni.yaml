@@ -5,7 +5,7 @@
 
 - name: Create /opt/cni and /etc/cni/net.d directory
   file:
-    path: {{item}}
+    path: "{{item}}"
     state: directory
     mode: 0755
   with_items:
@@ -27,8 +27,11 @@
   shell: cat /run/flannel/subnet.env |grep -i subnet|cut -d'=' -f2
   register: pod_net_subnet
 
+- debug:
+    var: pod_net_subnet.stdout
+
 - name: Copy cni-conf file to /etc/cni/net.d
   template:
-    scr: cni-conf.j2
+    src: cni-conf.j2
     dest: /etc/cni/net.d/cni-conf.json
     mode: 0644
