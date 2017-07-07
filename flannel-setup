@@ -52,3 +52,7 @@ sudo systemctl daemon-reload
 sudo systemctl enable flanneld
 sudo systemctl start flanneld
 sudo systemctl status flanneld --no-pager
+
+
+
+kubectl --kubeconfig ./admin.conf create -f http://k8s.io/docs/tasks/run-application/deployment.yam

@@ -31,3 +31,8 @@
 
 - debug:
     var: flanneld_status.stdout
+
+- name: Install bridge-utils package
+  package:
+    name: bridge-utils
+    state: latest

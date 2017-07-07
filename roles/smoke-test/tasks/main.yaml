@@ -1,0 +1,4 @@
+---
+
+- include: nodes-status.yaml
+- include: smoke-test.yaml

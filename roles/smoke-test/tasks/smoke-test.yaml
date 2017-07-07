@@ -1,0 +1,16 @@
+---
+
+- name: Deploy nginx app pods
+  command: kubectl create -f http://k8s.io/docs/tasks/run-application/deployment.yam
+  ignore_errors: false
+  async: 30
+  poll: 15
+  register: nginx_pod_create
+- debug:
+    var: nginx_pod_create.stdout
+
+- name: List pods
+  command: kubectl get pods -o wide
+  register: get_pods
+- debug:
+    var: get_pods.stdout
