@@ -1,10 +1,7 @@
 {
-	"Network": "10.0.0.0/8",
-	"SubnetLen": 20,
-	"SubnetMin": "10.10.0.0",
-	"SubnetMax": "10.99.0.0",
+	"Network": "{{pod_cidr}}",
+	"SubnetLen": {{pod_net_subnet_len}},
 	"Backend": {
-		"Type": "udp",
-		"Port": 7890
-	}
+		"Type": "{{pod_backend_type}}",
+		}
 }

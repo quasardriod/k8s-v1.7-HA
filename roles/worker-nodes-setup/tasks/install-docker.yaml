@@ -1,19 +1,19 @@
 ---
-#- name: Install docker package
-#  unarchive:
-#    src: https://get.docker.com/builds/Linux/x86_64/docker-1.12.6.tgz
-#    dest: /tmp
-#    remote_src: True
-#  ignore_errors: false
+- name: Install docker package
+  unarchive:
+    src: https://get.docker.com/builds/Linux/x86_64/docker-1.12.6.tgz
+    dest: /tmp
+    remote_src: True
+  ignore_errors: false
 
-#- name: Copy docker binaries to /usr/bin
-#  shell: mv /tmp/docker/docker* /usr/bin/
-#  ignore_errors: false
+- name: Copy docker binaries to /usr/bin
+  shell: mv /tmp/docker/docker* /usr/bin/
+  ignore_errors: false
 
-#- name: Clean remaining docker files from /tmp
-#  file:
-#    path: /tmp/docker
-#    state: absent
+- name: Clean remaining docker files from /tmp
+  file:
+    path: /tmp/docker
+    state: absent
 
 - name: Copy docker service template to all worker nodes
   template:
@@ -23,13 +23,32 @@
     backup: yes
   ignore_errors: false
 
+- name: Get FLANNEL_SUBNET from /run/flannel/subnet.env
+  shell: cat /run/flannel/subnet.env| grep -i FLANNEL_SUBNET|cut -d '=' -f2
+  register: flannel_subnet_env
+
+- debug:
+    var: flannel_subnet_env.stdout
+
+- name: Get FLANNEL_MTU from /run/flannel/subnet.env
+  shell: cat /run/flannel/subnet.env| grep -i FLANNEL_MTU|cut -d '=' -f2
+  register: flannel_mtu_env
+- debug:
+    var: flannel_mtu_env.stdout
+
+- name: Copy docker env file to worker nodes
+  template:
+    src: default-docker.j2
+    dest: /etc/default/docker
+    mode: 0644
+
 - name: Reload systemd daemon
   command: systemctl daemon-reload
 
 - name: Start and enable docker service
   service:
     name: docker.service
-    state: restarted
+    state: started
     enabled: yes
   ignore_errors: false
 

@@ -14,14 +14,6 @@
     backup: yes
   ignore_errors: false
 
-#- name: Copy flanneld default option template to all worker nodes
-#  template:
-#    src: default-funnel.j2
-#    dest: /etc/default/flanneld
-#    mode: 0644
-#    backup: yes
-#  ignore_errors: false
-
 - name: Reload systemd daemon
   command: systemctl daemon-reload
 
@@ -39,15 +31,3 @@
 
 - debug:
     var: flanneld_status.stdout
-
-- name: Install bridge-utils package
-  package:
-    name: bridge-utils
-    state: latest
-
-- name: Get brctl output
-  shell: brctl show
-  register: brctl_show
-
-- debug:
-    var: brctl_show.stdout

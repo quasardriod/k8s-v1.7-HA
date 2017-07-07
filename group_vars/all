@@ -17,3 +17,11 @@ k8s_worker1_hostname: k8s-worker1
 k8s_worker2_hostname: k8s-worker2
 
 k8s_cluster_name: kubernetes-the-hard-way
+
+# Pod network specific variables
+pod_cidr: 10.0.0.0/8
+pod_net_subnet_len: 24
+pod_net_name: cbr0
+pod_net_type: flannel
+pod_bridge_name: cbr0
+pod_backend_type: vxlan

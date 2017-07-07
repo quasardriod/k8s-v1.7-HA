@@ -3,11 +3,14 @@
 # The Kubelet can now use CNI - the Container Network Interface to manage machine level networking requirements.
 # https://github.com/containernetworking/cni
 
-- name: Create /opt/cni directory
+- name: Create /opt/cni and /etc/cni/net.d directory
   file:
     path: /opt/cni
     state: directory
     mode: 0755
+  with_items:
+    - /opt/cni
+    - /etc/cni/net.d
 
 - name: Install CNI package
   unarchive:
@@ -15,3 +18,12 @@
     dest: /opt/cni
     remote_src: True
   ignore_errors: false
+
+- name: Copy flannel network binary to /etc/cni/net.d
+  command: cp /opt/cni/bin/flannel /etc/cni/net.d/
+
+#- name: Copy cni-conf file to /etc/cni/net.d
+#  template:
+#    scr: cni-conf.j2
+#    dest: /etc/cni/net.d/cni-conf.json
+#    mode: 0644

@@ -1,0 +1,15 @@
+{
+        "cniVersion": "0.2.0",
+        "name": "{{pod_net_name}}",
+        "type": "{{pod_net_type}}",
+        "bridge": "{{pod_bridge_name}}",
+        "isGateway": true,
+        "ipMasq": true,
+        "ipam": {
+                "type": "{{pod_backend_type}}",
+                "subnet": "{{pod_net_subnet}}",
+                "routes": [
+                        { "dst": "0.0.0.0/0" }
+                ]
+        }
+}
