@@ -1,7 +1,7 @@
 ---
 
 - name: Deploy nginx app pods
-  command: kubectl create -f http://k8s.io/docs/tasks/run-application/deployment.yam
+  command: kubectl create -f http://k8s.io/docs/tasks/run-application/deployment.yaml
   ignore_errors: false
   async: 30
   poll: 15
