@@ -33,7 +33,7 @@
 #  roles:
 #    - etcd-ha-non-https
 
- hosts: master
+- hosts: master
   become: true
   vars_files:
     - group_vars/all
