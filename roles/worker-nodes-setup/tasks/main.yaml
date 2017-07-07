@@ -2,6 +2,6 @@
 
 #- include: dirs-tls-config.yaml
 #- include: install-cni.yaml
-- include: install-docker.yaml
-#- include: install-kubelet.yaml
+#- include: install-docker.yaml
+- include: install-kubelet.yaml
 #- include: install-kubeproxy.yaml
