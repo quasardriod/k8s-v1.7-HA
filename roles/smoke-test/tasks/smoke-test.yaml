@@ -14,3 +14,13 @@
   register: get_pods
 - debug:
     var: get_pods.stdout
+
+- name: Expose service for nginx app
+  command: kubectl expose deployment nginx-deployment --type=NodePort --name=nginx-service
+  ignore_errors: false
+
+- name: Get nginx service status
+  shell: kubectl describe svc nginx-service
+  register: nginx_svc_status
+- debug:
+    var: nginx_svc_status.stdout

@@ -1,0 +1,24 @@
+---
+
+- name: Get app node port
+  shell: kubectl describe svc nginx-service|grep NodePort|grep -i tcp|awk '{print $3}'|cut -d '/' -f1
+  register: nginx_svc_port
+- debug:
+    var: nginx_svc_port.stdout
+
+- name: Copy nginx-app-haproxy template to loadbalancer
+  template:
+    src: nginx-app-haproxy.j2
+    dest: /tmp/nginx-app-haproxy.cfg
+
+- name: Take haproxy conf backup
+  shell: cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg-$(date +"%Y-%m-%dT%H%M%S%:z")
+  
+- name: Add nginx-app-haproxy config to haproxy.cfg
+  shell: cat /tmp/nginx-app-haproxy.cfg >> /etc/haproxy/haproxy.cfg
+
+- name: Restart haproxy service
+  service:
+    name: haproxy
+    state: restarted
+  ignore_errors: flase

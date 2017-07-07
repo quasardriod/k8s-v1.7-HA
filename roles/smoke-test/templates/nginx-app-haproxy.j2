@@ -1,0 +1,12 @@
+frontend nginx-http
+  bind *:80
+  option tcplog
+  mode tcp
+  default_backend nginx-app
+backend nginx-app
+  mode tcp
+  balance roundrobin
+  option forwardfor
+  http-request set-header X-Forwarded-Port %[dst_port]
+  server k8s-node1 {{k8s_node1_ip}}:{{nginx_svc_port.stdout}} check
+  server k8s-node2 {{k8s_node2_ip}}:{{nginx_svc_port.stdout}} check
