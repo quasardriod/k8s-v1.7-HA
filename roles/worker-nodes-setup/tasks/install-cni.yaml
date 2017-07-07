@@ -5,12 +5,13 @@
 
 - name: Create /opt/cni and /etc/cni/net.d directory
   file:
-    path: /opt/cni
+    path: {{item}}
     state: directory
     mode: 0755
   with_items:
     - /opt/cni
     - /etc/cni/net.d
+
 
 - name: Install CNI package
   unarchive:
