@@ -18,7 +18,7 @@
 #  roles:
 #    - copy-files-to-master
 
-- hosts: k8s-node1
+- hosts: nodes
   become: true
   become_method: sudo
   vars_files:
@@ -33,12 +33,12 @@
 #  roles:
 #    - etcd-ha-non-https
 
-- hosts: master
-  become: true
-  vars_files:
-    - group_vars/all
-  roles:
-    - api-servers
+#- hosts: master
+#  become: true
+#  vars_files:
+#    - group_vars/all
+#  roles:
+#    - api-servers
 
 #- hosts: loadbalancers
 #  become: true
@@ -72,13 +72,13 @@
 #  roles:
 #    - worker-node-setup-prerequisites
 
-- hosts: nodes
-  become: true
-  become_method: sudo
-  vars_files:
-    - group_vars/all
-  roles:
-    - worker-flannel-install
+#- hosts: nodes
+#  become: true
+#  become_method: sudo
+#  vars_files:
+#    - group_vars/all
+#  roles:
+#    - worker-flannel-install
 
 
 - hosts: nodes
