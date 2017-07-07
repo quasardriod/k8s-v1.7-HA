@@ -18,4 +18,4 @@
 - name: Remove copied flannel-conf template
   file:
     path: /tmp/flannel-conf.json
-    state: absent 
+    state: absent

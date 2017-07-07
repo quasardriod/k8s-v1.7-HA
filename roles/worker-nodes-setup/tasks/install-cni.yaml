@@ -23,8 +23,12 @@
 - name: Copy flannel network binary to /etc/cni/net.d
   command: cp /opt/cni/bin/flannel /etc/cni/net.d/
 
-#- name: Copy cni-conf file to /etc/cni/net.d
-#  template:
-#    scr: cni-conf.j2
-#    dest: /etc/cni/net.d/cni-conf.json
-#    mode: 0644
+- name: Get pod_net_subnet value from flannel subnet.env
+  shell: cat /run/flannel/subnet.env |grep -i subnet|cut -d'=' -f2
+  register: pod_net_subnet
+
+- name: Copy cni-conf file to /etc/cni/net.d
+  template:
+    scr: cni-conf.j2
+    dest: /etc/cni/net.d/cni-conf.json
+    mode: 0644

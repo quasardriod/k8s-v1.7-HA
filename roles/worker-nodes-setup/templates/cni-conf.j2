@@ -7,7 +7,7 @@
         "ipMasq": true,
         "ipam": {
                 "type": "{{pod_backend_type}}",
-                "subnet": "{{pod_net_subnet}}",
+                "subnet": "{{pod_net_subnet.stdout}}",
                 "routes": [
                         { "dst": "0.0.0.0/0" }
                 ]
