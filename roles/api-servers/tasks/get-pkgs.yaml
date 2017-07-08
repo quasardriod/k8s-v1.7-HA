@@ -7,7 +7,6 @@
     mode: 0755
 
 - name: Copy certs and token to kubernetes data directory
-  #command: mv token.csv ca.pem ca-key.pem kubernetes-key.pem kubernetes.pem /var/lib/kubernetes/
   copy:
     src: /var/tmp/k8s-v1.7-certs/{{item}}
     dest: /var/lib/kubernetes/
@@ -29,21 +28,3 @@
     - https://storage.googleapis.com/kubernetes-release/release/v1.7.0-alpha.3/bin/linux/amd64/kube-controller-manager
     - https://storage.googleapis.com/kubernetes-release/release/v1.7.0-alpha.3/bin/linux/amd64/kube-scheduler
     - https://storage.googleapis.com/kubernetes-release/release/v1.7.0-alpha.3/bin/linux/amd64/kubectl
-
-#- name: Change download binaries permissions
-#  file:
-#    path: /tmp/{{item}}
-#    mode: 0755
-#  with_items:
-#    - kube-apiserver
-#    - kube-controller-manager
-#    - kube-scheduler
-#    - kubectl
-#
-#- name: Install kubernetes binaries
-#  command: mv /tmp/{{item}} /usr/bin/
-#  with_items:
-#    - kube-apiserver
-#    - kube-controller-manager
-#    - kube-scheduler
-#    - kubectl
