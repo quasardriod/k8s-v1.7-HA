@@ -1,23 +1,23 @@
 ---
 
-- name: Copy etcd service template to master nodes
-  template:
-    src: etcd-service.j2
-    dest: /etc/systemd/system/etcd.service
-    mode: 0644
-    backup: no
-  ignore_errors: false
+#- name: Copy etcd service template to master nodes
+#  template:
+#    src: etcd-service.j2
+#    dest: /etc/systemd/system/etcd.service
+#    mode: 0644
+#    backup: no
+#  ignore_errors: false
 
-- name: Reload systemd daemon
-  command: systemctl daemon-reload
-  ignore_errors: false
+#- name: Reload systemd daemon
+#  command: systemctl daemon-reload
+#  ignore_errors: false
 
-- name: Start and enable etcd service
-  service:
-    name: etcd.service
-    state: started
-    enabled: yes
-  ignore_errors: false
+#- name: Start and enable etcd service
+#  service:
+#    name: etcd.service
+#    state: started
+#    enabled: yes
+#  ignore_errors: false
 
 - name: Check etcd service status
   shell: systemctl status etcd --no-pager
@@ -28,8 +28,12 @@
 - name: Get etcd cluster health status
   shell: etcdctl cluster-health
   when: ansible_nodename == "{{k8s_master1_hostname}}"
+  retries: 3
+  delay: 10
+  ignore_errors: yes
   register: etcd_health
 
 - debug:
     var: etcd_health.stdout
   when: ansible_nodename == "{{k8s_master1_hostname}}"
+  ignore_errors: false
