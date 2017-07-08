@@ -7,7 +7,14 @@
     mode: 0755
 # Just for the knowledge coping certs. However these will not be used.
 - name: Copy the TLS certs to etcd directory
-  command: cp ca.pem kubernetes-key.pem kubernetes.pem /etc/etcd
+  #command: cp ca.pem kubernetes-key.pem kubernetes.pem /etc/etcd
+  copy:
+    src: /var/tmp/k8s-v1.7-certs/{{item}}
+    dest: /etc/etcd/
+  with_items:
+    - ca.pem
+    - kubernetes-key.pem
+    - kubernetes.pem
   ignore_errors: false
 
 - name: Download and extract etcd binary
