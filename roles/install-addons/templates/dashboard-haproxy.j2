@@ -1,0 +1,12 @@
+# Kubernetes dashboard haproxy config
+frontend k8s-dashboard
+  bind *:9090
+  option tcplog
+  mode tcp
+  default_backend dashboard-pod
+backend dashboard-pod
+  mode tcp
+  balance roundrobin
+  option forwardfor
+  http-request set-header X-Forwarded-Port %[dst_port]
+  server k8s-node1 {{dashboard_node.stdout}}:{{k8s_dashboard_svc_port.stdout}} check

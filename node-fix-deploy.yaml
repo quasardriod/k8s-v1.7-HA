@@ -105,10 +105,10 @@
   roles:
     - install-addons
 
-- hosts: kube-client
-  become: true
-  become_method: sudo
-  vars_files:
-    - group_vars/all
-  roles:
-    - smoke-test
+#- hosts: kube-client
+#  become: true
+#  become_method: sudo
+#  vars_files:
+#    - group_vars/all
+#  roles:
+#    - smoke-test

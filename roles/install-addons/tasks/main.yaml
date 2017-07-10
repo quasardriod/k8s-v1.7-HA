@@ -1,4 +1,4 @@
 ---
 
-- include: create-clusterrolebinding.yaml
+#- include: create-kubedns-clusterrolebinding.yaml
 - include: install-dashboard.yaml
