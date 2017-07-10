@@ -48,5 +48,6 @@
   ignore_errors: flase
 
 - name: Remove /tmp/dashboard-haproxy.cfg file
-  file: /tmp/dashboard-haproxy.cfg
-  state: absent
+  file:
+    path: /tmp/dashboard-haproxy.cfg
+    state: absent
