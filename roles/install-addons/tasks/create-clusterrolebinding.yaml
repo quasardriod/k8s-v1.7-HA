@@ -1,0 +1,25 @@
+---
+
+- name: Create clusterrolebinding for serviceaccounts-cluster-admin
+  shell: kubectl create clusterrolebinding serviceaccounts-cluster-admin --clusterrole=cluster-admin --group=system:serviceaccounts
+  register: get_rolebinding_cli_status
+- debug:
+    var: get_rolebinding_cli_status.stdout
+
+- name: Create kubedns service
+  command: kubectl create -f https://raw.githubusercontent.com/kelseyhightower/kubernetes-the-hard-way/master/services/kubedns.yaml
+
+- name: Get kubedns service status
+  shell: kubectl --namespace=kube-system get svc
+  register: get_dns_svc
+- debug:
+    var: get_dns_svc.stdout
+
+- name: Create kubedns deployment
+  command: kubectl create -f https://raw.githubusercontent.com/kelseyhightower/kubernetes-the-hard-way/master/deployments/kubedns.yaml
+
+- name: Get kubedns deployment status
+  shell: kubectl --namespace=kube-system get pods
+  register: get_kubedns_deployment
+- debug:
+    var: get_kubedns_deployment.stdout

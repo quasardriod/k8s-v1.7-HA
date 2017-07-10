@@ -1,0 +1,4 @@
+---
+
+- include: create-clusterrolebinding.yaml
+- include: install-dashboard.yaml
