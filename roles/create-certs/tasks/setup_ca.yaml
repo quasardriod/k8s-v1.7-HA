@@ -20,15 +20,3 @@
 - name: Generate a CA certificate and private key "gen-ca-certs.sh"
   script: gen-ca-certs.sh
   ignore_errors: false
-
-#- name: Validate CA files got created
-#  stat:
-#    path: /var/k8s-v1.7/certs/"{{item}}"
-#  with_items:
-#    - ca-key.pem
-#    - ca.pem
-#  ignore_errors: false
-#  register: ca_files
-#- debug:
-#    msg: "Files are created."
-#  when: ca_files.stat.exists == True

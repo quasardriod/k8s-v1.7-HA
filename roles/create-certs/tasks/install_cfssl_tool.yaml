@@ -5,15 +5,8 @@
 - name: Install cfssl and cfssljson binaries
   get_url:
     url: "{{item}}"
-    dest: /tmp
+    dest: /usr/local/bin/
+    mode: 0755
   with_items:
     - https://pkg.cfssl.org/R1.2/cfssl_linux-amd64
     - https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64
-
-- name: Move downloaded cfssl binaries to /usr/local/bin
-  command: "{{item}}"
-  with_items:
-    - chmod +x /tmp/cfssl_linux-amd64
-    - chmod +x /tmp/cfssljson_linux-amd64
-    - mv /tmp/cfssl_linux-amd64 /usr/local/bin/cfssl
-    - mv /tmp/cfssljson_linux-amd64 /usr/local/bin/cfssljson

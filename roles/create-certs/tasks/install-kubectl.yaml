@@ -5,10 +5,5 @@
 - name: Download and Install kubectl in lb node
   get_url:
     url: https://storage.googleapis.com/kubernetes-release/release/v1.7.0-alpha.3/bin/linux/amd64/kubectl
-    dest: /tmp
-
-- name: Move downloaded kubectl binary to /usr/local/bin
-  command: "{{item}}"
-  with_items:
-    - chmod +x /tmp/kubectl
-    - mv /tmp/kubectl /usr/local/bin
+    dest: /sr/local/bin/
+    mode: 0755

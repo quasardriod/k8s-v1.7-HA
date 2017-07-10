@@ -28,8 +28,12 @@
 - name: Get etcd cluster health status
   shell: etcdctl cluster-health
   when: ansible_nodename == "{{k8s_master1_hostname}}"
+  retries: 3
+  delay: 10
+  ignore_errors: yes
   register: etcd_health
 
 - debug:
     var: etcd_health.stdout
   when: ansible_nodename == "{{k8s_master1_hostname}}"
+  ignore_errors: false
