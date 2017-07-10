@@ -2,4 +2,30 @@
 
 - name: Install dashboard
   command: kubectl create -f https://rawgit.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard.yaml
-  
+
+- name: Get kubernetes dashboard pod name
+  shell: kubectl get pod --all-namespaces|grep -i dashboard|awk '{print $2}'
+  register: dashboard_pod_name
+- debug:
+    var: dashboard_pod_name.stdout  
+
+- name: Create service for kubernetes dashboard pod
+  shell: kubectl expose pod {{dashboard_pod_name.stdout}} --type=NodePort --name=k8s-dashboard-svc --namespace=kube-system
+
+- name: Get k8s-dashboard-svc details
+  shell: kubectl describe svc k8s-dashboard-svc --namespace=kube-system
+  register: k8s_dashboard_svc
+- debug:
+    var: k8s_dashboard_svc.stdout
+
+- name: Get dasboard pod node
+  shell: kubectl describe pod {{dashboard_pod_name.stdout}} --namespace=kube-system|head -5 |grep -i Node:|awk '{print $2}'|cut -d'/' -f2
+  register: dashboard_node
+- debug:
+    var: dashboard_node.stdout
+
+- name: Get dashboard service port
+  shell: kubectl describe svc k8s-dashboard-svc --namespace=kube-system|grep -i NodePort:|awk '{print $3}'|cut -d'/' -f1
+  register: k8s_dashboard_svc_port
+- debug: 
+    var: k8s_dashboard_svc_port.stdout  
