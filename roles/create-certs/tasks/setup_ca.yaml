@@ -18,3 +18,4 @@
 - name: Generate a CA certificate and private key "gen-ca-certs.sh"
   script: gen-ca-certs.sh
   ignore_errors: false
+  become: true

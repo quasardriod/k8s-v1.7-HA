@@ -15,17 +15,20 @@
 - name: Rename copied files
   copy:
     remote_src: True
-    src: /usr/local/bin/"{{item.srcfile}}"
-    dest: /usr/local/bin/"{{item.destfile}}"
+    src: /usr/local/bin/{{item.srcfile}}
+    dest: /usr/local/bin/{{item.destfile}}
+    mode: 0755
   with_items:
-    - { srcfile: 'cfssl_linux-amd64', destfile: 'cfssl'}
-    - { srcfile: 'cfssljson_linux-amd64', destfile: 'cfssljson'}
+    - { srcfile: cfssl_linux-amd64, destfile: cfssl}
+    - { srcfile: cfssljson_linux-amd64, destfile: cfssljson}
   ignore_errors: false
+  become: true
 
 - name: Delete old files
   file:
-    path: /usr/local/bin/"{{item}}"
+    path: /usr/local/bin/{{item}}
     state: absent
   with_items:
     - cfssl_linux-amd64
     - cfssljson_linux-amd64
+  become: true
