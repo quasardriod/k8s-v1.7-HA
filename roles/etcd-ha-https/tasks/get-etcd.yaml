@@ -1,40 +1,44 @@
 ---
 
-- name: Create etcd directory
-  file:
-    path: /etc/etcd
-    state: directory
-    mode: 0755
-# Just for the knowledge coping certs. However these will not be used.
-- name: Copy the TLS certs to etcd directory
-  copy:
-    src: /var/tmp/k8s-v1.7-certs/{{item}}
-    dest: /etc/etcd/
-  with_items:
-    - ca.pem
-    - kubernetes-key.pem
-    - kubernetes.pem
-  ignore_errors: false
+#- name: Create etcd directory
+#  file:
+#    path: /etc/etcd
+#    state: directory
+#    mode: 0755
+
+#- name: Copy the TLS certs to etcd directory
+#  copy:
+#    src: /var/tmp/k8s-v1.7-certs/{{item}}
+#    dest: /etc/etcd/
+#  with_items:
+#    - ca.pem
+#    - kubernetes-key.pem
+#    - kubernetes.pem
+#  ignore_errors: false
 
 - name: Download and extract etcd binary
   unarchive:
     src: https://github.com/coreos/etcd/releases/download/v3.1.4/etcd-v3.1.4-linux-amd64.tar.gz
     dest: /tmp
     remote_src: True
+  when: ansible_ssh_host == 192.168.2.153
 
 - name: Copy etcd binaries to /usr/bin
   command: "{{item}}"
   with_items:
     -  mv /tmp/etcd-v3.1.4-linux-amd64/etcd /usr/bin/
     -  mv /tmp/etcd-v3.1.4-linux-amd64/etcdctl /usr/bin/
+  when: ansible_ssh_host == 192.168.2.153
 
 - name: Create the etcd data directory
   file:
     path: /var/lib/etcd
     state: directory
     mode: 0755
+  when: ansible_ssh_host == 192.168.2.153
 
 - name: Remove /tmp/etcd additional data
   file:
     path: /tmp/etcd-v3.1.4-linux-amd64
     state: absent
+  when: ansible_ssh_host == 192.168.2.153

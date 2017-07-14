@@ -1,6 +1,6 @@
 ---
 
-- name: Copy create-client-bootstrap-kubeconfig.j2 to lb node
+- name: Copy create-client-bootstrap-kubeconfig.j2
   template:
     src: create-client-bootstrap-kubeconfig.j2
     dest: /tmp/create-client-bootstrap-kubeconfig.sh
@@ -14,7 +14,7 @@
     chdir: /tmp/k8s-v1.7/certs
   ignore_errors: false
 
-- name: Run Copy create-client-kubeproxy-kubeconfig.j2 to lb node
+- name: Run Copy create-client-kubeproxy-kubeconfig.j2
   template:
     src: create-client-kubeproxy-kubeconfig.j2
     dest: /tmp/create-client-kubeproxy-kubeconfig.sh

@@ -12,7 +12,7 @@
   delegate_to: localhost
   ignore_errors: false
 
-- name: Fetch certificates files from lb system
+- name: Fetch certificate files
   fetch:
     src: /tmp/k8s-v1.7/certs/{{item}}
     dest: /var/tmp/k8s-v1.7-certs/

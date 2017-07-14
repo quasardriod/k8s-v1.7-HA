@@ -1,12 +1,12 @@
 ---
 
-- name: Create a directory to store certificates in loadbalancer node
+- name: Create a directory to store certificates
   file:
     path: /tmp/k8s-v1.7/certs
     state: directory
     mode: 0755
 
-- name: Copy CA config and csr files to lb node
+- name: Copy CA config and csr files
   copy:
     src: "{{item}}"
     dest: /tmp/k8s-v1.7/certs/

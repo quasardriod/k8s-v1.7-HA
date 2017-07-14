@@ -3,7 +3,7 @@
 # The Kubernetes public IP address will be included in the list of subject alternative names for the Kubernetes server certificate.
 # This will ensure the TLS certificate is valid for remote client access.
 
-- name: Copy kubernetes-csr file to lb node
+- name: Copy kubernetes-csr file
   template:
     src: kubernetes-csr.j2
     dest: /tmp/k8s-v1.7/certs/kubernetes-csr.json

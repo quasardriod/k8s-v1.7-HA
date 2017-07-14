@@ -5,7 +5,7 @@
 
 # Create the Admin client certificate
 
-- name: Copy CA config and csr files to lb node
+- name: Copy CA config and csr files
   copy:
     src: admin-csr.json
     dest: /tmp/k8s-v1.7/certs/
