@@ -2,15 +2,15 @@
 # This lab requires the cfssl and cfssljson binaries. Download them from the cfssl repository.
 # https://pkg.cfssl.org/
 # This tasks we will be performed in lb node
-#- name: Install cfssl and cfssljson binaries
-#  get_url:
-#    url: "{{item}}"
-#    dest: /usr/local/bin/
-#    mode: 0755
-#  with_items:
-#    - https://pkg.cfssl.org/R1.2/cfssl_linux-amd64
-#    - https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64
-#  sudo: true
+- name: Install cfssl and cfssljson binaries
+  get_url:
+    url: "{{item}}"
+    dest: /usr/local/bin/
+    mode: 0755
+  with_items:
+    - https://pkg.cfssl.org/R1.2/cfssl_linux-amd64
+    - https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64
+  sudo: true
 
 - name: Rename copied files
   copy:
