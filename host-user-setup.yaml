@@ -25,7 +25,7 @@
     
       
 
-- hosts: all
+- hosts: k8s-servers
   become: true
   become_method: sudo
   vars_files:
