@@ -1,0 +1,41 @@
+localhost ansible_connectio=local
+
+# KVM office lab VMs
+k8s-master1 ansible_ssh_host=192.168.2.151
+k8s-master2 ansible_ssh_host=192.168.2.152
+k8s-master3 ansible_ssh_host=192.168.2.153
+
+kube-lb01 ansible_ssh_host=192.168.2.156
+kube-lb02 ansible_ssh_host=192.168.2.157
+kube-client ansible_ssh_host=192.168.2.158
+
+k8s-node1 ansible_ssh_host=192.168.2.161
+k8s-node2 ansible_ssh_host=192.168.2.162
+
+
+[k8s-cluster-servers]
+k8s-master1
+k8s-master2
+k8s-master3
+k8s-node1
+k8s-node2
+
+[masters]
+k8s-master1
+k8s-master2
+k8s-master3
+
+[nodes]
+k8s-node1
+k8s-node2
+
+[loadbalancers]
+kube-lb01
+kube-lb02
+
+[kube-client]
+kube-client
+
+[all:vars]
+ansible_ssh_user=kubeuser
+ansible_ssh_private_key_file=~/.ssh/id_rsa

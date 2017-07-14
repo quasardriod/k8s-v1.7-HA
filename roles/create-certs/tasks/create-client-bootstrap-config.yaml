@@ -11,7 +11,7 @@
 - name: Run create-client-bootstrap-kubeconfig.sh locally to create bootstrap kubeconfig
   shell: sh /tmp/create-client-bootstrap-kubeconfig.sh
   args:
-    chdir: /var/k8s-v1.7/certs
+    chdir: /tmp/k8s-v1.7/certs
   ignore_errors: false
 
 - name: Run Copy create-client-kubeproxy-kubeconfig.j2 to lb node
@@ -25,7 +25,7 @@
 - name: Run create-client-kubeproxy-kubeconfig.sh locally to create bootstrap kubeconfig
   shell: sh /tmp/create-client-kubeproxy-kubeconfig.sh
   args:
-    chdir: /var/k8s-v1.7/certs
+    chdir: /tmp/k8s-v1.7/certs
   ignore_errors: false
 
 - name: Remove copied scripts

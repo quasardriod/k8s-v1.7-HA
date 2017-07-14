@@ -5,5 +5,6 @@
 - name: Download and Install kubectl in lb node
   get_url:
     url: https://storage.googleapis.com/kubernetes-release/release/v1.7.0-alpha.3/bin/linux/amd64/kubectl
-    dest: /sr/local/bin/
+    dest: /usr/local/bin/
     mode: 0755
+  sudo: true

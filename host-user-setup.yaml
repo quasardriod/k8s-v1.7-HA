@@ -1,0 +1,54 @@
+---
+
+- hosts: localhost
+  vars_files:
+    - local_user.yaml
+  tasks:
+  - name: check ssh public key existance for current user
+    stat:
+      path: ~/.ssh/id_rsa.pub
+    register: pub_key
+
+#  - debug:
+#      msg: " file is exists."
+#    when: pub_key.stat.path is defined
+  
+#  - debug:
+#      msg: " file does not exists."
+#    when: pub_key.stat.path is not defined
+
+  - name: Creating ssh key for local user
+    user:
+      name: "{{local_user}}"
+      generate_ssh_key: yes
+    when: pub_key.stat.path is not defined
+    
+      
+
+- hosts: all
+  become: true
+  become_method: sudo
+  vars_files:
+    - remote_user.yaml
+  tasks:
+  - name: Setup | create user
+    user:
+      name: "{{ k8s_user }}"
+      shell: /bin/bash
+      generate_ssh_key: yes
+
+  - name: Setup | set user password
+    shell: usermod -p $(echo '{{ k8s_user_pass }}' | openssl passwd -1 -stdin) {{ k8s_user }}
+
+  - name: Setup | authorized key upload
+    authorized_key: user={{ k8s_user }}
+      key="{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+      path='/home/{{ k8s_user }}/.ssh/authorized_keys'
+      manage_dir=no
+
+  - name: Sudoers | update sudoers file and validate
+    lineinfile: "dest=/etc/sudoers
+      insertafter=EOF
+      line='{{ k8s_user }} ALL=(ALL) NOPASSWD: ALL'
+      regexp='{{ k8s_user }} ALL=(ALL) NOPASSWD: ALL'
+      state=present"

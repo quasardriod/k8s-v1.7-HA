@@ -6,7 +6,7 @@
 - name: Copy kubernetes-csr file to lb node
   template:
     src: kubernetes-csr.j2
-    dest: /var/k8s-v1.7/certs/kubernetes-csr.json
+    dest: /tmp/k8s-v1.7/certs/kubernetes-csr.json
     backup: no
   ignore_errors: false
 

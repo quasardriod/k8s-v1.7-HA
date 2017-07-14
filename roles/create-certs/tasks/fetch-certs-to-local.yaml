@@ -14,7 +14,7 @@
 
 - name: Fetch certificates files from lb system
   fetch:
-    src: /var/k8s-v1.7/certs/{{item}}
+    src: /tmp/k8s-v1.7/certs/{{item}}
     dest: /var/tmp/k8s-v1.7-certs/
     flat: yes
     fail_on_missing: yes
