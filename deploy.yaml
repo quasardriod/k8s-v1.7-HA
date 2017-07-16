@@ -32,20 +32,20 @@
 #  roles:
 #    - pacemaker
 
-- hosts: masters
-  become: true
-  vars_files:
-    - group_vars/all
-  roles:
-    - api-servers
-
-#- hosts: loadbalancers
+#- hosts: masters
 #  become: true
-#  become_method: sudo
 #  vars_files:
 #    - group_vars/all
 #  roles:
-#    - kube-api-haproxy
+#    - api-servers
+
+- hosts: loadbalancers
+  become: true
+  become_method: sudo
+  vars_files:
+    - group_vars/all
+  roles:
+    - kube-api-haproxy
 
 #- hosts: client
 #  become: true

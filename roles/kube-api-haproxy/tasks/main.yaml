@@ -25,7 +25,7 @@
 - name: Restart haproxy service
   service:
     name: haproxy
-    state: restarted
+    state: started
 
 - name: Check haproxy service status
   shell: systemctl status haproxy --no-pager

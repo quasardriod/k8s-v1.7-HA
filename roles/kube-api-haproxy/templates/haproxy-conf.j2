@@ -36,7 +36,7 @@ defaults
         errorfile 504 /etc/haproxy/errors/504.http
 
 frontend http-frontend
-    bind *:{{kube_bind_port}}
+    bind {{k8s_lb_vip}}:{{kube_bind_port}}
     option tcplog
     mode {{traffic_mode}}
     default_backend {{backend_name}}

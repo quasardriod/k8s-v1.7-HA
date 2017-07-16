@@ -5,7 +5,7 @@ k8s-master1 ansible_ssh_host=192.168.2.151
 k8s-master2 ansible_ssh_host=192.168.2.152
 k8s-master3 ansible_ssh_host=192.168.2.153
 
-kube-lb01 ansible_ssh_host=192.168.2.156
+kube-lb01 ansible_ssh_host=192.168.2.155
 kube-lb02 ansible_ssh_host=192.168.2.157
 kube-client ansible_ssh_host=192.168.2.158
 
@@ -31,7 +31,6 @@ k8s-node2
 
 [loadbalancers]
 kube-lb01
-kube-lb02
 
 [client]
 kube-client
