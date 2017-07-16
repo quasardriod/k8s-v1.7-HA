@@ -1,7 +1,7 @@
 ---
 # tasks file for pacemaker
 
-- include: get-pc-corosync.yaml
+#- include: get-pc-corosync.yaml
 - include: setup-cluster-auth.yaml
 - include: setup-cluster.yaml
 - include: get-pcs-status.yaml

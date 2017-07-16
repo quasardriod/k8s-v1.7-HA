@@ -2,14 +2,11 @@
 
 - name: Install pacemaker and corosync
   package:
-    name: {{item}}
+    name: "{{item}}"
     state: latest
   with_items:
      - pcs
-     - pacemaker
-     - corosync
      - fence-agents
-     - resource-agents
   ignore_errors: false
   register: install_pcs_pkgs
   until: install_pcs_pkgs | success

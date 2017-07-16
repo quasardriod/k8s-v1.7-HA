@@ -1,7 +1,7 @@
 ---
 
 - name: Setp password for hacluster user
-  shell: echo {{pcs_pass}} | passwd --stdin {{pcs_user}}
+  shell: usermod -p $(echo '{{ pcs_pass }}' | openssl passwd -1 -stdin) {{ pcs_user }}
 
 - name: Authenticate all cluster nodes
   shell: pcs cluster auth {{k8s_lb01_hostname}} {{k8s_lb02_hostname}} -u {{pcs_user}} -p {{pcs_pass}} --force
