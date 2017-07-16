@@ -17,7 +17,7 @@
 - name: Start and enable kube-apiserver service
   service:
     name: kube-apiserver
-    state: restarted
+    state: started
     enabled: yes
 
 - name: Check kube-apiserver service status

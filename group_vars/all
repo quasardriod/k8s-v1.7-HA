@@ -20,8 +20,12 @@ k8s_lb01_hostname: k8s-lb01
 k8s_lb02_hostname: k8s-lb02
 k8s_lb_vip: 192.168.2.155
 
+# Packages
 
-
+k8s_api_pkg: https://storage.googleapis.com/kubernetes-release/release/v1.7.0/bin/linux/amd64/kube-apiserver
+k8s_ctrlmgr_pkg: https://storage.googleapis.com/kubernetes-release/release/v1.7.0/bin/linux/amd64/kube-controller-manager
+k8s_scdl_pkg: https://storage.googleapis.com/kubernetes-release/release/v1.7.0/bin/linux/amd64/kube-scheduler
+k8s_ctl_pkg: https://storage.googleapis.com/kubernetes-release/release/v1.7.0/bin/linux/amd64/kubectl
 
 
 # Pod network specific variables
@@ -34,6 +38,8 @@ pod_backend_type: vxlan
 KUBERNETES_PUBLIC_ADDRESS: 192.168.2.155
 kube_bind_port: 6443
 k8s_cluster_name: kubernetes-the-hard-way
+svc_clus_ip_range: 10.32.0.0/24
+svc_node_port_range: 30000-32767
 
 # pcs cluster
 pcs_user: hacluster

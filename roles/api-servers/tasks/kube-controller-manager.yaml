@@ -14,8 +14,8 @@
 
 - name: Start and enable kube-controller-manager service
   service:
-    name: kube-controller-manager.service
-    state: restarted
+    name: kube-controller-manager
+    state: started
     enabled: yes
 
 - name: Check kube-controller-manager service status

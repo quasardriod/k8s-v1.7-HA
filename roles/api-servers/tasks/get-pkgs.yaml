@@ -24,7 +24,7 @@
     dest: /usr/bin/
     mode: 0755
   with_items:
-    - https://storage.googleapis.com/kubernetes-release/release/v1.7.0-alpha.3/bin/linux/amd64/kube-apiserver
-    - https://storage.googleapis.com/kubernetes-release/release/v1.7.0-alpha.3/bin/linux/amd64/kube-controller-manager
-    - https://storage.googleapis.com/kubernetes-release/release/v1.7.0-alpha.3/bin/linux/amd64/kube-scheduler
-    - https://storage.googleapis.com/kubernetes-release/release/v1.7.0-alpha.3/bin/linux/amd64/kubectl
+    - {{k8s_api_pkg}}
+    - {{k8s_ctrlmgr_pkg}}
+    - {{k8s_scdl_pkg}}
+    - {{k8s_ctl_pkg}}
