@@ -24,7 +24,7 @@
     dest: /usr/bin/
     mode: 0755
   with_items:
-    - {{k8s_api_pkg}}
-    - {{k8s_ctrlmgr_pkg}}
-    - {{k8s_scdl_pkg}}
-    - {{k8s_ctl_pkg}}
+    - "{{k8s_api_pkg}}"
+    - "{{k8s_ctrlmgr_pkg}}"
+    - "{{k8s_scdl_pkg}}"
+    - "{{k8s_ctl_pkg}}"

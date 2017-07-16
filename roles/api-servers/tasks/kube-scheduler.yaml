@@ -15,7 +15,7 @@
 - name: Start and enable kube-scheduler service
   service:
     name: kube-scheduler
-    state: started
+    state: restarted
     enabled: yes
 
 - name: Check kube-scheduler service status

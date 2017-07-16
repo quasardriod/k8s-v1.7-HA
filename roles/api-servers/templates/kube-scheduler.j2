@@ -5,7 +5,7 @@ Documentation=https://github.com/GoogleCloudPlatform/kubernetes
 [Service]
 ExecStart=/usr/bin/kube-scheduler \
   --leader-elect=true \
-  --master=http://"{{ansible_ssh_host}}":8080 \
+  --master=http://{{ansible_ssh_host}}:8080 \
   --v=2
 Restart=on-failure
 RestartSec=5
