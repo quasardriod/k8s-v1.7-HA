@@ -1,0 +1,16 @@
+---
+
+- name: Setp password for hacluster user
+  shell: echo {{pcs_pass}} | passwd --stdin {{pcs_user}}
+
+- name: Authenticate all cluster nodes
+  shell: pcs cluster auth {{k8s_lb01_hostname}} {{k8s_lb02_hostname}} -u {{pcs_user}} -p {{pcs_pass}} --force
+  register: auth_pcs
+  when: ansible_nodename == k8s_lb01_hostname
+  until: auth_pcs | success
+  retries: 2
+  delay: 5
+
+- debug:
+    var: auth_pcs.stdout
+  when: ansible_nodename == k8s_lb01_hostname

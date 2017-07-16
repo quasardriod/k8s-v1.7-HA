@@ -16,7 +16,10 @@ k8s_worker2_hostname: k8s-worker2
 
 k8s_lb01_ip: 192.168.2.156
 k8s_lb02_ip: 192.168.2.157
+k8s_lb01_hostname: k8s-lb01
+k8s_lb02_hostname: k8s-lb02
 k8s_lb_vip: 192.168.2.155
+
 
 
 
@@ -31,3 +34,12 @@ pod_backend_type: vxlan
 KUBERNETES_PUBLIC_ADDRESS: 192.168.2.155
 kube_bind_port: 6443
 k8s_cluster_name: kubernetes-the-hard-way
+
+# pcs cluster
+pcs_user: hacluster
+pcs_pass: haclus@pass
+pcs_clus_name: ha-lb-haproxy
+
+# HAproxy
+vip_name: haproxy-vip
+hapxy_resrc: lb-haproxy

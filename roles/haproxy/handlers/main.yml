@@ -1,0 +1,10 @@
+---
+# handlers file for haproxy
+
+- name: rabbitmqctl cluster_status
+  command: rabbitmqctl cluster_status
+  register: mq_cluster_check
+
+- debug: var=mq_cluster_check.stdout
+
+

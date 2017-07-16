@@ -12,7 +12,7 @@
 #  - debug:
 #      msg: " file is exists."
 #    when: pub_key.stat.path is defined
-  
+
 #  - debug:
 #      msg: " file does not exists."
 #    when: pub_key.stat.path is not defined
@@ -22,10 +22,10 @@
       name: "{{local_user}}"
       generate_ssh_key: yes
     when: pub_key.stat.path is not defined
-    
-      
 
-- hosts: masters
+
+
+- hosts: k8s-servers
   become: true
   become_method: sudo
   vars_files:

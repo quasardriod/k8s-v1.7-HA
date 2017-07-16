@@ -1,0 +1,10 @@
+---
+
+- name: View status and config of pacemaker cluster
+  shell: pcs status
+  ignore_errors: false
+  changed_when: true
+  register: pcs_status
+  
+- debug:
+    var: pcs_status.stdout

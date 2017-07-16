@@ -1,0 +1,116 @@
+---
+# tasks file for HAPROXY
+
+- name: Install required packages for HAproxy
+  package: name=haproxy state=present
+  register: haproxy_pkgs
+  tags:
+    - haproxy_install
+
+- name: Setup HAproxy conf file in all controller nodes
+  template:
+    src: haproxy_conf.j2
+    dest: /etc/haproxy/haproxy.cfg
+    backup: yes
+    owner: root
+    group: root
+    mode: 0644
+  register: haproxy_conf
+  tags:
+    - haproxy_conf_setup
+
+- name: Copy HAProxy log conf files
+  copy: 
+    src: "{{item.src}}"
+    dest: "{{item.dest}}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - { src: 'ansible_haproxy_log', dest: '/etc/rsyslog.d/haproxy.conf' }
+    - { src: 'ansible_haproxy_logrotate', dest: '/etc/logrotate.d/haproxy' }
+  register: log_ha_conf
+  tags:
+    - copy_haproxy_log_conf
+
+- name: Create log files
+  file:
+    path: "{{item}}"
+    state: touch
+    mode: 0644
+    owner: haproxy
+    group: haproxy
+  with_items:
+    - /var/log/haproxy.log
+    - /var/log/haproxy-status.log
+  register: create_log_files
+  tags:
+    - create_haproxy_log
+
+- name: Restart rsyslog
+  service:
+    name: rsyslog
+    state: restarted
+  register: restart_rsyslog
+  tags:
+    - rsyslog_restart
+
+- name: Create a cloned systemd resource that will run a highly available active-active HAProxy service on all controller hosts
+  command: "{{item}}"
+  with_items:
+    - pcs resource create {{hapxy_resrc}} systemd:haproxy --clone --disable
+    - pcs constraint order start {{vip_name}} then start {{hapxy_resrc}}-clone kind=Mandatory
+    - pcs constraint colocation add {{hapxy_resrc}}-clone with {{vip_name}}
+  register: pcs_hpx_resrc_create
+  when: ansible_nodename=="{{controller3_host}}"
+  tags:
+    - haproxy_resource_create
+
+- name: Enable pcs resources
+  command: pcs resource enable {{vip_name}} {{hapxy_resrc}}-clone
+  register: enable_src
+  tags:
+    - enable_pcs_resource
+
+- name: View status and config of pacemaker cluster
+  shell: "{{item}}"
+  with_items: 
+    - pcs cluster status
+    - pcs status
+  register: pcs_status
+  tags:
+    - check_pcs_status
+- debug: var=pcs_status.stdout_lines  
+
+- name: Configure HAproxy to load balance Galera in each node
+  template:
+    src: clustercheck.j2
+    dest: /etc/sysconfig/clustercheck
+    owner: root
+    group: root
+    mode: 0644
+  register: galera_chk_conf
+  tags:
+    - galera_clus_check
+ 
+- name: Configure Galera monitor for HAProxy
+  template:
+    src: galera_ha_monitor.j2
+    dest: /etc/xinetd.d/galera-monitor
+    owner: root
+    group: root
+    mode: 0644
+  register: galera_monitor_file
+  tags:
+    - galera_monitor_xinetd
+
+- name: Reload xinetd
+  command: "{{item}}"
+  with_items:
+    - systemctl daemon-reload
+    - systemctl enable xinetd
+    - systemctl start xinetd
+  register: reload_xinetd
+  tags:
+    - xinetd_reload 
+

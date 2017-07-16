@@ -1,0 +1,24 @@
+---
+
+- name: Create and name cluster
+  command: pcs cluster setup --force --name {{pcs_clus_name}} {{k8s_lb01_hostname}} {{k8s_lb02_hostname}}
+  register: set_pcs_cluster
+  when: ansible_nodename == k8s_lb01_hostname
+  until: set_pcs_cluster | success
+  retries: 3
+  delay: 10
+
+- name: Start cluster services
+  command: "{{item}}"
+  with_items:
+    - pcs cluster start --all
+    - pcs cluster enable --all
+  register: start_cluster
+  until: start_cluster | success
+  retries: 3
+  delay: 10
+  
+- name: Assign a VIP to cluster
+  command: pcs resource create {{vip_name}} IPaddr2 params ip="{{k8s_lb01_ip}}" op monitor interval="30s"
+  register: assign_vip
+  when: ansible_nodename == k8s_lb01_hostname
