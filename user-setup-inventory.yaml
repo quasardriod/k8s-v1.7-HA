@@ -23,6 +23,11 @@ k8s-lb01
 k8s-lb02
 k8s-client
 
+[masters]
+k8s-master1
+k8s-master2
+k8s-master3
+
 [k8s-servers:vars]
 ansible_ssh_user=stack
 ansible_ssh_pass=redhat

@@ -2,7 +2,7 @@
 
 # Setup hosts and k8s package installation
 
-#- hosts: kube-client
+#- hosts: client
 #  become: true
 #  become_method: sudo
 #  vars_files:
@@ -55,7 +55,7 @@
 #  roles:
 #    - kube-api-haproxy
 
-#- hosts: kube-client
+#- hosts: client
 #  become: true
 #  become_method: sudo
 #  vars_files:
@@ -103,7 +103,7 @@
 #  roles:
 #    - approve-tls-csr-request
 
-#- hosts: kube-client
+#- hosts: client
 #  become: true
 #  become_method: sudo
 #  vars_files:
@@ -111,7 +111,7 @@
 #  roles:
 #    - install-addons
 
-#- hosts: kube-client
+#- hosts: client
 #  become: true
 #  become_method: sudo
 #  vars_files:

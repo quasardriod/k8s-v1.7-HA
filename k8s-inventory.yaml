@@ -33,7 +33,7 @@ k8s-node2
 kube-lb01
 kube-lb02
 
-[kube-client]
+[client]
 kube-client
 
 [all:vars]
