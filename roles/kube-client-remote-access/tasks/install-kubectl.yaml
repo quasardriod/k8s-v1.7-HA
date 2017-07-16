@@ -2,8 +2,14 @@
 
 # Download and Install kubectl in load balancer node (node which used to create certs or wants to use as client machine)
 
+- name: Check if kubectl package already installed
+  stat:
+    path: /usr/local/bin/kubectl
+  register: kubectl_file
+
 - name: Download and Install kubectl in client machine
   get_url:
-    url: https://storage.googleapis.com/kubernetes-release/release/v1.7.0-alpha.3/bin/linux/amd64/kubectl
+    url: "{{k8s_ctl_pkg}}"
     dest: /usr/local/bin/
     mode: 0755
+   when: kubectl_file.stat.path is not defined

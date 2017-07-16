@@ -6,10 +6,10 @@
     dest: /tmp/flannel-conf.json
 
 - name: Initialized flannel network in etcd
-  shell: etcdctl set /kubernetes-cluster/network/config < /tmp/flannel-conf.json
+  shell: etcdctl -C https://{{ansible_ssh_host}}:2379 --ca-file=/etc/etcd/ca.pem --cert-file=/etc/etcd/kubernetes.pem --key-file=/etc/etcd/kubernetes-key.pem set /kubernetes-cluster/network/config < /tmp/flannel-conf.json
 
 - name: Get flannel network details from etcd
-  shell: etcdctl get /kubernetes-cluster/network/config
+  shell: etcdctl -C https://{{ansible_ssh_host}}:2379 --ca-file=/etc/etcd/ca.pem --cert-file=/etc/etcd/kubernetes.pem --key-file=/etc/etcd/kubernetes-key.pem get /kubernetes-cluster/network/config
   register: etcd_flannel_net
 
 - debug:
