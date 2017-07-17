@@ -21,6 +21,32 @@
     backup: yes
   ignore_errors: false
 
+- name: Copy HAProxy log conf files
+  copy:
+    src: "{{item.src}}"
+    dest: "{{item.dest}}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - { src: 'ansible_haproxy_log', dest: '/etc/rsyslog.d/haproxy.conf' }
+    - { src: 'ansible_haproxy_logrotate', dest: '/etc/logrotate.d/haproxy' }
+
+- name: Create log files
+  file:
+    path: "{{item}}"
+    state: touch
+    mode: 0644
+    owner: haproxy
+    group: haproxy
+  with_items:
+    - /var/log/haproxy.log
+    - /var/log/haproxy-status.log
+
+- name: Restart rsyslog
+  service:
+    name: rsyslog
+    state: restarted
 
 - name: Restart haproxy service
   service:
