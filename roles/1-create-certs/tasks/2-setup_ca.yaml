@@ -1,0 +1,20 @@
+---
+
+- name: Create a directory to store certificates
+  file:
+    path: /k8s-v1.7/certs
+    state: directory
+    mode: 0755
+
+- name: Copy CA config and csr files
+  copy:
+    src: "{{item}}"
+    dest: /k8s-v1.7/certs/
+  with_items:
+    - ca-config.json
+    - ca-csr.json
+  ignore_errors: false
+
+- name: Generate a CA certificate and private key "gen-ca-certs.sh"
+  script: gen-ca-certs.sh
+  ignore_errors: false

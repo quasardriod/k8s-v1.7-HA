@@ -1,0 +1,28 @@
+---
+
+# Generate client and server TLS certificates
+# In this section we will generate TLS certificates for each Kubernetes component and a client certificate for the admin user.
+
+# Create the Admin client certificate
+
+- name: Copy CA config and csr files
+  copy:
+    src: admin-csr.json
+    dest: /k8s-v1.7/certs/
+  ignore_errors: false
+
+- name: Generate the admin client certificate and private key "gen-admin-client-cert-key.sh"
+  script: gen-admin-client-cert-key.sh
+  ignore_errors: false
+
+# Create the kube-proxy client certificate
+
+- name: Copy kube-proxy client certificate signing request
+  copy:
+    src: kube-proxy-csr.json
+    dest: /k8s-v1.7/certs/
+  ignore_errors: false
+
+- name: Generate the kube-proxy client certificate and private key "gen-kube_proxy-client-cert-key.sh"
+  script: gen-kube_proxy-client-cert-key.sh
+  ignore_errors: false

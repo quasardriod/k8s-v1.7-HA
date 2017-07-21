@@ -1,4 +1,0 @@
----
-
-- include: copy-tls-certs-to-masters.yaml
-- include: copy-token-to-master.yaml

@@ -1,0 +1,38 @@
+---
+
+- name: Create temparory directory
+  file:
+    path: /kubectl-client-setup
+    state: directory
+    mode: 0755
+
+- name: Copy required certificates to client node
+  copy:
+    src: /var/tmp/k8s-v1.7-certs/{{item}}
+    dest: /kubectl-client-setup/
+  with_items:
+    - ca.pem
+    - admin.pem
+    - admin-key.pem
+  ignore_errors: false
+
+- name: Copy kubeconfig client script to kubectl client machine
+  template:
+    src: kubeconfig-client-setup.j2
+    dest: /tmp/kubeconfig-client-setup.sh
+    mode: 0744
+    backup: no
+  ignore_errors: false
+
+- name: Run kubeconfig-client-setup.sh in client to complete kubectl client setup
+  shell: sh /tmp/kubeconfig-client-setup.sh
+  args:
+    chdir: /kubectl-client-setup/
+  ignore_errors: false
+
+# Note: Do not delete copied certificates
+- name: Delete copied script
+  file:
+    path: /tmp/kubeconfig-client-setup.sh
+    state: absent
+  ignore_errors: false

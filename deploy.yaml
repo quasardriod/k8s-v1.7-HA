@@ -2,13 +2,43 @@
 
 # Setup hosts and k8s package installation
 
-#- hosts: client
-#  become: true
-#  become_method: sudo
-#  vars_files:
-#    - group_vars/all
-#  roles:
-#    - create-certs
+- hosts: client
+  become: true
+  become_method: sudo
+  vars_files:
+    - group_vars/all
+  roles:
+    - 1-create-certs
+
+- hosts: masters
+  become: true
+  vars_files:
+    - group_vars/all
+  roles:
+    - 2-etcd-ha-https
+
+- hosts: masters
+  become: true
+  vars_files:
+    - group_vars/all
+  roles:
+    - 3-api-servers
+
+- hosts: loadbalancers
+  become: true
+  become_method: sudo
+  vars_files:
+    - group_vars/all
+  roles:
+    - 4-kube-api-haproxy
+
+- hosts: client
+  become: true
+  become_method: sudo
+  vars_files:
+    - group_vars/all
+  roles:
+    - 5-kube-client-remote-access
 
 #- hosts: masters
 #  become: true
@@ -16,13 +46,6 @@
 #    - group_vars/all
 #  roles:
 #    - etcd-ha-non-https
-
-#- hosts: masters
-#  become: true
-#  vars_files:
-#    - group_vars/all
-#  roles:
-#    - etcd-ha-https
 
 #- hosts: loadbalancers
 #  become: true
@@ -32,44 +55,21 @@
 #  roles:
 #    - pacemaker
 
-#- hosts: masters
-#  become: true
-#  vars_files:
-#    - group_vars/all
-#  roles:
-#    - api-servers
-
-#- hosts: loadbalancers
+#- hosts: k8s-master1
 #  become: true
 #  become_method: sudo
 #  vars_files:
 #    - group_vars/all
 #  roles:
-#    - kube-api-haproxy
-
-- hosts: client
-  become: true
-  become_method: sudo
-  vars_files:
-    - group_vars/all
-  roles:
-    - kube-client-remote-access
-
-- hosts: k8s-master1
-  become: true
-  become_method: sudo
-  vars_files:
-    - group_vars/all
-  roles:
-    - etcd-master-flannel-net
-
-- hosts: k8s-master1
-  become: true
-  become_method: sudo
-  vars_files:
-    - group_vars/all
-  roles:
-    - worker-node-setup-prerequisites
+#    - etcd-master-flannel-net
+#
+#- hosts: k8s-master1
+#  become: true
+#  become_method: sudo
+#  vars_files:
+#    - group_vars/all
+#  roles:
+#    - worker-node-setup-prerequisites
 
 #- hosts: nodes
 #  become: true

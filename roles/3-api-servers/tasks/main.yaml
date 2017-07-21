@@ -1,0 +1,7 @@
+---
+
+- include: 1-get-pkgs.yaml
+- include: 2-kube-apiserver.yaml
+- include: 3-kube-controller-manager.yaml
+- include: 4-kube-scheduler.yaml
+- include: 5-get-status.yaml

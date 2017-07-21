@@ -1,5 +1,0 @@
----
-
-- include: install-kubectl.yaml
-- include: kubectl-client-setup.yaml
-- include: get-k8s-status-from-client.yaml

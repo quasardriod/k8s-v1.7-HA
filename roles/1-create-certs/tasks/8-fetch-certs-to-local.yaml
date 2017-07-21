@@ -1,0 +1,32 @@
+---
+
+# Fetch all required worker and mster certificates to local system
+
+- name: Create a temporary directory to store certificates and other files to local system
+  file:
+    path: /var/tmp/k8s-v1.7-certs
+    state: directory
+    owner: stack
+    group: stack
+    mode: 0755
+  delegate_to: localhost
+  ignore_errors: false
+
+- name: Fetch certificate files
+  fetch:
+    src: /k8s-v1.7/certs/{{item}}
+    dest: /var/tmp/k8s-v1.7-certs/
+    flat: yes
+    fail_on_missing: yes
+  with_items:
+    - ca.pem
+    - kube-proxy.pem
+    - kube-proxy-key.pem
+    - ca-key.pem
+    - kubernetes-key.pem
+    - kubernetes.pem
+    - token.csv
+    - bootstrap.kubeconfig
+    - kube-proxy.kubeconfig
+    - admin.pem
+    - admin-key.pem

@@ -1,7 +1,0 @@
----
-
-- include: get-pkgs.yaml
-- include: kube-apiserver.yaml
-- include: kube-controller-manager.yaml
-- include: kube-scheduler.yaml
-- include: get-status.yaml

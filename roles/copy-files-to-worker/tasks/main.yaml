@@ -1,4 +1,0 @@
----
-
-- include: copy-tls-certs-to-workers.yaml
-- include: copy-kubeconfig-to-workers.yaml

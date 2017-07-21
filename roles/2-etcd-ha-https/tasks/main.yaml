@@ -1,0 +1,4 @@
+---
+
+- include: 1-get-etcd.yaml
+- include: 2-etcd-service-setup.yaml

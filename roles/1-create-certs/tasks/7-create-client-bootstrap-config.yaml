@@ -1,0 +1,39 @@
+---
+
+- name: Copy create-client-bootstrap-kubeconfig.j2
+  template:
+    src: create-client-bootstrap-kubeconfig.j2
+    dest: /tmp/create-client-bootstrap-kubeconfig.sh
+    mode: 0744
+    backup: no
+  ignore_errors: false
+
+- name: Run create-client-bootstrap-kubeconfig.sh locally to create bootstrap kubeconfig
+  shell: sh /tmp/create-client-bootstrap-kubeconfig.sh
+  args:
+    chdir: /k8s-v1.7/certs
+  ignore_errors: false
+
+- name: Run Copy create-client-kubeproxy-kubeconfig.j2
+  template:
+    src: create-client-kubeproxy-kubeconfig.j2
+    dest: /tmp/create-client-kubeproxy-kubeconfig.sh
+    mode: 0744
+    backup: no
+  ignore_errors: false
+
+- name: Run create-client-kubeproxy-kubeconfig.sh locally to create bootstrap kubeconfig
+  shell: sh /tmp/create-client-kubeproxy-kubeconfig.sh
+  args:
+    chdir: /k8s-v1.7/certs
+  ignore_errors: false
+
+- name: Remove copied scripts
+  file:
+    path: /tmp/{{item}}
+    state: absent
+  with_items:
+    - create-client-bootstrap-kubeconfig.sh
+    - create-client-kubeproxy-kubeconfig.sh
+  tags:
+    - remove-worker-kube-config-scripts
