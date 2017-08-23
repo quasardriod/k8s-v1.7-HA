@@ -2,43 +2,51 @@
 
 # Setup hosts and k8s package installation
 
-- hosts: client
+- hosts: all
   become: true
   become_method: sudo
   vars_files:
     - group_vars/all
   roles:
-    - 1-create-certs
+    - 0-host-presetup
 
-- hosts: masters
-  become: true
-  vars_files:
-    - group_vars/all
-  roles:
-    - 2-etcd-ha-https
+#- hosts: client
+#  become: true
+#  become_method: sudo
+#  vars_files:
+#    - group_vars/all
+#  roles:
+#    - 1-create-certs
 
-- hosts: masters
-  become: true
-  vars_files:
-    - group_vars/all
-  roles:
-    - 3-api-servers
+#- hosts: masters
+#  become: true
+#  vars_files:
+#    - group_vars/all
+#  roles:
+#    - 2-etcd-ha-https
 
-- hosts: loadbalancers
-  become: true
-  become_method: sudo
-  vars_files:
-    - group_vars/all
-  roles:
-    - 4-kube-api-haproxy
+#- hosts: masters
+#  become: true
+#  vars_files:
+#    - group_vars/all
+#  roles:
+#    - 3-api-servers
 
-- hosts: client
-  become: true
-  become_method: sudo
-  vars_files:
-    - group_vars/all
-  roles:
-    - 5-kube-client-remote-access
+#- hosts: loadbalancers
+#  become: true
+#  become_method: sudo
+#  vars_files:
+#    - group_vars/all
+#  roles:
+#    - 4-kube-api-haproxy
+
+#- hosts: client
+#  become: true
+#  become_method: sudo
+#  vars_files:
+#    - group_vars/all
+#  roles:
+#    - 5-kube-client-remote-access
 
 #- hosts: masters
 #  become: true

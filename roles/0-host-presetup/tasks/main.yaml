@@ -1,0 +1,11 @@
+---
+
+- name: Copy hosts template to all nodes
+  template:
+    src: hosts.j2
+    dest: /etc/hosts
+    backup: yes
+    mode: 0644
+    owner: root
+    group: root
+  ignore_errors: false
