@@ -1,7 +1,7 @@
 ---
 
-#- include: 1-install_cfssl_tool.yaml
-#- include: 2-setup_ca.yaml
+- include: 1-install_cfssl_tool.yaml
+- include: 2-setup_ca.yaml
 - include: 3-tls_certs_clients.yaml
 - include: 4-tls_certs_server.yaml
 - include: 5-install-kubectl.yaml
