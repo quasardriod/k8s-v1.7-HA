@@ -13,7 +13,7 @@ kube-lb02 ansible_ssh_host=192.168.2.157
 
 kube-client ansible_ssh_host=192.168.2.158
 
-[all]
+[all-k8s-hosts]
 k8s-master1
 k8s-master2
 k8s-master3
