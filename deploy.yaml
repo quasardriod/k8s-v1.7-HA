@@ -2,7 +2,7 @@
 
 # Setup hosts and k8s package installation
 
- hosts: all-k8s-hosts
+- hosts: all-k8s-hosts
   become: true
   become_method: sudo
   vars_files:
