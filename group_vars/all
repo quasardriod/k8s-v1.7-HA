@@ -23,6 +23,8 @@ k8s_lb_vip: 192.168.2.155
 k8s_client_ip: 192.168.2.158
 k8s_client_hostname: k8s-client
 
+dns_server: 192.168.2.1
+
 # Packages
 
 k8s_api_pkg: https://storage.googleapis.com/kubernetes-release/release/v1.7.0/bin/linux/amd64/kube-apiserver
