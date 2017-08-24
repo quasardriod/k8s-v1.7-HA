@@ -1,2 +1,3 @@
 ---
-- include: install-flannel.yaml
+#- include: 1-install-flannel.yaml
+- include: 2-get-subnet.yaml

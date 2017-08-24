@@ -1,0 +1,8 @@
+---
+
+- name: Get subnet details from each nodes
+  shell: cat /run/flannel/subnet.env|grep -i subnet
+  register: node_subnet
+
+- debug:
+    var: node_subnet.stdout
