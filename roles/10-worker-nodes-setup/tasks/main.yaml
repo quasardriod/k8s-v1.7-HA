@@ -1,0 +1,7 @@
+---
+
+- include: 1-dirs-tls-config.yaml
+- include: 2-install-cni.yaml
+#- include: 3-install-docker.yaml
+#- include: 4-install-kubelet.yaml
+#- include: 5-install-kubeproxy.yaml

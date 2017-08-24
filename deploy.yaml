@@ -40,13 +40,45 @@
 #  roles:
 #    - 4-kube-api-haproxy
 
-- hosts: client
+#- hosts: client
+#  become: true
+#  become_method: sudo
+#  vars_files:
+#    - group_vars/all
+#  roles:
+#    - 6-kube-client-remote-access
+
+- hosts: k8s-master1
   become: true
   become_method: sudo
   vars_files:
     - group_vars/all
   roles:
-    - 5-kube-client-remote-access
+    - 7-etcd-master-flannel-net
+
+- hosts: k8s-master1
+  become: true
+  become_method: sudo
+  vars_files:
+    - group_vars/all
+  roles:
+    - 8-worker-node-setup-prerequisites
+
+- hosts: nodes
+  become: true
+  become_method: sudo
+  vars_files:
+    - group_vars/all
+  roles:
+    - 9-worker-flannel-install
+
+#- hosts: nodes
+#  become: true
+#  become_method: sudo
+#  vars_files:
+#    - group_vars/all
+#  roles:
+#    - 10-worker-nodes-setup
 
 #- hosts: masters
 #  become: true
@@ -63,37 +95,8 @@
 #  roles:
 #    - pacemaker
 
-#- hosts: k8s-master1
-#  become: true
-#  become_method: sudo
-#  vars_files:
-#    - group_vars/all
-#  roles:
-#    - etcd-master-flannel-net
 #
-#- hosts: k8s-master1
-#  become: true
-#  become_method: sudo
-#  vars_files:
-#    - group_vars/all
-#  roles:
-#    - worker-node-setup-prerequisites
 
-#- hosts: nodes
-#  become: true
-#  become_method: sudo
-#  vars_files:
-#    - group_vars/all
-#  roles:
-#    - worker-flannel-install
-
-#- hosts: nodes
-#  become: true
-#  become_method: sudo
-#  vars_files:
-#    - group_vars/all
-#  roles:
-#    - worker-nodes-setup
 #
 #- hosts: k8s-master1
 #  become: true

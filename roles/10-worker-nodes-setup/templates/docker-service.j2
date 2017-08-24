@@ -4,7 +4,12 @@ Documentation=http://docs.docker.io
 
 [Service]
 EnvironmentFile=-/etc/default/docker
-ExecStart=/usr/bin/docker daemon --iptables=false --ip-masq=false --host=unix:///var/run/docker.sock --log-level=error --storage-driver=overlay
+ExecStart=/usr/bin/docker daemon \
+  --iptables=false \
+  --ip-masq=false \
+  --host=unix:///var/run/docker.sock \
+  --log-level=error \
+  --storage-driver=overlay
 Restart=on-failure
 RestartSec=5
 
