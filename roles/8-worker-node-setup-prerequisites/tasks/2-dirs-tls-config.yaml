@@ -36,4 +36,6 @@
     - ca.pem
     - kube-proxy.pem
     - kube-proxy-key.pem
+    - kubernetes.pem
+    - kubernetes-key.pem
   ignore_errors: flase

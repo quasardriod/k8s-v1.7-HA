@@ -1,10 +1,17 @@
 ---
+
+- name: Check if flanneld package already installed
+  stat:
+    path: /usr/bin/flanneld
+  register: flanneld_file
+
 - name: Install flannel package
   get_url:
     url: https://github.com/coreos/flannel/releases/download/v0.7.0/flanneld-amd64
     dest: /usr/bin/flanneld
     mode: 0755
   ignore_errors: false
+  when: flanneld_file.stat.path is not defined
 
 - name: Copy flanneld service template to all worker nodes
   template:
@@ -20,7 +27,7 @@
 - name: Start and enable flanneld service
   service:
     name: flanneld
-    state: started
+    state: restarted
     enabled: yes
   ignore_errors: false
 
@@ -32,7 +39,7 @@
 - debug:
     var: flanneld_status.stdout
 
-- name: Install bridge-utils package
-  package:
-    name: bridge-utils
-    state: latest
+#- name: Install bridge-utils package
+#  package:
+#    name: bridge-utils
+#    state: latest

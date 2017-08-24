@@ -1,13 +1,4 @@
 ---
 
-# Each worker node will provision a unique TLS client certificate as defined in the kubelet TLS bootstrapping guide.
-#The kubelet-bootstrap user must be granted permission to request a client TLS certificate.
-# https://kubernetes.io/docs/admin/kubelet-tls-bootstrapping/
-
-# Note: Below command will be run on one of master node, in my case master1
-
-#Enable TLS bootstrapping by binding the kubelet-bootstrap user to the system:node-bootstrapper cluster role:
-
-- name: Enable TLS bootstrapping by binding the kubelet-bootstrap user
-  script: tls-kubelet-bootstrap-user.sh
-  ignore_errors: false
+#- include: 1-enable-tls-bootstrap-binding.yaml
+- include: 2-dirs-tls-config.yaml

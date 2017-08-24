@@ -56,21 +56,13 @@
 #  roles:
 #    - 7-etcd-master-flannel-net
 
-#- hosts: k8s-master1
-#  become: true
-#  become_method: sudo
-#  vars_files:
-#    - group_vars/all
-#  roles:
-#    - 8-worker-node-setup-prerequisites
-
-#- hosts: nodes
-#  become: true
-#  become_method: sudo
-#  vars_files:
-#    - group_vars/all
-#  roles:
-#    - 9-worker-flannel-install
+- hosts: k8s-master1
+  become: true
+  become_method: sudo
+  vars_files:
+    - group_vars/all
+  roles:
+    - 8-worker-node-setup-prerequisites
 
 - hosts: nodes
   become: true
@@ -78,7 +70,15 @@
   vars_files:
     - group_vars/all
   roles:
-    - 10-worker-nodes-setup
+    - 9-worker-flannel-install
+
+#- hosts: nodes
+#  become: true
+#  become_method: sudo
+#  vars_files:
+#    - group_vars/all
+#  roles:
+#    - 10-worker-nodes-setup
 
 #- hosts: masters
 #  become: true
