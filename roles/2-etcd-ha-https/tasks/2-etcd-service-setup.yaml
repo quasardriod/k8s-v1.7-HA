@@ -17,6 +17,8 @@
     name: etcd
     state: started
     enabled: yes
+  retries: 3
+  delay: 10
   ignore_errors: false
 
 - name: Check etcd service status
