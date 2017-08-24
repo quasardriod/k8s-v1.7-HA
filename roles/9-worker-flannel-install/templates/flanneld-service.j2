@@ -1,3 +1,4 @@
+# tested with httpd etcd and worked
 [Unit]
 Description=Flanneld overlay address etcd agent
 Documentation=https://github.com/coreos
@@ -9,8 +10,12 @@ Before=docker.service
 
 [Service]
 ExecStart=/usr/bin/flanneld \
-  --etcd-endpoints=https://{{k8s_master1_ip}}:2379,https://{{k8s_master2_ip}}:2379,https://{{k8s_master3_ip}}:2379 \
-  --etcd-prefix=kubernetes-cluster/network
+  -etcd-endpoints=https://{{k8s_master1_ip}}:2379,https://{{k8s_master2_ip}}:2379,https://{{k8s_master3_ip}}:2379 \
+  -etcd-prefix=kubernetes-cluster/network \
+  -etcd-cafile=/var/lib/kubernetes/ca.pem \
+  -etcd-certfile=/var/lib/kubernetes/kubernetes.pem \
+  -etcd-keyfile=/var/lib/kubernetes/kubernetes-key.pem
+
 Restart=on-failure
 RestartSec=5
 
