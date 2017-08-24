@@ -17,6 +17,9 @@
     name: kube-controller-manager
     state: started
     enabled: yes
+  retries: 3
+  delay: 10
+  ignore_errors: false
 
 - name: Check kube-controller-manager service status
   shell: systemctl status kube-controller-manager --no-pager

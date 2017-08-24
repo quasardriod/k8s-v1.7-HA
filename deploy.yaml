@@ -18,19 +18,19 @@
 #  roles:
 #    - 1-create-certs
 
-- hosts: masters
-  become: true
-  vars_files:
-    - group_vars/all
-  roles:
-    - 2-etcd-ha-https
-
 #- hosts: masters
 #  become: true
 #  vars_files:
 #    - group_vars/all
 #  roles:
-#    - 3-api-servers
+#    - 2-etcd-ha-https
+
+- hosts: masters
+  become: true
+  vars_files:
+    - group_vars/all
+  roles:
+    - 3-api-servers
 
 #- hosts: loadbalancers
 #  become: true

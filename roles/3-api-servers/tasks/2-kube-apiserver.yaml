@@ -19,6 +19,9 @@
     name: kube-apiserver
     state: started
     enabled: yes
+  retries: 3
+  delay: 10
+  ignore_errors: false
 
 - name: Check kube-apiserver service status
   shell: systemctl status kube-apiserver --no-pager
