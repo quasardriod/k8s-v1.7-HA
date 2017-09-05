@@ -9,25 +9,27 @@
 
 #Generate a certificate and private key for each Kubernetes worker node:
 
-#- name: Copy create-worker-csr-json.j2 template to client machine
-#  template:
-#    src: 5-create-worker-csr-json.j2
-#    dest: /k8s-v1.7/certs/create-worker-csr-json.sh
-#    mode: 0744
-#    backup: no
-#  ignore_errors: false
+- name: Copy create-worker-csr-json.j2 template to client machine
+  template:
+    src: 5-create-worker-csr-json.j2
+    dest: /k8s-v1.7/certs/create-worker-csr-json.sh
+    mode: 0744
+    backup: no
+  ignore_errors: false
 
-#- name: Create csr.json for each worker machine
-#  shell: sh /k8s-v1.7/certs/create-worker-csr-json.sh
-#  ignore_errors: false
+- name: Create csr.json for each worker machine
+  shell: sh /k8s-v1.7/certs/create-worker-csr-json.sh
+  ignore_errors: false
 
 - name: Verify required files for created
   stat:
-    path: /k8s-v1.7/certs/"{{k8s_node1_hostname}}"-csr.json
+    path: /k8s-v1.7/certs/{{k8s_node1_hostname}}-csr.json
   register: worker_csr
 
 - debug:
-    var: worker_csr.stdout
+    msg: "Worker nodes csr files got created."
+  when: worker_csr.stat.path is defined
+  ignore_errors: false
 
 - fail:
     msg: "Whoops! Worker nodes csr files are failed to create."
