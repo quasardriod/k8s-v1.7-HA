@@ -1,0 +1,24 @@
+---
+
+# Create the kube-proxy client certificate
+
+- name: Copy kube-proxy client certificate signing request
+  copy:
+    src: kube-proxy-csr.json
+    dest: /k8s-v1.7/certs/
+  ignore_errors: false
+
+- name: Generate the kube-proxy client certificate and private key "gen-kube-proxy-client-cert.sh"
+  script: gen-kube-proxy-client-cert.sh
+  ignore_errors: false
+
+- name: Check required files kube-proxy-key.pem and kube-proxy.pem got created
+  stat:
+    path: /k8s-v1.7/certs/kube-proxy.pem
+  register: kproxy_cert
+  ignore_errors: false
+
+- fail:
+    msg: "Whoops! kube-proxy-key.pem and kube-proxy.pem files are failed to create."
+  when: kproxy_cert.stat.path is not defined
+  ignore_errors: false

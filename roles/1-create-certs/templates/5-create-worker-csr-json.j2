@@ -1,0 +1,24 @@
+#!/bin/bash
+
+cd /k8s-v1.7/certs/;
+
+for instance in "{{k8s_node1_hostname}}" "{{k8s_node2_hostname}}"; do
+cat > ${instance}-csr.json <<EOF
+{
+  "CN": "system:node:${instance}",
+  "key": {
+    "algo": "rsa",
+    "size": 2048
+  },
+  "names": [
+    {
+      "C": "US",
+      "L": "Portland",
+      "O": "system:nodes",
+      "OU": "Kubernetes The Hard Way",
+      "ST": "Oregon"
+    }
+  ]
+}
+EOF
+done

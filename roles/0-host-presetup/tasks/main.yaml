@@ -10,9 +10,9 @@
     group: root
   ignore_errors: false
 
-- name: Update resolv.conf file
-  lineinfile: "dest=/etc/resolv.conf
-    insertafter=EOF
-    line='nameserver {{dns_server}}'
-    regexp='nameserver {{dns_server}}'
-    state=present"
+#- name: Update resolv.conf file
+#  lineinfile: "dest=/etc/resolv.conf
+#    insertafter=EOF
+#    line='nameserver {{dns_server}}'
+#    regexp='nameserver {{dns_server}}'
+#    state=present"

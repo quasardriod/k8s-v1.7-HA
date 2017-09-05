@@ -1,0 +1,28 @@
+---
+
+- name: Copy 6-create-worker-certs.j2 template to client machine
+  template:
+    src: 6-create-worker-certs.j2
+    dest: /k8s-v1.7/certs/create-worker-certs.sh
+    mode: 0744
+    backup: no
+  ignore_errors: false
+
+- name: Generate a certificate and private key for each Kubernetes worker node
+  shell: sh /k8s-v1.7/certs/create-worker-certs.sh
+  ignore_errors: false
+
+- name: Verify required files for created
+  stat:
+    path: /k8s-v1.7/certs/"{{k8s_node2_hostname}}".pem
+  register: worker_cert
+
+- fail:
+    msg: "Whoops! Worker nodes certificate files are failed to create."
+  when: worker_cert.stat.path is not defined
+  ignore_errors: false
+
+- name: Delete script create-worker-certs.sh
+  file:
+    path: /k8s-v1.7/certs/create-worker-certs.sh
+    state: absent

@@ -8,8 +8,8 @@
     dest: /usr/local/bin/
     mode: 0755
   with_items:
-    - https://pkg.cfssl.org/R1.2/cfssl_linux-amd64
-    - https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64
+    - "{{cfssl_linux}}"
+    - "{{cfssljson_linux}}"
   sudo: true
 
 - name: Rename copied files
@@ -32,3 +32,9 @@
     - cfssl_linux-amd64
     - cfssljson_linux-amd64
   become: true
+
+- name: Verify cfssl version 1.2.0 or higher is installed
+  shell: cfssl version
+  register: cfssl_version
+- debug:
+    var: cfssl_version.stdout

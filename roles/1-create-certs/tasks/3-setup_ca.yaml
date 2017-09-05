@@ -1,0 +1,43 @@
+---
+
+- name: Create a directory to store certificates
+  file:
+    path: /k8s-v1.7/certs
+    state: directory
+    mode: 0755
+    owner: kubeuser
+    group: kubeuser
+  ignore_errors: false
+
+- name: Create a temp directory to store files
+  file:
+    path: /k8s-v1.7/temp
+    state: directory
+    mode: 0755
+    owner: kubeuser
+    group: kubeuser
+  ignore_errors: false
+
+- name: Copy CA config and csr files
+  copy:
+    src: "{{item}}"
+    dest: /k8s-v1.7/certs/
+  with_items:
+    - ca-config.json
+    - ca-csr.json
+  ignore_errors: false
+
+- name: Generate a CA certificate and private key "gen-ca-certs.sh"
+  script: gen-ca-certs.sh
+  ignore_errors: false
+
+- name: Check required files ca-key.pem and ca.pem got created
+  stat:
+    path: /k8s-v1.7/certs/ca.pem
+  register: ca_file
+  ignore_errors: false
+
+- fail:
+    msg: "Whoops! ca-key.pem and ca.pem files are failed to create by script gen-ca-certs."
+  when: ca_file.stat.path is not defined
+  ignore_errors: false

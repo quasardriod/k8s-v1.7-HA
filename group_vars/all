@@ -11,8 +11,8 @@ k8s_master3_hostname: k8s-master3
 
 k8s_node1_ip: 192.168.2.161
 k8s_node2_ip: 192.168.2.162
-k8s_worker1_hostname: k8s-node1
-k8s_worker2_hostname: k8s-node2
+k8s_node1_hostname: k8s-node1
+k8s_node2_hostname: k8s-node2
 
 k8s_lb01_ip: 192.168.2.156
 k8s_lb02_ip: 192.168.2.157
@@ -27,10 +27,14 @@ dns_server: 192.168.2.1
 
 # Packages
 
+cfssl_linux: https://pkg.cfssl.org/R1.2/cfssl_linux-amd64
+cfssljson_linux: https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64
+
+k8s_ctl_pkg: https://storage.googleapis.com/kubernetes-release/release/v1.7.4/bin/darwin/amd64/kubectl
 k8s_api_pkg: https://storage.googleapis.com/kubernetes-release/release/v1.7.0/bin/linux/amd64/kube-apiserver
 k8s_ctrlmgr_pkg: https://storage.googleapis.com/kubernetes-release/release/v1.7.0/bin/linux/amd64/kube-controller-manager
 k8s_scdl_pkg: https://storage.googleapis.com/kubernetes-release/release/v1.7.0/bin/linux/amd64/kube-scheduler
-k8s_ctl_pkg: https://storage.googleapis.com/kubernetes-release/release/v1.7.0/bin/linux/amd64/kubectl
+
 
 
 # Pod network specific variables

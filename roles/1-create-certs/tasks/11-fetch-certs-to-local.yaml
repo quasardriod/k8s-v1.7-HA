@@ -12,21 +12,25 @@
   delegate_to: localhost
   ignore_errors: false
 
-- name: Fetch certificate files
+- name: Get the files
+  shell: (cd /k8s-v1.7/certs; find . -maxdepth 1 -type f) | cut -d'/' -f2
+  register: files_to_copy
+
+- name: Fetch files
   fetch:
     src: /k8s-v1.7/certs/{{item}}
     dest: /var/tmp/k8s-v1.7-certs/
     flat: yes
     fail_on_missing: yes
-  with_items:
-    - ca.pem
-    - kube-proxy.pem
-    - kube-proxy-key.pem
-    - ca-key.pem
-    - kubernetes-key.pem
-    - kubernetes.pem
-    - token.csv
-    - bootstrap.kubeconfig
-    - kube-proxy.kubeconfig
-    - admin.pem
-    - admin-key.pem
+  with_items: files_to_copy.stdout_lines
+#    - ca.pem
+#    - kube-proxy.pem
+#    - kube-proxy-key.pem
+#    - ca-key.pem
+#    - kubernetes-key.pem
+#    - kubernetes.pem
+#    - token.csv
+#    - bootstrap.kubeconfig
+#    - kube-proxy.kubeconfig
+#    - admin.pem
+#    - admin-key.pem

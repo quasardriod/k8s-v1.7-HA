@@ -1,0 +1,37 @@
+---
+
+#The Kubelet Client Certificates
+#Kubernetes uses a special-purpose authorization mode called Node Authorizer,
+#that specifically authorizes API requests made by Kubelets. In order to be authorized by the Node Authorizer,
+#Kubelets must use a credential that identifies them as being in the system:nodes group,
+#with a username of system:node:<nodeName>. In this section you will create a certificate for each Kubernetes worker node
+#that meets the Node Authorizer requirements.
+
+#Generate a certificate and private key for each Kubernetes worker node:
+
+- name: Copy create-worker-csr-json.j2 template to client machine
+  template:
+    src: 5-create-worker-csr-json.j2
+    dest: /k8s-v1.7/certs/create-worker-csr-json.sh
+    mode: 0744
+    backup: no
+  ignore_errors: false
+
+- name: Create csr.json for each worker machine
+  shell: sh /k8s-v1.7/certs/create-worker-csr-json.sh
+  ignore_errors: false
+
+- name: Verify required files for created
+  stat:
+    path: /k8s-v1.7/certs/"{{k8s_node1_hostname}}"-csr.json
+  register: worker_csr
+
+- fail:
+    msg: "Whoops! Worker nodes csr files are failed to create."
+  when: worker_csr.stat.path is not defined
+  ignore_errors: false
+
+- name: Delete script create-worker-csr-json.sh
+  file:
+    path: /k8s-v1.7/certs/create-worker-csr-json.sh
+    state: absent 

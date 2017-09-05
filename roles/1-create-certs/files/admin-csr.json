@@ -1,6 +1,5 @@
 {
   "CN": "admin",
-  "hosts": [],
   "key": {
     "algo": "rsa",
     "size": 2048
@@ -10,7 +9,7 @@
       "C": "US",
       "L": "Portland",
       "O": "system:masters",
-      "OU": "Cluster",
+      "OU": "Kubernetes The Hard Way",
       "ST": "Oregon"
     }
   ]

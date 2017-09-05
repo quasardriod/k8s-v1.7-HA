@@ -1,0 +1,16 @@
+#!/bin/bash
+
+cd /k8s-v1.7/certs/;
+
+for instance in "{{k8s_node1_hostname}}" "{{k8s_node2_hostname}}"; do
+
+INTERNAL_IP=$(cat /etc/hosts|grep $instance|awk '{print $1}')
+
+cfssl gencert \
+  -ca=ca.pem \
+  -ca-key=ca-key.pem \
+  -config=ca-config.json \
+  -hostname=${instance},${INTERNAL_IP} \
+  -profile=kubernetes \
+  ${instance}-csr.json | cfssljson -bare ${instance}
+done

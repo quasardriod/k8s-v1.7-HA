@@ -1,0 +1,19 @@
+---
+
+- name: Check if kubectl package is already Installed
+  stat:
+    path: /usr/local/bin/kubectl
+  register: kubectl_file
+
+- name: Download and Install kubectl
+  get_url:
+    url: "{{k8s_ctl_pkg}}"
+    dest: /usr/local/bin/
+    mode: 0755
+  when: kubectl_file.stat.path is not defined
+
+- name: Verify kubectl version 1.7.4 or higher is installed
+  shell: kubectl version --client
+  register: kubectl_ver
+- debug:
+    var: kubectl_ver.stdout
