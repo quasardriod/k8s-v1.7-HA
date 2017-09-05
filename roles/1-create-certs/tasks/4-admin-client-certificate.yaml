@@ -6,7 +6,7 @@
 
 # Create the Admin client certificate
 
-- name: Copy CA config and csr files
+- name: Copy admin-csr file to client machine
   copy:
     src: admin-csr.json
     dest: /k8s-v1.7/certs/

@@ -2,8 +2,8 @@
 
 #- include: 1-install_cfssl_tool.yaml
 #- include: 2-install-kubectl.yaml
-- include: 3-setup_ca.yaml
-- include: 4-admin-client-certificate.yaml
+#- include: 3-setup_ca.yaml
+#- include: 4-admin-client-certificate.yaml
 - include: 5-kubelet-client-csr.yaml
 - include: 6-gen-wokernode-certs.yaml
 - include: 7-kube-proxy-client-cert.yaml
