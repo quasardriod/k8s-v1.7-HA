@@ -11,8 +11,8 @@ k8s_master3_hostname: k8s-master3
 
 k8s_node1_ip: 192.168.2.161
 k8s_node2_ip: 192.168.2.162
-k8s_worker1_hostname: k8s-worker1
-k8s_worker2_hostname: k8s-worker2
+k8s_worker1_hostname: k8s-node1
+k8s_worker2_hostname: k8s-node2
 
 k8s_lb01_ip: 192.168.2.156
 k8s_lb02_ip: 192.168.2.157
@@ -20,7 +20,7 @@ k8s_lb01_hostname: k8s-lb01
 k8s_lb02_hostname: k8s-lb02
 k8s_lb_vip: 192.168.2.155
 
-k8s_client_ip: 192.168.2.158
+k8s_client_ip: 192.168.2.160
 k8s_client_hostname: k8s-client
 
 dns_server: 192.168.2.1

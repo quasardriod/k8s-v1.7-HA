@@ -23,8 +23,6 @@
       generate_ssh_key: yes
     when: pub_key.stat.path is not defined
 
-
-
 - hosts: k8s-servers
   become: true
   become_method: sudo
