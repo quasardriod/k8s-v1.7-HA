@@ -6,7 +6,6 @@
     state: directory
     mode: 0755
     owner: kubeuser
-    group: kubeuser
   ignore_errors: false
 
 - name: Create a temp directory to store files
@@ -15,7 +14,6 @@
     state: directory
     mode: 0755
     owner: kubeuser
-    group: kubeuser
   ignore_errors: false
 
 - name: Copy CA config and csr files
