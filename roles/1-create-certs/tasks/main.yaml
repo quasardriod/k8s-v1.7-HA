@@ -8,6 +8,6 @@
 #- include: 6-gen-wokernode-certs.yaml
 #- include: 7-kube-proxy-client-cert.yaml
 #- include: 8-kube-api-server-certs.yaml
-- include: 9-kubelet-kubeconfig.yaml
-- include: 10-kubeproxy-kubeconfig.yaml
+#- include: 9-kubelet-kubeconfig.yaml
+#- include: 10-kubeproxy-kubeconfig.yaml
 - include: 11-fetch-certs-to-local.yaml
