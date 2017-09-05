@@ -7,7 +7,6 @@
     path: /var/tmp/k8s-v1.7-certs
     state: directory
     owner: stack
-    group: stack
     mode: 0755
   delegate_to: localhost
   ignore_errors: false

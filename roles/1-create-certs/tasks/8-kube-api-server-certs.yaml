@@ -16,7 +16,6 @@
     dest: /k8s-v1.7/certs/gen-kube-api-srv-cert.sh
     mode: 0755
     owner: kubeuser
-    group: kubeuser
   ignore_errors: false
 
 - name: Generate the Kubernetes certificate and private key
