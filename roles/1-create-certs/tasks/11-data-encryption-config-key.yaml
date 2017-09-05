@@ -1,0 +1,20 @@
+---
+
+- name: Generating the Data Encryption Config and Key
+  script: 11-data-encryption-config-key.sh
+
+- name: Check encryption-config.yaml files got created
+  stat:
+    path: /k8s-v1.7/certs/encryption-config.yaml
+  register: encryption_config
+  ignore_errors: false
+
+- debug:
+    msg: "encryption-config.yaml file got created."
+  when: encryption_config.stat.path is defined
+  ignore_errors: false
+
+- fail:
+    msg: "Whoops! encryption-config.yaml file failed to create."
+  when: encryption_config.stat.path is not defined
+  ignore_errors: false

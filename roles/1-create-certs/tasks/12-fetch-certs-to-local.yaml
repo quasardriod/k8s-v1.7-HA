@@ -1,18 +1,18 @@
 ---
 
 # Fetch all required worker and mster certificates to local system
+# this needs to be optimized
+- name: Create a temporary directory to store certificates and other files to local system
+  file:
+    path: /var/tmp/k8s-v1.7-certs
+    state: directory
+    owner: stack
+    mode: 0755
+  delegate_to: localhost
+  ignore_errors: false
 
-#- name: Create a temporary directory to store certificates and other files to local system
-#  file:
-#    path: /var/tmp/k8s-v1.7-certs
-#    state: directory
-#    owner: stack
-#    mode: 0755
-#  delegate_to: localhost
-#  ignore_errors: false
-
-#- name: Set permissions on created files
-#  shell: chown -R "{{ansible_ssh_user}}" /k8s-v1.7/certs/*
+- name: Set permissions on created files
+  shell: chown -R "{{ansible_ssh_user}}" /k8s-v1.7/certs/*
 
 - name: Get the files
   shell: scp -o StrictHostKeyChecking=no {{ansible_ssh_user}}@{{k8s_client_ip}}:/k8s-v1.7/certs/* /var/tmp/k8s-v1.7-certs/
@@ -26,7 +26,7 @@
 #    dest: /var/tmp/k8s-v1.7-certs/
 #    flat: yes
 #    fail_on_missing: yes
-#  with_items: 
+#  with_items:
 #    - files_to_copy.stdout_lines
 #    - ca.pem
 #    - kube-proxy.pem

@@ -5,7 +5,7 @@
     path: /usr/local/bin/kubectl
   register: kubectl_file
 
-- name: Download and Install kubectl
+- name: Download and Install kubectl - this needs to be tested
   get_url:
     url: "{{k8s_ctl_pkg}}"
     dest: /usr/local/bin/

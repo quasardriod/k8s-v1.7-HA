@@ -10,4 +10,5 @@
 #- include: 8-kube-api-server-certs.yaml
 #- include: 9-kubelet-kubeconfig.yaml
 #- include: 10-kubeproxy-kubeconfig.yaml
-- include: 11-fetch-certs-to-local.yaml
+- include: 11-data-encryption-config-key.yaml
+- include: 12-fetch-certs-to-local.yaml
