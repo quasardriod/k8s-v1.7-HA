@@ -1,6 +1,6 @@
 ---
 
-- name: Check if etcd package already installed
+- name: Check if kube-apiserver package already installed
   stat:
     path: /usr/local/bin/kube-apiserver
   register: kubeapi_file
@@ -16,3 +16,9 @@
     - "{{k8s_scdl_pkg}}"
     - "{{k8s_ctl_pkg}}"
   when: kubeapi_file.stat.path is not defined
+
+- name: Set ownership of kubectl binary
+  file:
+    path: /usr/local/bin/kubectl
+    owner: {{ansible_ssh_user}}
+    mode: 0755
