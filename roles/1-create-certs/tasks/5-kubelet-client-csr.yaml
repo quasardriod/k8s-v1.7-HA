@@ -27,9 +27,7 @@
   register: worker_csr
 
 - debug:
-    msg: "Worker nodes csr files got created."
-  when: worker_csr.stat.path is defined
-  ignore_errors: false
+    var: worker_csr.stdout
 
 - fail:
     msg: "Whoops! Worker nodes csr files are failed to create."

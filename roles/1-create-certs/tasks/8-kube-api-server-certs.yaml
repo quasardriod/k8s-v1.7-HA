@@ -29,6 +29,11 @@
   register: kubeapi_cert
   ignore_errors: false
 
+- debug:
+    msg: "Whoops! kubernetes-key.pem and kubernetes.pem files got created."
+  when: kubeapi_cert.stat.path is defined
+  ignore_errors: false
+
 - fail:
     msg: "Whoops! kubernetes-key.pem and kubernetes.pem files failed to create."
   when: kubeapi_cert.stat.path is not defined

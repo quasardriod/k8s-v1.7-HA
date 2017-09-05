@@ -18,6 +18,11 @@
   register: kproxy_cert
   ignore_errors: false
 
+- debug:
+    msg: "kube-proxy-key.pem and kube-proxy.pem files got to created."
+  when: kproxy_cert.stat.path is defined
+  ignore_errors: false
+
 - fail:
     msg: "Whoops! kube-proxy-key.pem and kube-proxy.pem files are failed to create."
   when: kproxy_cert.stat.path is not defined
