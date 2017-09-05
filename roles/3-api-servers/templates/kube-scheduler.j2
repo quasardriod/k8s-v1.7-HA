@@ -3,7 +3,7 @@ Description=Kubernetes Scheduler
 Documentation=https://github.com/GoogleCloudPlatform/kubernetes
 
 [Service]
-ExecStart=/usr/bin/kube-scheduler \
+ExecStart=/usr/local/bin/kube-scheduler \
   --leader-elect=true \
   --master=http://{{ansible_ssh_host}}:8080 \
   --v=2

@@ -1,30 +1,18 @@
 ---
 
-- name: Create kubernetes data directory in master nodes
-  file:
-    path: /var/lib/kubernetes
-    state: directory
-    mode: 0755
+- name: Check if etcd package already installed
+  stat:
+    path: /usr/local/bin/kube-apiserver
+  register: kubeapi_file
 
-- name: Copy certs and token to kubernetes data directory
-  copy:
-    src: /var/tmp/k8s-v1.7-certs/{{item}}
-    dest: /var/lib/kubernetes/
-  with_items:
-    - token.csv
-    - ca.pem
-    - ca-key.pem
-    - kubernetes-key.pem
-    - kubernetes.pem
-  ignore_errors: false
-
-- name: Download offcial kubernetes binaries in /usr/bin/
+- name: Download offcial kubernetes binaries in /usr/local/bin/
   get_url:
     url: "{{item}}"
-    dest: /usr/bin/
+    dest: /usr/local/bin/
     mode: 0755
   with_items:
     - "{{k8s_api_pkg}}"
     - "{{k8s_ctrlmgr_pkg}}"
     - "{{k8s_scdl_pkg}}"
     - "{{k8s_ctl_pkg}}"
+  when: kubeapi_file.stat.path is not defined

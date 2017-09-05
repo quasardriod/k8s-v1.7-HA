@@ -9,7 +9,7 @@
     - kubernetes.pem
   ignore_errors: false
 
-- name: Required certs got copied to /etc/etcd
+- name: Check Required certs got copied to /etc/etcd
   stat:
     path: /etc/etcd/kubernetes.pem
   register: etcd_certs

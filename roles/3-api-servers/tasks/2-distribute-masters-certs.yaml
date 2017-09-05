@@ -1,0 +1,30 @@
+---
+
+- name: Create kubernetes data directory in master nodes
+  file:
+    path: /var/lib/kubernetes
+    state: directory
+    mode: 0755
+
+- name: Copy certs and token to kubernetes data directory
+  copy:
+    src: /var/tmp/k8s-v1.7-certs/{{item}}
+    dest: /var/lib/kubernetes/
+  with_items:
+    - ca.pem
+    - ca-key.pem
+    - kubernetes-key.pem
+    - kubernetes.pem
+    - encryption-config.yaml
+  ignore_errors: false
+
+- name: Check Required certs got copied to /var/lib/kubernetes/
+  stat:
+    path: /var/lib/kubernetes/encryption-config.yaml
+  register: api_certs
+  ignore_errors: false
+
+- fail:
+    msg: "Whoops! K8s required certificates are missing."
+  when: api_certs.stat.path is not defined
+  ignore_errors: false
