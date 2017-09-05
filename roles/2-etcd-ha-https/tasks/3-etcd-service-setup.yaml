@@ -28,7 +28,7 @@
     var: ectd_srv_status.stdout
 
 - name: Get etcd cluster health status
-  shell: etcdctl --ca-file=/etc/etcd/ca.pem --cert-file=/etc/etcd/kubernetes.pem --key-file=/etc/etcd/kubernetes-key.pem cluster-health
+  shell: ETCDCTL_API=3 etcdctl member list
   when: ansible_nodename == k8s_master1_hostname
   retries: 3
   delay: 10

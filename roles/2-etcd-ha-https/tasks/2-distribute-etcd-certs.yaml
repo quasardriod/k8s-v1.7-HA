@@ -1,0 +1,21 @@
+---
+- name: Copy the TLS certs to etcd directory
+  copy:
+    src: /var/tmp/k8s-v1.7-certs/{{item}}
+    dest: /etc/etcd/
+  with_items:
+    - ca.pem
+    - kubernetes-key.pem
+    - kubernetes.pem
+  ignore_errors: false
+
+- name: Required certs got copied to /etc/etcd
+  stat:
+    path: /etc/etcd/kubernetes.pem
+  register: etcd_certs
+  ignore_errors: false
+
+- fail:
+    msg: "Whoops! ectd required certificates are missing."
+  when: etcd_certs.stat.path is not defined
+  ignore_errors: false

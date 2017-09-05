@@ -1,38 +1,43 @@
 ---
 
-- name: Create etcd directory
+- name: Create etcd directories
   file:
-    path: /etc/etcd
+    path: "{{item}}"
     state: directory
     mode: 0755
-
-- name: Copy the TLS certs to etcd directory
-  copy:
-    src: /var/tmp/k8s-v1.7-certs/{{item}}
-    dest: /etc/etcd/
   with_items:
-    - ca.pem
-    - kubernetes-key.pem
-    - kubernetes.pem
-  ignore_errors: false
+    - /etc/etcd
+    - /var/lib/etcd
+
+- name: Check if etcd package already installed
+  stat:
+    path: /usr/local/bin/etcd
+  register: etcd_file
 
 - name: Download and extract etcd binary
   unarchive:
-    src: https://github.com/coreos/etcd/releases/download/v3.1.4/etcd-v3.1.4-linux-amd64.tar.gz
+    src: "{{etcd_pkg}}"
     dest: /tmp
-    remote_src: True
+    copy: no
+  ignore_errors: false
+  when: etcd_file.stat.path is not defined
 
-- name: Copy etcd binaries to /usr/bin
+- name: Copy etcd binaries to /usr/local/bin
   command: "{{item}}"
   with_items:
-    -  mv /tmp/etcd-v3.1.4-linux-amd64/etcd /usr/bin/
-    -  mv /tmp/etcd-v3.1.4-linux-amd64/etcdctl /usr/bin/
+    -  mv /tmp/etcd-v3.2.6-linux-amd64/etcd /usr/local/bin/
+    -  mv /tmp/etcd-v3.2.6-linux-amd64/etcdctl /usr/local/bin/
 
-- name: Create the etcd data directory
-  file:
-    path: /var/lib/etcd
-    state: directory
-    mode: 0755
+- name: Check required etcd binaries got created
+  stat:
+    path: /usr/local/bin/etcdctl
+  register: etcdctl
+  ignore_errors: false
+
+- fail:
+    msg: "Whoops! ectd binaries are missing."
+  when: etcdctl.stat.path is not defined
+  ignore_errors: false
 
 - name: Remove /tmp/etcd additional data
   file:

@@ -29,7 +29,7 @@ dns_server: 192.168.2.1
 
 cfssl_linux: https://pkg.cfssl.org/R1.2/cfssl_linux-amd64
 cfssljson_linux: https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64
-
+etcd_pkg: https://github.com/coreos/etcd/releases/download/v3.2.6/etcd-v3.2.6-linux-amd64.tar.gz
 k8s_ctl_pkg: https://storage.googleapis.com/kubernetes-release/release/v1.7.4/bin/darwin/amd64/kubectl
 k8s_api_pkg: https://storage.googleapis.com/kubernetes-release/release/v1.7.0/bin/linux/amd64/kube-apiserver
 k8s_ctrlmgr_pkg: https://storage.googleapis.com/kubernetes-release/release/v1.7.0/bin/linux/amd64/kube-controller-manager
