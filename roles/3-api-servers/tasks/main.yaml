@@ -1,6 +1,6 @@
 ---
 
-- include: 1-get-pkgs.yaml
+#- include: 1-get-pkgs.yaml
 #- include: 2-distribute-masters-certs.yaml
 #- include: 3-kube-apiserver.yaml
 #- include: 4-kube-controller-manager.yaml
