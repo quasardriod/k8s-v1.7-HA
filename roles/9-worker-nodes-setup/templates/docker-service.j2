@@ -3,8 +3,8 @@ Description=Docker Application Container Engine
 Documentation=http://docs.docker.io
 
 [Service]
-EnvironmentFile=-/etc/default/docker
-ExecStart=/usr/bin/docker daemon \
+#EnvironmentFile=-/etc/default/docker
+ExecStart=/usr/local/bin/docker daemon \
   --iptables=false \
   --ip-masq=false \
   --host=unix:///var/run/docker.sock \
