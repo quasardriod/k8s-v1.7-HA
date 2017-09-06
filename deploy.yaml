@@ -46,29 +46,21 @@
 #  roles:
 #    - 5-kube-client-remote-access
 
-- hosts: k8s-master1
-  become: true
-  become_method: sudo
-  vars_files:
-    - group_vars/all
-  roles:
-    - 6-etcd-master-flannel-net
-
 #- hosts: k8s-master1
 #  become: true
 #  become_method: sudo
 #  vars_files:
 #    - group_vars/all
 #  roles:
-#    - 8-worker-node-setup-prerequisites
+#    - 6-etcd-master-flannel-net
 
-#- hosts: nodes
-#  become: true
-#  become_method: sudo
-#  vars_files:
-#    - group_vars/all
-#  roles:
-#    - 9-workernode-certs
+- hosts: nodes
+  become: true
+  become_method: sudo
+  vars_files:
+    - group_vars/all
+  roles:
+    - 7-workernode-certs
 
 #- hosts: nodes
 #  become: true
