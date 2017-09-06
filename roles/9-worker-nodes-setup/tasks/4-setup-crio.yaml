@@ -7,7 +7,7 @@
   ignore_errors: false
 
 - name: move crio.conf and seccomp.json to /etc/crio/
-  shell: cd /var/tmp/; crio.conf seccomp.json /etc/crio/
+  shell: cd /var/tmp/; mv crio.conf seccomp.json /etc/crio/
   when: crio_conf_file.stat.path is not defined
   ignore_errors: false
 
