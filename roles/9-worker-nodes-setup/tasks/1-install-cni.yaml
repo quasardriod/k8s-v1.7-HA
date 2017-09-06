@@ -7,7 +7,7 @@
   unarchive:
     src: "{{cni_pkg}}"
     dest: /opt/cni/bin/
-#    remote_src: True
+    remote_src: True
   ignore_errors: false
 
 #- name: Copy flannel network binary to /etc/cni/net.d
