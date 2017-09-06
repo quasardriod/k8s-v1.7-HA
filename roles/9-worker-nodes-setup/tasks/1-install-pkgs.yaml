@@ -15,6 +15,14 @@
   ignore_errors: false
 
 #======================== CRIO ===========
+
+- name: Install crio dependancies
+  command: "{{item}}"
+  with_items:
+    - add-apt-repository -y ppa:alexlarsson/flatpak
+    - apt-get update
+    - apt-get install -y socat libgpgme11 libostree-1-1
+    
 - name: Check if CRIO already installed
   stat:
     path: /usr/local/bin/crio
