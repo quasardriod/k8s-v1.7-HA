@@ -2,7 +2,7 @@
 
 - name: Create required directories in worker nodes
   file:
-    path: "{{item}}"
+    path: {{item}}
     state: directory
     mode: 0755
   with_items:
@@ -13,25 +13,27 @@
     - /var/lib/kubernetes
     - /var/run/kubernetes
 
-- name: copy CA certificate to worker nodes in /var/lib/kubernetes
+- name: copy CA certificate to worker nodes in /var/lib/kubernetes/
   copy:
     src: /var/tmp/k8s-v1.7-certs/ca.pem
     dest: /var/lib/kubernetes/
   ignore_errors: false
 
-- name: copy worker nodes certificates to /var/lib/kubelet
+- name: copy worker nodes certificates to /var/lib/kubelet/
   copy:
-    src: "{{item}}"
+    src: /var/tmp/k8s-v1.7-certs/{{item}}
     dest: /var/lib/kubelet/
   with_items:
-    - /var/tmp/k8s-v1.7-certs/{{ansible_nodename}}.pem
-    - /var/tmp/k8s-v1.7-certs/{{ansible_nodename}}-key.pem
+    - ansible_nodename.pem
+    - ansible_nodename-key.pem
   ignore_errors: false
 
 - name: copy worker nodes kubeconfig files to /var/lib/kubelet/ named as kubeconfig
   copy:
-    src: /var/tmp/k8s-v1.7-certs/{{ansible_nodename}}.kubeconfig
+    src: /var/tmp/k8s-v1.7-certs/"{{ansible_nodename}}".kubeconfig
     dest: /var/lib/kubelet/kubeconfig
+  with_items:
+      - kube-proxy.kubeconfig
   ignore_errors: false
 
 - name: copy kube-proxy kubeconfig file to /var/lib/kube-proxy/ named as kubeconfig
