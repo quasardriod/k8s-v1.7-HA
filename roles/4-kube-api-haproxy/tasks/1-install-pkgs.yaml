@@ -1,0 +1,23 @@
+---
+
+- name: Check if keepalived package are installed
+  stat:
+    path: /usr/sbin/keepalived
+  register: keepalived_file
+
+- name: Install keepalived package
+  package:
+    name: keepalived
+    state: latest
+  when: keepalived_file.stat.path is not defined
+
+- name: Check if haproxy package are installed
+  stat:
+    path: /usr/sbin/haproxy
+  register: haproxy_file
+
+- name: Install haproxy package
+  package:
+    name: haproxy
+    state: latest
+  when: haproxy_file.stat.path is not defined

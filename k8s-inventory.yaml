@@ -41,6 +41,7 @@ k8s-node2
 
 [loadbalancers]
 kube-lb01
+kube-lb02
 
 [client]
 kube-client

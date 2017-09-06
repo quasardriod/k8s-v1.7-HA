@@ -1,0 +1,8 @@
+---
+
+- name: Get loadbalancer servers interface name
+  shell: ip a|grep -i -B2 {{ansible_ssh_host}}|awk 'FNR==1 {print $2}'|cut -d':' -f1
+  register: lb_eth_name
+- debug:
+    var: lb_eth_name.stdout
+#- name: Copy keepalived template to both loadbalancer servers
