@@ -35,7 +35,7 @@ k8s_api_pkg: https://storage.googleapis.com/kubernetes-release/release/v1.7.4/bi
 k8s_ctrlmgr_pkg: https://storage.googleapis.com/kubernetes-release/release/v1.7.4/bin/linux/amd64/kube-controller-manager
 k8s_scdl_pkg: https://storage.googleapis.com/kubernetes-release/release/v1.7.4/bin/linux/amd64/kube-scheduler
 
-
+flanneld_pkg: https://github.com/coreos/flannel/releases/download/v0.8.0/flanneld-amd64
 
 # Pod network specific variables
 pod_cidr: 10.0.0.0/8
