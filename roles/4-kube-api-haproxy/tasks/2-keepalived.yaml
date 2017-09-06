@@ -1,52 +1,52 @@
 ---
 
-#- name: Get loadbalancer servers interface name
-#  shell: ip a|grep -i -B2 {{ansible_ssh_host}}|awk 'FNR==1 {print $2}'|cut -d':' -f1
-#  register: lb_eth_name
-#  ignore_errors: false
-#
-#- name: Get VIP network prifix
-#  shell: ip a|grep -i -B2 {{ansible_ssh_host}}|awk 'FNR==3 {print $2}'|cut -d'/' -f2
-#  register: lb_vip_prifix
-#  ignore_errors: false
+- name: Get loadbalancer servers interface name
+  shell: ip a|grep -i -B2 {{ansible_ssh_host}}|awk 'FNR==1 {print $2}'|cut -d':' -f1
+  register: lb_eth_name
+  ignore_errors: false
 
-#- name: Verify that keepalived directory exists
-#  stat:
-#    path: /etc/keepalived/
-#  register: keepalived_path
-#  ignore_errors: false
+- name: Get VIP network prifix
+  shell: ip a|grep -i -B2 {{ansible_ssh_host}}|awk 'FNR==3 {print $2}'|cut -d'/' -f2
+  register: lb_vip_prifix
+  ignore_errors: false
 
-#- name: Create keepalived directory
-#  file:
-#    path: /etc/keepalived
-#    state: directory
-#    owner: root
-#    group: root
-#    mode: 0744
-#  when: keepalived_path.stat.path is not defined
+- name: Verify that keepalived directory exists
+  stat:
+    path: /etc/keepalived/
+  register: keepalived_path
+  ignore_errors: false
 
-#- name: Copy keepalived template to both loadbalancer servers
-#  template:
-#    src: keepalived.j2
-#    dest: /etc/keepalived/keepalived.conf
-#    mode: 0644
-#    backup: yes
-#  ignore_errors: false
+- name: Create keepalived directory
+  file:
+    path: /etc/keepalived
+    state: directory
+    owner: root
+    group: root
+    mode: 0744
+  when: keepalived_path.stat.path is not defined
 
-#- name: Start keepalived service
-#  service:
-#    name: keepalived
-#    state: started
-#    enabled: yes
-#  retries: 3
-#  delay: 10
-#  ignore_errors: false
+- name: Copy keepalived template to both loadbalancer servers
+  template:
+    src: keepalived.j2
+    dest: /etc/keepalived/keepalived.conf
+    mode: 0644
+    backup: yes
+  ignore_errors: false
 
-#- name: check keepalived service status
-#  shell: systemctl status keepalived.service --no-pager
-#  register: keepalived_svc
-#- debug:
-#    var: keepalived_svc.stdout
+- name: Start keepalived service
+  service:
+    name: keepalived
+    state: started
+    enabled: yes
+  retries: 3
+  delay: 10
+  ignore_errors: false
+
+- name: check keepalived service status
+  shell: systemctl status keepalived.service --no-pager
+  register: keepalived_svc
+- debug:
+    var: keepalived_svc.stdout
 
 - name: check VIP validation
   shell: ip a|grep -i {{k8s_lb_vip}}|awk 'FNR==1 {print $2}'|cut -d'/' -f1
