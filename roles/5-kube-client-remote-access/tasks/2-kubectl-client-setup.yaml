@@ -26,8 +26,6 @@
 
 - name: Run kubeconfig-client-setup.sh in client to complete kubectl client setup
   shell: sh /tmp/kubeconfig-client-setup.sh
-  args:
-    chdir: /kubectl-client-setup/
   ignore_errors: false
 
 # Note: Do not delete copied certificates
