@@ -28,6 +28,21 @@
   when: crio_file.stat.path is not defined
   ignore_errors: false
 
+- name: Move crio binaries to /usr/local/bin/
+  shell: cd /var/tmp/; mv crio crioctl kpod  /usr/local/bin/
+  register: crio_binary
+  when: crio_file.stat.path is not defined
+
+- name: Move additional crio binaries to /usr/local/libexec/crio/
+  shell: cd /var/tmp/; mv conmon pause  /usr/local/libexec/crio/
+  when: crio_file.stat.path is not defined
+
+- fail:
+    msg: "Whoops! crio binary did not find."
+  when: crio_binary|failed
+  ignore_errors: false
+
+
 
 
 #================== Docker ====================
