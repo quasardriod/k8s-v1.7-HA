@@ -25,7 +25,7 @@
     src: "{{crio_pkg}}"
     dest: /var/tmp/
     remote_src: True
-  when: cni_file.stat.path is not defined
+  when: crio_file.stat.path is not defined
   ignore_errors: false
 
 
