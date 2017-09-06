@@ -1,0 +1,72 @@
+---
+
+#==================== CNI=====================
+- name: Check if CNI already installed
+  stat:
+    path: /opt/cni/bin/bridge
+  register: cni_file
+
+- name: Install CNI package
+  unarchive:
+    src: "{{cni_pkg}}"
+    dest: /opt/cni/bin/
+    remote_src: True
+  when: cni_file.stat.path is not defined
+  ignore_errors: false
+
+#================== Docker ====================
+- name: Check if docker already installed
+  stat:
+    path: /usr/local/bin/docker
+  register: docker_file
+
+- name: Install docker package
+  unarchive:
+    src: "{{docker_pkg}}"
+    dest: /tmp/
+    remote_src: True
+  when: docker_file.stat.path is not defined
+  register: download_docker
+  ignore_errors: false
+
+- name: Copy docker binaries to /usr/bin
+  shell: mv /tmp/docker/docker* /usr/local/bin/
+  when: docker_file.stat.path is not defined
+  ignore_errors: false
+
+
+- name: Clean remaining docker files from /tmp
+  file:
+    path: /tmp/docker
+    state: absent
+  when: download_docker|succeeded
+
+#==================================== Kubelet =========
+- name: Check if kubelet already installed
+  stat:
+    path: /usr/local/bin/kubelet
+  register: kubelet_file
+  ignore_errors: false
+
+- name: Download kubelet binary
+  get_url:
+    url: "{{kubelet_pkg}}"
+    dest: /usr/local/bin/
+    mode: 0755
+  when: kubelet_file.stat.path is not defined
+  ignore_errors: false
+
+#==================================== kube-proxy =========
+- name: Check if kube-proxy already installed
+  stat:
+    path: /usr/local/bin/kube-proxy
+  register: kproxy_file
+  ignore_errors: false
+
+- name: Download kube-proxy binary
+  get_url:
+    url: "{{kproxy_pkg}}"
+    dest: /usr/local/bin/
+    mode: 0755
+  when: kproxy_file.stat.path is not defined
+  ignore_errors: false

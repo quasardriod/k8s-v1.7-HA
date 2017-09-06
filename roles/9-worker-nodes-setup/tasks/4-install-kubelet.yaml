@@ -2,20 +2,16 @@
 
 #Note: To fix kubectl exec..container login issue
 #https://github.com/kelseyhightower/kubernetes-the-hard-way/issues/146
-- name: Download kubelet binary
-  get_url:
-    url: https://storage.googleapis.com/kubernetes-release/release/v1.7.0-alpha.3/bin/linux/amd64/kubelet
-    dest: /usr/bin/
-    mode: 0755
 
-- name: Get API_SERVERS url
-  shell: cat /var/tmp/k8s-v1.7-certs/bootstrap.kubeconfig| grep server | cut -d ':' -f2,3,4 | tr -d '[:space:]'
-  delegate_to: localhost
-  register: api_server
 
-- debug:
-    var: api_server.stdout
-  delegate_to: localhost
+#- name: Get API_SERVERS url
+#  shell: cat /var/tmp/k8s-v1.7-certs/bootstrap.kubeconfig| grep server | cut -d ':' -f2,3,4 | tr -d '[:space:]'
+#  delegate_to: localhost
+#  register: api_server
+
+#- debug:
+#    var: api_server.stdout
+#  delegate_to: localhost
 
 - name: Copy kubelet service template to all worker nodes
   template:
