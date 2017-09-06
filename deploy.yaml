@@ -40,21 +40,19 @@
 #  roles:
 #    - 4-kube-api-haproxy
 
-- hosts: client
-#  become: true
-#  become_method: sudo
-  vars_files:
-    - group_vars/all
-  roles:
-    - 5-kube-client-remote-access
-
-#- hosts: k8s-master1
-#  become: true
-#  become_method: sudo
+#- hosts: client
 #  vars_files:
 #    - group_vars/all
 #  roles:
-#    - 7-etcd-master-flannel-net
+#    - 5-kube-client-remote-access
+
+- hosts: k8s-master1
+  become: true
+  become_method: sudo
+  vars_files:
+    - group_vars/all
+  roles:
+    - 6-etcd-master-flannel-net
 
 #- hosts: k8s-master1
 #  become: true

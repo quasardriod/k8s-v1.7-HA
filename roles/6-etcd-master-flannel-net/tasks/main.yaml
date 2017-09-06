@@ -1,0 +1,24 @@
+---
+
+- name: Copy flannel network conf file to master node
+  template:
+    src: flannel-conf.j2
+    dest: /tmp/flannel-conf.json
+
+- name: Initialized flannel network in etcd
+  shell: ETCDCTL_API=3 etcdctl set /kubernetes-cluster/network/config < /tmp/flannel-conf.json
+  ignore_errors: false
+#shell: etcdctl -C https://{{ansible_ssh_host}}:2379 --ca-file=/etc/etcd/ca.pem --cert-file=/etc/etcd/kubernetes.pem --key-file=/etc/etcd/kubernetes-key.pem set /kubernetes-cluster/network/config < /tmp/flannel-conf.json
+
+- name: Get flannel network details from etcd
+  shell: ETCDCTL_API=3 etcdctl get /kubernetes-cluster/network/config
+  register: etcd_flannel_net
+  ignore_errors: false
+
+- debug:
+    var: etcd_flannel_net.stdout
+
+- name: Remove copied flannel-conf template
+  file:
+    path: /tmp/flannel-conf.json
+    state: absent
