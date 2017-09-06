@@ -1,7 +1,7 @@
 ---
 
 - name: Do api test through Haproxy
-  shell: curl --cacert /var/lib/kubernetes/ca.pem https://${KUBERNETES_PUBLIC_IP_ADDRESS}:6443/version
+  shell: curl --cacert /var/lib/kubernetes/ca.pem https://{{KUBERNETES_PUBLIC_ADDRESS}}:6443/version
   register: api_version
 
 - debug:

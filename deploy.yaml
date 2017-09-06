@@ -46,8 +46,7 @@
   vars_files:
     - group_vars/all
   roles:
-    - 20-api-test
-
+    - api-test
 #- hosts: client
 #  become: true
 #  become_method: sudo
