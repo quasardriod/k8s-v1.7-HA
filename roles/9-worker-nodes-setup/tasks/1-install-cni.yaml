@@ -1,0 +1,35 @@
+---
+
+# The Kubelet can now use CNI - the Container Network Interface to manage machine level networking requirements.
+# https://github.com/containernetworking/cni
+
+- name: Install CNI package
+  unarchive:
+    src: "{{cni_pkg}}"
+    dest: /opt/cni/bin/
+#    remote_src: True
+  ignore_errors: false
+
+#- name: Copy flannel network binary to /etc/cni/net.d
+#  command: cp /opt/cni/bin/flannel /etc/cni/net.d/
+
+#- name: Get pod_net_subnet value from flannel subnet.env
+#  shell: cat /run/flannel/subnet.env |grep -i subnet|cut -d'=' -f2
+#  register: pod_net_subnet
+
+#- debug:
+#    var: pod_net_subnet.stdout
+
+- name: Copy CNI network bridge file to worker nodes
+  template:
+    src: cni-10-bridge.j2
+    dest: /etc/cni/net.d/10-bridge.conf
+    mode: 0644
+  ignore_errors: false
+
+- name: Copy CNI loopback network file to worker nodes
+  template:
+    src: cni-99-loopback.j2
+    dest: /etc/cni/net.d/99-loopback.conf
+    mode: 0644
+  ignore_errors: false
