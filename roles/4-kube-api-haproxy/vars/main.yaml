@@ -1,3 +1,5 @@
 backend_name: k8s-masters
 balance_method: roundrobin
 traffic_mode: tcp
+
+keepalived_pass: keep@auth
