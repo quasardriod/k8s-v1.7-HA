@@ -1,6 +1,6 @@
 ---
 
-- include: 1-install-cni.yaml
-#- include: 2-install-docker.yaml
+#- include: 1-install-cni.yaml
+- include: 2-install-docker.yaml
 #- include: 3-install-kubelet.yaml
 #- include: 4-install-kubeproxy.yaml

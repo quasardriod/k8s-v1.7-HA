@@ -4,7 +4,7 @@ Documentation=http://docs.docker.io
 
 [Service]
 #EnvironmentFile=-/etc/default/docker
-ExecStart=/usr/local/bin/docker daemon \
+ExecStart=/usr/local/bin/dockerd \
   --iptables=false \
   --ip-masq=false \
   --host=unix:///var/run/docker.sock \

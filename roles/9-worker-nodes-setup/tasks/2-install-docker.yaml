@@ -1,19 +1,31 @@
 ---
+
+- name: Check if docker already installed
+  stat:
+    path: /usr/local/bin/docker
+  register: docker_file
+    
 - name: Install docker package
   unarchive:
     src: "{{docker_pkg}}"
-    dest: /usr/local/bin/
+    dest: /tmp/
     remote_src: True
+  when: docker_file.stat.path is not defined
+  register: download_docker
   ignore_errors: false
 
-#- name: Copy docker binaries to /usr/bin
-#  shell: mv /tmp/docker/docker* /usr/bin/
-#  ignore_errors: false
+- name: Copy docker binaries to /usr/bin
+  shell: mv /tmp/docker/docker* /usr/local/bin/
+  when: docker_file.stat.path is not defined
+  ignore_errors: false
+  
 
-#- name: Clean remaining docker files from /tmp
-#  file:
-#    path: /tmp/docker
-#    state: absent
+- name: Clean remaining docker files from /tmp
+  file:
+    path: /tmp/docker
+    state: absent
+  when: download_docker|succeeded
+  
 
 - name: Copy docker service template to all worker nodes
   template:
@@ -54,6 +66,8 @@
 
 - name: check docker status
   shell: docker version
+  become: true
+  become_method: sudo
   register: docker_status
   ignore_errors: false
 
