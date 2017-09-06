@@ -1,0 +1,8 @@
+---
+
+- name: Do api test through Haproxy
+  shell: curl --cacert ~/kubectl-client-setup/ca.pem https://{{KUBERNETES_PUBLIC_ADDRESS}}:6443/version
+  register: api_version
+
+- debug:
+    var: api_version.stdout
