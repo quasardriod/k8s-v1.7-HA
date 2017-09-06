@@ -14,7 +14,12 @@
   when: cni_file.stat.path is not defined
   ignore_errors: false
 
-#======================== CRIO ===========
+#======================== CRIO and RUNC ===========
+
+- name: Get libgpgme CRIO lib status
+  stat:
+    path: /usr/lib/x86_64-linux-gnu/libgpgme.so.11
+  register: crio_lib_file
 
 - name: Install crio dependancies
   command: "{{item}}"
@@ -22,7 +27,8 @@
     - add-apt-repository -y ppa:alexlarsson/flatpak
     - apt-get update
     - apt-get install -y socat libgpgme11 libostree-1-1
-    
+  when: crio_lib_file.stat.path is not defined
+
 - name: Check if CRIO already installed
   stat:
     path: /usr/local/bin/crio
@@ -50,7 +56,20 @@
   when: crio_binary|failed
   ignore_errors: false
 
+#========================== RUNC======================
+- name: Check if runc already installed
+  stat:
+    path: /usr/local/bin/runc
+  register: runc_file
+  ignore_errors: false
 
+- name: Download runc binary
+  get_url:
+    url: "{{runc_pkg}}"
+    dest: /usr/local/bin/runc
+    mode: 0755
+  when: runc_file.stat.path is not defined
+  ignore_errors: false
 
 
 #================== Docker ====================
@@ -72,7 +91,6 @@
   shell: mv /tmp/docker/docker* /usr/local/bin/
   when: docker_file.stat.path is not defined
   ignore_errors: false
-
 
 - name: Clean remaining docker files from /tmp
   file:
