@@ -32,13 +32,21 @@
 #  roles:
 #    - 3-api-servers
 
-- hosts: loadbalancers
+#- hosts: loadbalancers
+#  become: true
+#  become_method: sudo
+#  vars_files:
+#    - group_vars/all
+#  roles:
+#    - 4-kube-api-haproxy
+
+- hosts: k8s-master1
   become: true
   become_method: sudo
   vars_files:
     - group_vars/all
   roles:
-    - 4-kube-api-haproxy
+    - 20-api-test
 
 #- hosts: client
 #  become: true
