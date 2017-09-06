@@ -1,4 +1,26 @@
 ---
+
+- name: Get crio.conf file status
+  stat:
+    path: /etc/crio/crio.conf
+  register: crio_conf_file
+  ignore_errors: false
+
+- name: move crio.conf and seccomp.json to /etc/crio/
+  shell: cd /var/tmp/; crio.conf seccomp.json /etc/crio/
+  when: crio_conf_file.stat.path is not defined
+  ignore_errors: false
+
+- name: Get CRIO policy.json status
+  stat:
+    path: /etc/containers/policy.json
+  register: crio_policy_json
+
+- name: move policy.json to /etc/containers/
+  shell: cd /var/tmp/; mv policy.json /etc/containers/
+  when: crio_policy_json.stat.path is not defined
+  ignore_errors: false
+
 - name: Copy crio service template to all worker nodes
   template:
     src: crio-service.j2
@@ -6,3 +28,19 @@
     mode: 0644
     backup: yes
   ignore_errors: false
+
+- name: Reload systemd daemon
+  command: systemctl daemon-reload
+
+- name: Start and enable crio service
+  service:
+    name: crio
+    state: started
+    enabled: yes
+  ignore_errors: false
+
+- name: Check crio service status
+  shell: systemctl status crio --no-pager
+  register: crio_srv_status
+- debug:
+    var: crio_srv_status.stdout
