@@ -13,6 +13,16 @@
   ignore_errors: false
   when: flanneld_file.stat.path is not defined
 
+- name: copy required certificates used to communicate to etcd by flanneld
+  copy:
+    src: /var/tmp/k8s-v1.7-certs/{{item}}
+    dest: /var/lib/kubernetes/
+  with_items:
+    - ca.pem
+    - kubernetes.pem
+    - kubernetes-key.pem
+  ignore_errors: false
+
 - name: Copy flanneld service template to all worker nodes
   template:
     src: flanneld-service.j2
@@ -27,7 +37,7 @@
 - name: Start and enable flanneld service
   service:
     name: flanneld
-    state: restarted
+    state: started
     enabled: yes
   ignore_errors: false
 
@@ -38,8 +48,3 @@
 
 - debug:
     var: flanneld_status.stdout
-
-- name: Install bridge-utils package
-  package:
-    name: bridge-utils
-    state: latest
