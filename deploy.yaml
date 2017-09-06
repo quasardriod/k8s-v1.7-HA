@@ -54,13 +54,13 @@
 #  roles:
 #    - 6-etcd-master-flannel-net
 
-#- hosts: nodes
-#  become: true
-#  become_method: sudo
-#  vars_files:
-#    - group_vars/all
-#  roles:
-#    - 7-workernode-certs
+- hosts: nodes
+  become: true
+  become_method: sudo
+  vars_files:
+    - group_vars/all
+  roles:
+    - 7-workernode-certs
 
 #- hosts: nodes
 #  become: true

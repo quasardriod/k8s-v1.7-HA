@@ -12,6 +12,9 @@
     - /var/lib/kube-proxy
     - /var/lib/kubernetes
     - /var/run/kubernetes
+    - /etc/crio
+    - /usr/local/libexec/crio
+    - /etc/containers
 
 - name: copy CA certificate to worker nodes in /var/lib/kubernetes
   copy:

@@ -37,6 +37,7 @@ k8s_scdl_pkg: https://storage.googleapis.com/kubernetes-release/release/v1.7.4/b
 
 flanneld_pkg: https://github.com/coreos/flannel/releases/download/v0.8.0/flanneld-amd64
 cni_pkg: https://github.com/containernetworking/plugins/releases/download/v0.6.0/cni-plugins-amd64-v0.6.0.tgz
+crio_pkg: https://storage.googleapis.com/kubernetes-the-hard-way/crio-amd64-v1.0.0-beta.0.tar.gz
 docker_pkg: https://get.docker.com/builds/Linux/x86_64/docker-1.13.1.tgz
 
 kubelet_pkg: https://storage.googleapis.com/kubernetes-release/release/v1.7.4/bin/linux/amd64/kubelet

@@ -1,0 +1,8 @@
+---
+- name: Copy crio service template to all worker nodes
+  template:
+    src: crio-service.j2
+    dest: /etc/systemd/system/crio.service
+    mode: 0644
+    backup: yes
+  ignore_errors: false

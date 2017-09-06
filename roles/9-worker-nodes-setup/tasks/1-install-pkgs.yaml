@@ -14,6 +14,22 @@
   when: cni_file.stat.path is not defined
   ignore_errors: false
 
+#======================== CRIO ===========
+- name: Check if CRIO already installed
+  stat:
+    path: /usr/local/bin/crio
+  register: crio_file
+
+- name: Install CRIO package
+  unarchive:
+    src: "{{crio_pkg}}"
+    dest: /var/tmp/
+    remote_src: True
+  when: cni_file.stat.path is not defined
+  ignore_errors: false
+
+
+
 #================== Docker ====================
 - name: Check if docker already installed
   stat:
