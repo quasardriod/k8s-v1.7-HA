@@ -27,7 +27,7 @@
 - name: Start and enable kubelet service
   service:
     name: kubelet
-    state: restarted
+    state: started
     enabled: yes
   ignore_errors: false
 

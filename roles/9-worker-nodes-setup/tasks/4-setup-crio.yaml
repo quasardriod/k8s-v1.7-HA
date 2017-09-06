@@ -35,7 +35,7 @@
 - name: Start and enable crio service
   service:
     name: crio
-    state: restarted
+    state: started
     enabled: yes
   ignore_errors: false
 

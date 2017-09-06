@@ -1,6 +1,6 @@
 ---
 
-#- include: 1-install-kubectl.yaml
-#- include: 2-kubectl-client-setup.yaml
+- include: 1-install-kubectl.yaml
+- include: 2-kubectl-client-setup.yaml
 - include: 3-get-k8s-status-from-client.yaml
-- include: 4-api-client-testing.yaml
+- include: 4-api-client-testing-haproxy.yaml

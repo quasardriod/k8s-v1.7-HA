@@ -1,0 +1,7 @@
+---
+
+- name: Check nodes
+  shell: kubectl get nodes
+  register: get_nodes
+- debug:
+    var: get_nodes.stdout
