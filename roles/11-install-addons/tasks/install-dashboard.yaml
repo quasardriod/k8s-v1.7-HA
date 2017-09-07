@@ -30,24 +30,24 @@
 - debug:
     var: k8s_dashboard_svc_port.stdout
 
-- name: Copy dashboard-haproxy template to loadbalancer
-  template:
-    src: dashboard-haproxy.j2
-    dest: /tmp/dashboard-haproxy.cfg
+#- name: Copy dashboard-haproxy template to loadbalancer
+#  template:
+#    src: dashboard-haproxy.j2
+#    dest: /tmp/dashboard-haproxy.cfg
 
-- name: Take haproxy conf backup
-  shell: cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg-$(date +"%Y-%m-%dT%H%M%S%:z")
+#- name: Take haproxy conf backup
+#  shell: cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg-$(date +"%Y-%m-%dT%H%M%S%:z")
 
-- name: Add dashboard-haproxy config to haproxy.cfg
-  shell: cat /tmp/dashboard-haproxy.cfg >> /etc/haproxy/haproxy.cfg
+#- name: Add dashboard-haproxy config to haproxy.cfg
+#  shell: cat /tmp/dashboard-haproxy.cfg >> /etc/haproxy/haproxy.cfg
 
-- name: Restart haproxy service
-  service:
-    name: haproxy
-    state: restarted
-  ignore_errors: flase
+#- name: Restart haproxy service
+#  service:
+#    name: haproxy
+#    state: restarted
+#  ignore_errors: flase
 
-- name: Remove /tmp/dashboard-haproxy.cfg file
-  file:
-    path: /tmp/dashboard-haproxy.cfg
-    state: absent
+#- name: Remove /tmp/dashboard-haproxy.cfg file
+#  file:
+#    path: /tmp/dashboard-haproxy.cfg
+#    state: absent
