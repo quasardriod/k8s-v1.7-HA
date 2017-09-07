@@ -44,6 +44,8 @@ runc_pkg: https://github.com/opencontainers/runc/releases/download/v1.0.0-rc4/ru
 kubelet_pkg: https://storage.googleapis.com/kubernetes-release/release/v1.7.4/bin/linux/amd64/kubelet
 kproxy_pkg: https://storage.googleapis.com/kubernetes-release/release/v1.7.4/bin/linux/amd64/kube-proxy
 
+kube_dns_yaml: https://storage.googleapis.com/kubernetes-the-hard-way/kube-dns.yaml
+kube_dashboard: https://raw.githubusercontent.com/kubernetes/dashboard/v1.6.3/src/deploy/kubernetes-dashboard.yaml
 # Pod network specific variables
 pod_cidr: 10.0.0.0/8
 pod_net_subnet_len: 24

@@ -2,7 +2,8 @@
 
 #Note: To fix kubectl exec..container login issue
 #https://github.com/kelseyhightower/kubernetes-the-hard-way/issues/146
-
+# known issue is open for kubelet
+# https://github.com/kubernetes-incubator/cri-o/issues/790
 
 #- name: Get API_SERVERS url
 #  shell: cat /var/tmp/k8s-v1.7-certs/bootstrap.kubeconfig| grep server | cut -d ':' -f2,3,4 | tr -d '[:space:]'

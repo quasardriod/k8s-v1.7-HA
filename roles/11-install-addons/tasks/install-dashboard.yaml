@@ -1,7 +1,8 @@
 ---
 
-#- name: Install dashboard
-#  command: kubectl create -f https://rawgit.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard.yaml
+- name: check if dashboard already created.
+- name: Install dashboard
+  command: kubectl create -f {{kube_dashboard}}
 
 - name: Get kubernetes dashboard pod name
   shell: kubectl get pod --all-namespaces|grep -i dashboard|awk '{print $2}'

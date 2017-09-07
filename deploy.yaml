@@ -85,8 +85,8 @@
 #    - 10-get-nodes-status
 
 - hosts: client
-  become: true
-  become_method: sudo
+#  become: true
+#  become_method: sudo
   vars_files:
     - group_vars/all
   roles:
