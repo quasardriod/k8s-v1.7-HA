@@ -1,7 +1,7 @@
 ---
-- include: 1-install-pkgs.yaml
+#- include: 1-install-pkgs.yaml
 #- include: 2-install-cni.yaml
 #- include: 3-install-docker.yaml
 #- include: 4-setup-crio.yaml
-#- include: 5-install-kubelet.yaml
+- include: 5-install-kubelet.yaml
 - include: 6-install-kubeproxy.yaml
