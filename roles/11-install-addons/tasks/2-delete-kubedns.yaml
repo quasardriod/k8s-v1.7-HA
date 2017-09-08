@@ -1,0 +1,44 @@
+---
+
+#- name: Get Status of kube-dns pods
+#  shell: kubectl get pods -n kube-system | grep -i kube-dns
+#  register: kdns_pods
+#  ignore_errors: false
+#- debug:
+#    var: kdns_pods.stdout
+
+- name: Get failed kube-dns pods
+  shell: kubectl get pods --namespace=kube-system |grep -i kube-dns |egrep  "CrashLoopBackOff|Error"
+  register: failed_kubedns_pod
+  ignore_errors: true
+
+- fail:
+    msg: "Found kube-dns pods in failed state!"
+  register: dns_pod_fail_true
+  when: failed_kubedns_pod | succeeded
+  ignore_errors: true
+    
+  
+- name: Delete failed kube-dns deployment
+  shell: kubectl delete deployment kube-dns --namespace=kube-system
+  register: del_dns_deployment
+  when: dns_pod_fail_true | failed
+  ignore_errors: false
+
+- name: Remove remaining kube-dns component
+  command: kubectl delete "{{item}}" kube-dns --namespace=kube-system
+  with_items:
+    - Service
+    - ConfigMap
+    - ServiceAccount
+  when: dns_pod_fail_true | failed
+  ignore_errors: false
+
+#- name: Create kubedns deployment
+#  command: kubectl create -f {{kube_dns_yaml}}
+
+#- name: Get kubedns deployment status
+#  shell: kubectl get pods -l k8s-app=kube-dns -n kube-system -o wide
+#  register: get_kubedns_deployment
+#- debug:
+#    var: get_kubedns_deployment.stdout

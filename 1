@@ -1,7 +1,7 @@
 ---
 
-- name: Check if kube-dns pod account already presented
-  shell: kubectl get pods --namespace=kube-system |grep -i kube-dns |egrep -i "running|CrashLoopBackOff|Error|pending|terminating|creating"
+- name: Check if kube-dns pod account already available
+  shell: kubectl get pods --namespace=kube-system |grep -i kube-dns |egrep -i "running|CrashLoopBackOff|Error|pending|terminating"
 #  shell: kubectl get pods -n kube-system | grep -i kube-dns
 #    ksvc=`kubectl get ServiceAccount -n kube-system | grep -i kube-dns | wc -l`
 #    if ksvc == 0;then
@@ -18,7 +18,6 @@
 - name: Check if kube-dns ServiceAccount already available
   shell: kubectl get ServiceAccount -n kube-system | grep -i kube-dns
   register: kdns_svcacc
-  ignore_errors: true
 
 - debug:
     msg: "Kube-dns ServiceAccount already available"
@@ -48,7 +47,7 @@
   when: ( kdns_pod_status | failed ) and
         ( kdns_svcacc | failed)
 
-- name: New deployed kube-dns status
+- name: Get new deployed kube-dns status
   shell: kubectl get pods -l k8s-app=kube-dns -n kube-system -o wide
   register: new_kubedns_deployment
   when: kdns_pod_status | failed
@@ -56,7 +55,7 @@
     var: new_kubedns_deployment.stdout
   when: kdns_pod_status | failed
 
-- name: Existing kube-dns deployment status
+- name: Get existing kube-dns deployment status
   shell: kubectl get pods -l k8s-app=kube-dns -n kube-system -o wide|grep -i kube-dns|awk '{print $1 " state is "$3 ", and running on "$6}'
   register: exising_kubedns_deployment
   when: kdns_pod_status | succeeded

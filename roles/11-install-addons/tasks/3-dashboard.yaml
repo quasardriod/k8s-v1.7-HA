@@ -1,0 +1,87 @@
+---
+
+- name: Check if dashboard already presented
+  shell: kubectl get pods --namespace=kube-system |grep -i dashboard |egrep -i "running|CrashLoopBackOff|Error|pending|terminating|creating"
+  register: dashboard_pod_status
+  ignore_errors: true
+- debug:
+    msg: "kubernetes-dashboard podes already presented!"
+  when: dashboard_pod_status | succeeded
+
+- name: Check if kubernetes-dashboard ServiceAccount already available
+  shell:   kubectl get ServiceAccount -n kube-system | grep -i kubernetes-dashboard
+  register: dashboard_svcacc
+  ignore_errors: true
+- debug: 
+    msg: "kubernetes-dashboard ServiceAccount already presented!"
+  when: dashboard_svcacc | succeeded
+
+- name: Install dashboard
+  shell: kubectl create -f {{kube_dashboard}}
+  retries: 3
+  delay: 10
+  register: install_dashboard
+  when: (dashboard_pod_status | failed) and 
+        (dashboard_svcacc | failed)
+  ignore_errors: true
+
+- name: New deployed kubernetes dashboard pod status
+  shell: kubectl get pod -l k8s-app=kubernetes-dashboard -n kube-system
+  register: new_dashboard_status
+  when: dashboard_pod_status | failed
+  ignore_errors: true
+- debug:
+    var: new_dashboard_status.stdout
+  when: dashboard_pod_status | failed
+
+- name: Existing kubernetes-dashboard pod status
+  shell: kubectl get pods -l k8s-app=kubernetes-dashboard -n kube-system -o wide|grep -i dashboard|awk '{print $1 " state is "$3 ", and running on "$6}'
+  register: exising_dashboard_pod
+  when: dashboard_pod_status | succeeded
+- debug:
+    var: exising_dashboard_pod.stdout
+  when: dashboard_pod_status | succeeded
+
+
+#- name: Create service for kubernetes dashboard pod
+#  shell: kubectl expose pod {{dashboard_pod_name.stdout}} --type=NodePort --name=k8s-dashboard-svc --namespace=kube-system
+
+#- name: Get k8s-dashboard-svc details
+#  shell: kubectl describe svc k8s-dashboard-svc --namespace=kube-system
+#  register: k8s_dashboard_svc
+#- debug:
+#    var: k8s_dashboard_svc.stdout
+
+#- name: Get dasboard node
+#  shell: kubectl describe pod {{dashboard_pod_name.stdout}} --namespace=kube-system|head -5 |grep -i Node:|awk '{print $2}'|cut -d'/' -f2
+#  register: dashboard_node
+#- debug:
+#    var: dashboard_node.stdout
+
+#- name: Get dashboard service port
+#  shell: kubectl describe svc k8s-dashboard-svc --namespace=kube-system|grep -i NodePort:|awk '{print $3}'|cut -d'/' -f1
+#  register: k8s_dashboard_svc_port
+#- debug:
+#    var: k8s_dashboard_svc_port.stdout
+
+#- name: Copy dashboard-haproxy template to loadbalancer
+#  template:
+#    src: dashboard-haproxy.j2
+#    dest: /tmp/dashboard-haproxy.cfg
+
+#- name: Take haproxy conf backup
+#  shell: cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg-$(date +"%Y-%m-%dT%H%M%S%:z")
+
+#- name: Add dashboard-haproxy config to haproxy.cfg
+#  shell: cat /tmp/dashboard-haproxy.cfg >> /etc/haproxy/haproxy.cfg
+
+#- name: Restart haproxy service
+#  service:
+#    name: haproxy
+#    state: restarted
+#  ignore_errors: flase
+
+#- name: Remove /tmp/dashboard-haproxy.cfg file
+#  file:
+#    path: /tmp/dashboard-haproxy.cfg
+#    state: absent

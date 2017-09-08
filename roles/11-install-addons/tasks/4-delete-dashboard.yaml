@@ -1,0 +1,36 @@
+---
+
+- name: Get failed kubernetes-dashboard pods
+  shell: kubectl get pod -n kube-system |grep -i kubernetes-dashboard |egrep  "CrashLoopBackOff|Error"
+  register: failed_dashboard_pod
+  ignore_errors: true
+
+- fail:
+    msg: "Found kubernetes-dashboard pods in failed state!"
+  register: dash_pod_fail_true
+  when: failed_dashboard_pod | succeeded
+  ignore_errors: true
+
+- name: Delete failed kubernetes-dashboard deployment
+  shell: kubectl delete deployment kubernetes-dashboard --namespace=kube-system
+  register: del_dash_deployment
+  when: dash_pod_fail_true | failed
+  ignore_errors: false
+
+- name: Remove remaining kubernetes-dashboard components
+  command: kubectl delete "{{item}}" kubernetes-dashboard --namespace=kube-system
+  with_items:
+    - Service
+    - clusterrolebindings
+    - ServiceAccount
+  when: dash_pod_fail_true | failed
+  ignore_errors: false
+
+#- name: Create kubedns deployment
+#  command: kubectl create -f {{kube_dns_yaml}}
+
+#- name: Get kubedns deployment status
+#  shell: kubectl get pods -l k8s-app=kube-dns -n kube-system -o wide
+#  register: get_kubedns_deployment
+#- debug:
+#    var: get_kubedns_deployment.stdout
