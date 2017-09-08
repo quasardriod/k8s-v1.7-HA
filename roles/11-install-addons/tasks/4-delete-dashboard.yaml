@@ -25,12 +25,3 @@
     - ServiceAccount
   when: dash_pod_fail_true | failed
   ignore_errors: false
-
-#- name: Create kubedns deployment
-#  command: kubectl create -f {{kube_dns_yaml}}
-
-#- name: Get kubedns deployment status
-#  shell: kubectl get pods -l k8s-app=kube-dns -n kube-system -o wide
-#  register: get_kubedns_deployment
-#- debug:
-#    var: get_kubedns_deployment.stdout

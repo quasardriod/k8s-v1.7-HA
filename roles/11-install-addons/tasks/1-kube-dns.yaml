@@ -2,13 +2,6 @@
 
 - name: Check if kube-dns pod account already presented
   shell: kubectl get pods --namespace=kube-system |grep -i kube-dns |egrep -i "running|CrashLoopBackOff|Error|pending|terminating|creating"
-#  shell: kubectl get pods -n kube-system | grep -i kube-dns
-#    ksvc=`kubectl get ServiceAccount -n kube-system | grep -i kube-dns | wc -l`
-#    if ksvc == 0;then
-#      echo "kube-dns pod is not available!"
-#    else
-#      echo "kube-dns already running!"
-#    fi
   register: kdns_pod_status
   ignore_errors: true
 - debug:
@@ -33,7 +26,7 @@
   when: ( kdns_pod_status | failed ) and
         ( kdns_svcacc | failed)
   ignore_errors: false
-  
+
 - name: Create kube-dns deployment
   command: kubectl create -f /tmp/kube-dns.yaml
   register: create_dns
