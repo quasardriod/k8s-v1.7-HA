@@ -13,4 +13,4 @@
     - ConfigMap
     - ServiceAccount
   when: del_dns_deployment | succeeded
-  ignore_errors: false
+  ignore_errors: true

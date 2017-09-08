@@ -5,7 +5,7 @@
   register: dashboard_pod_status
   ignore_errors: true
 - debug:
-    msg: "kubernetes-dashboard podes already presented!"
+    msg: "kubernetes-dashboard podes already presented. kubernetes-dashboard pods installation will be skipped!"
   when: dashboard_pod_status | succeeded
 
 - name: Check if kubernetes-dashboard ServiceAccount already available
@@ -13,8 +13,14 @@
   register: dashboard_svcacc
   ignore_errors: true
 - debug: 
-    msg: "kubernetes-dashboard ServiceAccount already presented!"
+    msg: "kubernetes-dashboard ServiceAccount already presented. kubernetes-dashboard pods installation will be skipped!"
   when: dashboard_svcacc | succeeded
+
+- debug:
+    msg: "Did not find existing kubernetes-dashboard pods. kubernetes-dashboard pods will be created! "
+  when: (dashboard_pod_status | failed) and
+        (dashboard_svcacc | failed)
+
 
 - name: Install dashboard
   shell: kubectl create -f {{kube_dashboard}}
@@ -42,6 +48,20 @@
     var: exising_dashboard_pod.stdout
   when: dashboard_pod_status | succeeded
 
+- name: Check failed kubernetes-dashboard pods
+  shell: kubectl get pod -n kube-system |grep -i kubernetes-dashboard |egrep  "CrashLoopBackOff|Error"
+  register: failed_dashboard_pod
+  ignore_errors: true
+
+- fail:
+    msg: "Found kubernetes-dashboard pods in failed state. kubernetes-dashboard failed pods will be deleted!"
+  register: dash_pod_fail_true
+  when: failed_dashboard_pod | succeeded
+  ignore_errors: true
+
+- include: 5-delete-dashboard.yaml
+  when: dash_pod_fail_true | failed
+  ignore_errors: true
 
 #- name: Create service for kubernetes dashboard pod
 #  shell: kubectl expose pod {{dashboard_pod_name.stdout}} --type=NodePort --name=k8s-dashboard-svc --namespace=kube-system
