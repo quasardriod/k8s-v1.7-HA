@@ -1,6 +1,6 @@
 ---
 
 - include: 1-kube-dns.yaml
-- include: 2-delete-kubedns.yaml
-- include: 3-dashboard.yaml
-- include: 4-delete-dashboard.yaml
+#- include: 2-delete-kubedns.yaml
+#- include: 3-dashboard.yaml
+#- include: 4-delete-dashboard.yaml

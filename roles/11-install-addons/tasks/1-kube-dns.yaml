@@ -5,7 +5,7 @@
   register: kdns_pod_status
   ignore_errors: true
 - debug:
-    msg: "Kube-dns podes already presented!"
+    msg: "Kube-dns podes already presented. kube-dns pod installation will be skipped!"
   when: kdns_pod_status | succeeded
 
 - name: Check if kube-dns ServiceAccount already available
@@ -14,7 +14,7 @@
   ignore_errors: true
 
 - debug:
-    msg: "Kube-dns ServiceAccount already available"
+    msg: "Kube-dns ServiceAccount already available. kube-dns pod installation will be skipped!"
   when: kdns_svcacc | succeeded
 
 - name: Copy kube-dns template to k8s client machine
@@ -56,3 +56,18 @@
 - debug:
     var: exising_kubedns_deployment.stdout
   when: kdns_pod_status | succeeded
+
+- name: Check failed kube-dns pods
+  shell: kubectl get pods --namespace=kube-system |grep -i kube-dns |egrep  "CrashLoopBackOff|Error"
+  register: failed_kubedns_pod
+  ignore_errors: true
+
+- fail:
+    msg: "Found kube-dns pods in failed state!"
+  register: dns_pod_fail_true
+  when: failed_kubedns_pod | succeeded
+  ignore_errors: true
+
+- include: 2-delete-kubedns.yaml
+  when: dns_pod_fail_true | failed
+  ignore_errors: true
