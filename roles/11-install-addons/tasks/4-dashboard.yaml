@@ -41,7 +41,7 @@
   when: dashboard_pod_status | failed
 
 - name: Existing kubernetes-dashboard pod status
-  shell: kubectl get pods -l k8s-app=kubernetes-dashboard -n kube-system -o wide|grep -i dashboard|awk '{print $1 " state is "$3 ", and running on "$6}'
+  shell: kubectl get pods -l k8s-app=kubernetes-dashboard -n kube-system -o wide|grep -i dashboard|awk '{print $1 " state is "$3 ", and running on "$7}'
   register: exising_dashboard_pod
   when: dashboard_pod_status | succeeded
 - debug:
