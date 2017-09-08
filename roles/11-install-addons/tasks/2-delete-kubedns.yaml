@@ -3,7 +3,6 @@
 - name: Delete failed kube-dns deployment
   shell: kubectl delete deployment kube-dns --namespace=kube-system
   register: del_dns_deployment
-#  when: dns_pod_fail_true | failed
   ignore_errors: false
 
 - name: Remove remaining kube-dns component

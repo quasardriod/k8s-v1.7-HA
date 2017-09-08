@@ -1,5 +1,11 @@
 ---
 
 - include: 1-kube-dns.yaml
+
+# tasks 2 and 3 are called in task 1.
+#- include: 2-delete-kubedns.yaml
 #- include: 3-dns-verification.yaml
-#- include: 4-dashboard.yaml
+
+- include: 4-dashboard.yaml
+# Task 5 is called in task 4.
+#- include: 5-delete-dashboard.yaml
