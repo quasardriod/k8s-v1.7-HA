@@ -15,7 +15,7 @@
 - name: Start and enable kube-proxy service
   service:
     name: kube-proxy
-    state: restarted
+    state: started
     enabled: yes
   ignore_errors: false
 
