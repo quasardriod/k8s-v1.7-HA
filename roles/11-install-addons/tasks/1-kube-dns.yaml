@@ -76,3 +76,12 @@
 - include: 2-delete-kubedns.yaml
   when: dns_pod_fail_true | failed
   ignore_errors: true
+
+- name: Check if kube-dns pod is in running state
+  shell: kubectl get pods -n kube-system |grep -i kube-dns |egrep -i "running"
+  register: kdns_pod_running_state
+  ignore_errors: true
+
+- include: 3-dns-verification.yaml
+  when: kdns_pod_running_state | succeeded
+  ignore_errors: true

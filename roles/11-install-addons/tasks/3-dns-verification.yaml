@@ -1,0 +1,4 @@
+---
+
+- name: Create a busybox deployment
+  shell: kubectl run busybox --image=busybox --command -- sleep 3600
