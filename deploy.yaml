@@ -84,22 +84,14 @@
 #  roles:
 #    - 10-get-nodes-status
 
-#- hosts: client
-#  vars_files:
-#    - group_vars/all
-#  roles:
-#    - 11-install-addons
-
 - hosts: client
   vars_files:
     - group_vars/all
   roles:
-    - 12-smoke-test
+    - 11-install-addons
 
-#- hosts: k8s-master1
-#  become: true
-#  become_method: sudo
+#- hosts: client
 #  vars_files:
 #    - group_vars/all
 #  roles:
-#    - approve-tls-csr-request
+#    - 12-smoke-test
