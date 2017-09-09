@@ -1,8 +1,0 @@
----
-
-- name: Get nginx app page from loadbalancer
-  shell: curl http://{{k8s_lb_ip}}
-  register: get_nginx_page
-
-- debug:
-    var: get_nginx_page.stdout

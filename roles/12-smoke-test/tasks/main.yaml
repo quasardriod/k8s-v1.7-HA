@@ -1,6 +1,6 @@
 ---
 
-- include: nodes-status.yaml
-- include: smoke-test.yaml
-- include: update-haproxy-nginx-app.yaml
-- include: get-nginx-page.yaml
+- include: 1-nginx-deployment.yaml
+#- include: smoke-test.yaml
+#- include: update-haproxy-nginx-app.yaml
+#- include: get-nginx-page.yaml

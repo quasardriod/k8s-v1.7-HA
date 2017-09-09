@@ -1,0 +1,35 @@
+---
+
+- name: Deploy nginx
+  shell: kubectl run nginx --image=nginx
+  register: deploy_nginx
+
+- name: NGINX pods getting created
+  wait_for: time: 10
+  deligate_to: localhost
+
+- name: List nginx pods
+  shell: kubectl get pods -l run=nginx -o jsonpath="{.items[0].metadata.name}"
+  register: nginx_pod
+  when: deploy_nginx | succeeded
+- debug:
+    var: nginx_pod.stdout
+
+- name: Get nginx version
+  shell: kubectl exec -ti {{nginx_pod.stdout}} -- nginx -v
+  register: nginx_ver
+  when: nginx_pod | succeeded
+- debug:
+    var: nginx_ver.stdout
+
+- name: Delete nginx deployment
+  shell: kubectl delete deployment nginx
+  when: nginx_ver | succeeded
+
+  
+#- name: Get nginx app page from loadbalancer
+#  shell: curl http://{{k8s_lb_ip}}
+#  register: get_nginx_page
+
+#- debug:
+#    var: get_nginx_page.stdout

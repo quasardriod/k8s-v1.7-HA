@@ -11,14 +11,18 @@
   shell: kubectl get pods -l run=busybox -o jsonpath="{.items[0].metadata.name}"
   register: box_pod_name
   when:  busybox_pod | succeeded
-        
+
   ignore_errors: true
-- debug: 
+- debug:
     var: box_pod_name.stdout
 
 - name: Execute a DNS lookup for the kubernetes service inside the busybox pod
   shell: kubectl exec -ti {{box_pod_name.stdout}} -- nslookup kubernetes
   register: dns_test
   when: box_pod_name | succeeded
-- debug: 
+- debug:
     var: dns_test.stdout
+
+- name: Delete busybox deployment
+  shell: kubectl delete deployment busybox
+  when: dns_test | succeeded
