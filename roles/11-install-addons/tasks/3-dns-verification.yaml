@@ -22,6 +22,7 @@
   when: box_pod_name | succeeded
 - debug:
     var: dns_test.stdout
+  when: dns_test | succeeded
 
 - name: Delete busybox deployment
   shell: kubectl delete deployment busybox
