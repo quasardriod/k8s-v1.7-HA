@@ -55,14 +55,10 @@ pod_bridge_name: cbr0
 pod_backend_type: vxlan
 KUBERNETES_PUBLIC_ADDRESS: 192.168.2.155
 kube_bind_port: 6443
+k8s_api_port: 5443
 k8s_cluster_name: kubernetes-the-hard-way
 svc_clus_ip_range: 10.32.0.0/24
 svc_node_port_range: 30000-32767
-
-# pcs cluster
-pcs_user: hacluster
-pcs_pass: haclus@pass
-pcs_clus_name: ha-lb-haproxy
 
 # HAproxy
 vip_name: haproxy-vip
