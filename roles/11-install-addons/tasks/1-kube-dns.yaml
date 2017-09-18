@@ -99,6 +99,6 @@
   when: kdns_pod_running_state | failed
   ignore_errors: true
 
-- include: 3-dns-verification.yaml
-  when: no_dns_running | succeeded
-  ignore_errors: true
+#- include: 3-dns-verification.yaml
+#  when: no_dns_running | succeeded
+#  ignore_errors: true
