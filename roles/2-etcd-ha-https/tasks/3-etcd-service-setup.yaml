@@ -21,6 +21,9 @@
   delay: 10
   ignore_errors: false
 
+- name: etcd service getting started in master nodes
+  wait_for: timeout=10
+  
 - name: Check etcd service status
   shell: systemctl status etcd --no-pager
   register: ectd_srv_status
