@@ -15,7 +15,7 @@
 - name: Set ownership of kubectl binary
   file:
     path: /usr/local/bin/kubectl
-    owner: {{ansible_ssh_user}}
+    owner: "{{ansible_user}}"
     mode: 0755
 
 - name: Verify kubectl version 1.7.4 or higher is installed
