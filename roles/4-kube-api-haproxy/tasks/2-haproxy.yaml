@@ -37,18 +37,18 @@
     - /var/log/haproxy.log
     - /var/log/haproxy-status.log
 
-- name: Restart rsyslog
-  service:
-    name: rsyslog
-    state: restarted
+#- name: Restart rsyslog
+#  service:
+#    name: rsyslog
+#    state: restarted
+#
+#- name: Restart haproxy service
+#  service:
+#    name: haproxy
+#    state: started
 
-- name: Restart haproxy service
-  service:
-    name: haproxy
-    state: started
-
-- name: Check haproxy service status
-  shell: systemctl status haproxy --no-pager
-  register: haproxy_status
-- debug:
-    var: haproxy_status.stdout
+#- name: Check haproxy service status
+#  shell: systemctl status haproxy --no-pager
+#  register: haproxy_status
+#- debug:
+#    var: haproxy_status.stdout

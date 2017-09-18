@@ -25,13 +25,47 @@
     mode: 0744
   when: keepalived_path.stat.path is not defined
 
+- name: Check of keepalived log file already presented
+  stat:
+    path: /var/log/keepalived-notifications.log
+  register: k_log_file
+  ignore_errors: true
+
+- name: Create keepalived log file.
+  file:
+    path: /var/log/keepalived-notifications.log
+    state: present
+    mode: 0640
+  when: k_log_file.stat.path is not defined
+
+- name: Copy keepalived scripts to /etc/keepalived
+  template:
+    src: "{{item}}"
+    dest: /etc/keepalived/
+    mode: 0755
+    backup: yes
+  with_items:
+    - vip.sh
+    - haproxy.sh
+    - haproxy_service.sh
+  ignore_errors: false
+  register: k_scripts
+
 - name: Copy keepalived template to both loadbalancer servers
   template:
     src: keepalived.j2
     dest: /etc/keepalived/keepalived.conf
     mode: 0644
     backup: yes
+  check: host
   ignore_errors: false
+  register: k_conf_file
+
+- name: check if keepalived already running
+  stat:
+    file: /run/keepalived.pid
+  register: k_pid
+  ignore_errors: true
 
 - name: Start keepalived service
   service:
@@ -41,6 +75,18 @@
   retries: 3
   delay: 10
   ignore_errors: false
+  when: k_pid.stat.path is not defined
+
+- name: Restart keepalived after conf changes
+  service:
+    name: keepalived
+    state: restarted
+  retries: 3
+  delay: 10
+  ignore_errors: false
+  when:
+    - k_conf_file | changed
+    - k_pid.stat.path is defined
 
 - name: check keepalived service status
   shell: systemctl status keepalived.service --no-pager
