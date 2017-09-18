@@ -1,14 +1,14 @@
 ---
 
-#- include: 1-install_cfssl_tool.yaml
-#- include: 2-install-kubectl.yaml
-#- include: 3-setup_ca.yaml
-#- include: 4-admin-client-certificate.yaml
-#- include: 5-kubelet-client-csr.yaml
-#- include: 6-gen-wokernode-certs.yaml
-#- include: 7-kube-proxy-client-cert.yaml
-#- include: 8-kube-api-server-certs.yaml
-#- include: 9-kubelet-kubeconfig.yaml
-#- include: 10-kubeproxy-kubeconfig.yaml
+- include: 1-install_cfssl_tool.yaml
+- include: 2-install-kubectl.yaml
+- include: 3-setup_ca.yaml
+- include: 4-admin-client-certificate.yaml
+- include: 5-kubelet-client-csr.yaml
+- include: 6-gen-wokernode-certs.yaml
+- include: 7-kube-proxy-client-cert.yaml
+- include: 8-kube-api-server-certs.yaml
+- include: 9-kubelet-kubeconfig.yaml
+- include: 10-kubeproxy-kubeconfig.yaml
 - include: 11-data-encryption-config-key.yaml
 - include: 12-fetch-certs-to-local.yaml

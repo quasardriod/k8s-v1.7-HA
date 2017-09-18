@@ -2,13 +2,13 @@
 
 # Setup hosts and k8s package installation
 
-- hosts: all-k8s-hosts
-  become: true
-  become_method: sudo
-  vars_files:
-    - group_vars/all
-  roles:
-    - 0-host-presetup
+#- hosts: all-k8s-hosts
+#  become: true
+#  become_method: sudo
+#  vars_files:
+#    - group_vars/all
+#  roles:
+#    - 0-host-presetup
 
 - hosts: client
   become: true
