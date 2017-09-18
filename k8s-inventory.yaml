@@ -38,8 +38,9 @@ k8s-node1
 k8s-node2
 
 [loadbalancers]
-kube-lb01
-kube-lb02
+k8s-master1
+k8s-master2
+k8s-master3
 
 [client]
 kube-client
