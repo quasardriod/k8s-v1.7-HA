@@ -26,9 +26,6 @@
     path: /k8s-v1.7/certs/{{k8s_node1_hostname}}-csr.json
   register: worker_csr
 
-- debug:
-    var: worker_csr.stdout
-
 - fail:
     msg: "Whoops! Worker nodes csr files are failed to create."
   when: worker_csr.stat.path is not defined

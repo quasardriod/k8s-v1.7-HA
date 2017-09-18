@@ -8,9 +8,9 @@
 #    backup: no
 #  ignore_errors: false
 
-#- name: Generate a certificate and private key for each Kubernetes worker node
-#  shell: sh /k8s-v1.7/certs/create-worker-certs.sh
-#  ignore_errors: false
+- name: Generate a certificate and private key for each Kubernetes worker node
+  shell: sh /k8s-v1.7/certs/create-worker-certs.sh
+  ignore_errors: false
 
 - name: Verify required files for created
   stat:
