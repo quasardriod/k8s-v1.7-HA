@@ -1,5 +1,7 @@
 ---
 
+- name: k8s-api servers components getting initialized
+  wait_for: timeout=10
 - name: Get kube component status
   shell: kubectl get componentstatuses
   when: ansible_nodename == k8s_master2_hostname
