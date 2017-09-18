@@ -29,14 +29,17 @@
   stat:
     path: /var/log/keepalived-notifications.log
   register: k_log_file
-  ignore_errors: true
+  ignore_errors: false
 
 - name: Create keepalived log file.
   file:
     path: /var/log/keepalived-notifications.log
-    state: present
+    state: touch
+    owner: root
+    group: root
     mode: 0640
   when: k_log_file.stat.path is not defined
+  ignore_errors: false
 
 - name: Copy keepalived scripts to /etc/keepalived
   template:
@@ -48,22 +51,21 @@
     - vip.sh
     - haproxy.sh
     - haproxy_service.sh
-  ignore_errors: false
   register: k_scripts
+  ignore_errors: false
 
-- name: Copy keepalived template to both loadbalancer servers
+- name: Copy keepalived template to master servers
   template:
     src: keepalived.j2
     dest: /etc/keepalived/keepalived.conf
     mode: 0644
     backup: yes
-  check: host
   ignore_errors: false
   register: k_conf_file
 
 - name: check if keepalived already running
   stat:
-    file: /run/keepalived.pid
+    path: /run/keepalived.pid
   register: k_pid
   ignore_errors: true
 
@@ -93,6 +95,9 @@
   register: keepalived_svc
 - debug:
     var: keepalived_svc.stdout
+
+- name: Keepalived getting initialized
+  wait_for: timeout=10
 
 - name: check VIP validation
   shell: ip a|grep -i {{k8s_lb_vip}}|awk 'FNR==1 {print $2}'|cut -d'/' -f1
