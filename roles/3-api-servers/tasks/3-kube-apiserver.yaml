@@ -23,6 +23,9 @@
   delay: 10
   ignore_errors: false
 
+- name: kube-apiserver services getting started in all master nodes
+  wait_for: timeout=10
+
 - name: Check kube-apiserver service status
   shell: systemctl status kube-apiserver --no-pager
   register: api_srv_status

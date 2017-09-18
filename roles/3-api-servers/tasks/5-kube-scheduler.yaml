@@ -21,6 +21,9 @@
   delay: 10
   ignore_errors: false
 
+- name: kube-scheduler services getting started in all master nodes
+  wait_for: timeout=5
+
 - name: Check kube-scheduler service status
   shell: systemctl status kube-scheduler --no-pager
   register: k8s_scheduler_svc_status

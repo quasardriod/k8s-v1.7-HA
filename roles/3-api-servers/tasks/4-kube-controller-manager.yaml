@@ -21,6 +21,9 @@
   delay: 10
   ignore_errors: false
 
+- name: kube-controller-manager services getting started in all master nodes
+  wait_for: timeout=5
+
 - name: Check kube-controller-manager service status
   shell: systemctl status kube-controller-manager --no-pager
   register: k8s_ctrl_mg_srv_status
