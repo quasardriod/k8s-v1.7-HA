@@ -1,5 +1,5 @@
 ---
 
-- include: 1-install-pkgs.yaml
-- include: 2-haproxy.yaml
+#- include: 1-install-pkgs.yaml
+#- include: 2-haproxy.yaml
 - include: 3-keepalived.yaml

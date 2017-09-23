@@ -1,0 +1,46 @@
+# Keepaplive needs to fixed to handle both VIP and haproxy
+#
+vrrp_instance vip {
+    state MASTER
+    interface {{lb_eth_name.stdout}}
+    virtual_router_id 51
+    priority 150
+    advert_int 1
+    authentication {
+        auth_type PASS
+        auth_pass {{keepalived_pass}}
+    }
+    virtual_ipaddress {
+        {{k8s_lb_vip}}/{{lb_vip_prifix.stdout}} dev {{lb_eth_name.stdout}}
+    }
+    notify "/etc/keepalived/vip.sh"
+}
+
+vrrp_script pingable_check_script {
+  script "/etc/keepalived/haproxy.sh"
+  interval 5  checking every 10 seconds (default: 5 seconds)
+  fall 2           # require 2 failures for KO (default: 3)
+  rise 4           # require 4 successes for OK (default: 6)
+}
+
+vrrp_script haproxy_check_script {
+  script "/etc/keepalived/haproxy_service.sh"
+  interval 5   # checking every 5 seconds (default: 5 seconds)
+  fall 3           # require 3 failures for KO (default: 3)
+  rise 6           # require 6 successes for OK (default: 6)
+}
+
+vrrp_instance haproxy {
+  interface {{lb_eth_name.stdout}}
+  state MASTER
+  virtual_router_id 11
+  priority 150
+  authentication {
+    auth_type PASS
+    auth_pass {{keepalived_pass}}
+  }
+  track_script {
+    pingable_check_script
+    haproxy_check_script
+  }
+}
